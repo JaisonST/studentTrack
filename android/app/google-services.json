@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "40241868865",
+    "firebase_url": "https://studenttrack-ee8e5.firebaseio.com",
+    "project_id": "studenttrack-ee8e5",
+    "storage_bucket": "studenttrack-ee8e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40241868865:android:8257db1beff3403d3cd6c0",
+        "android_client_info": {
+          "package_name": "com.poor.studenttrack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40241868865-t8blc16cmebtd2pmsv9rse9mu0qe0u7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL-lLb8lumntk_UPvlrnvZD-BhZNtY4_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40241868865-t8blc16cmebtd2pmsv9rse9mu0qe0u7q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
