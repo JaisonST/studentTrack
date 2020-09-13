@@ -1,56 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:studenttrack/AuthenticationSystem/Auth.dart';
+import 'package:studenttrack/AuthenticationSystem/User.dart';
+import 'package:studenttrack/Screens/Home.dart';
+import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
+import 'package:studenttrack/Screens/Loading.dart';
+import 'package:studenttrack/Screens/Enclosure.dart';
 
-void main() {
-  runApp(Trial());
+void main() => runApp(App());
+
+class App extends StatefulWidget {
+  _AppState createState() => _AppState();
 }
 
-class Trial extends StatefulWidget {
+class _AppState extends State<App> {
+  // Set default `_initialized` and `_error` state to false
+  bool _initialized = false;
+  bool _error = false;
+
+  // Define an async function to initialize FlutterFire
+  void initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch(e) {
+      // Set `_error` state to true if Firebase initialization fails
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
   @override
-  _TrialState createState() => _TrialState();
-}
-
-class _TrialState extends State<Trial> {
-  String password;
-  String email;
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('firebase test'),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'email',
-              ),
-              onChanged: (value) {
-                email = value;
-              },
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'password',
-              ),
-              onChanged: (value) {
-                password = value;
-              },
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
-    );
+    // Show error message if initialization failed
+    if(_error) {
+      return MaterialApp(
+        home: Scaffold(
+          body:Text(
+            'Something went wrong'
+          )
+        )
+      );
+    }
+
+    // Show a loader until FlutterFire is initialized
+    if (!_initialized) {
+      return Loading();
+    }
+
+    return Enclosure();
   }
 }
