@@ -5,7 +5,11 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Text(
-        'Loading'
+        'Loading',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 20.0
+        )
       ),
     );
   }
