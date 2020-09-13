@@ -6,6 +6,7 @@ import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/AuthenticationSystem/User.dart';
 import 'package:studenttrack/Screens/Home.dart';
 import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
+import 'package:studenttrack/Screens/Loading.dart';
 
 
 void main() => runApp(StudentTrack());
@@ -18,7 +19,9 @@ class StudentTrack extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _initialization,
+
         builder: (context,snapshot){
+
         if(snapshot.connectionState == ConnectionState.done){
           return StreamProvider<Users>.value(
             value: AuthServices().user,
@@ -31,6 +34,8 @@ class StudentTrack extends StatelessWidget {
             ),
           );
         }
+
+        return Loading();
         }
         );
 
