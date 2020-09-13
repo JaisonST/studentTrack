@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/AuthenticationSystem/User.dart';
+import 'package:studenttrack/Screens/Designation.dart';
 import 'package:studenttrack/Screens/Home.dart';
 import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
 import 'package:studenttrack/Screens/Loading.dart';
@@ -18,6 +19,7 @@ class Enclosure extends StatelessWidget {
         routes: {
           Wrapper.id: (context) => Wrapper(),
           HomeScreen.id: (context) => HomeScreen(),
+          Designation.id: (context) => Designation(),
         },
       ),
     );
