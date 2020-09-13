@@ -1,56 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:studenttrack/AuthenticationSystem/Auth.dart';
+import 'package:studenttrack/AuthenticationSystem/User.dart';
+import 'package:studenttrack/Screens/Home.dart';
+import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
 
-void main() {
-  runApp(Trial());
-}
+void main() => runApp(StudentTrack());
 
-class Trial extends StatefulWidget {
-  @override
-  _TrialState createState() => _TrialState();
-}
-
-class _TrialState extends State<Trial> {
-  String password;
-  String email;
-
+class StudentTrack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('firebase test'),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'email',
-              ),
-              onChanged: (value) {
-                email = value;
-              },
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'password',
-              ),
-              onChanged: (value) {
-                password = value;
-              },
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {},
-            ),
-          ],
-        ),
+    return StreamProvider<Users>.value(
+        value: AuthServices().user,
+      child: MaterialApp(
+        initialRoute: '/',
+        routes: {
+          '/':(context) => Wrapper(),
+          '/home':(context) => HomeScreen(),
+        },
       ),
     );
   }
 }
+
