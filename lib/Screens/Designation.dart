@@ -12,9 +12,7 @@ class Designation extends StatelessWidget {
         title: Text(
           'Select Designation',
           style: TextStyle(
-              color: Color(0xff4DD172),
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold),
+              color: Colors.grey, fontSize: 30.0, fontWeight: FontWeight.bold),
         ),
         elevation: 0.0,
       ),
