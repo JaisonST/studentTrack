@@ -13,6 +13,10 @@ class _HomeScreenState extends State<HomeScreen> {
   _HomeScreenState({this.id});
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Text(
+        'Home',
+      )
+    );
   }
 }

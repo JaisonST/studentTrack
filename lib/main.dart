@@ -22,6 +22,13 @@ class StudentTrack extends StatelessWidget {
 
         builder: (context,snapshot){
 
+        if(snapshot.hasError)
+          return Scaffold(
+            body:Text(
+              'Error',
+            )
+          );
+
         if(snapshot.connectionState == ConnectionState.done){
           return StreamProvider<Users>.value(
             value: AuthServices().user,
@@ -34,6 +41,7 @@ class StudentTrack extends StatelessWidget {
             ),
           );
         }
+
 
         return Loading();
         }
