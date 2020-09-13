@@ -7,9 +7,13 @@ import 'package:studenttrack/AuthenticationSystem/User.dart';
 import 'package:studenttrack/Screens/Home.dart';
 import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
 
+
 void main() => runApp(StudentTrack());
 
 class StudentTrack extends StatelessWidget {
+
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider<Users>.value(
