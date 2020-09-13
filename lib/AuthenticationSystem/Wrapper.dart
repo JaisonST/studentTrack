@@ -13,6 +13,7 @@ class Wrapper extends StatelessWidget {
     if (user == null)
       return Designation();
     else
+      //TODO: the app is automatically going to homescreen.. solve issue
       return HomeScreen();
   }
 }
