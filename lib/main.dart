@@ -22,12 +22,7 @@ class StudentTrack extends StatelessWidget {
 
         builder: (context,snapshot){
 
-        if(snapshot.hasError)
-          return Scaffold(
-            body:Text(
-              'Error',
-            )
-          );
+
 
         if(snapshot.connectionState == ConnectionState.done){
           return Enclosure();
