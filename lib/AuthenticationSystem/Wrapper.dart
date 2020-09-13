@@ -13,6 +13,6 @@ class Wrapper extends StatelessWidget {
     if (user == null)
       return Designation();
     else
-      return HomeScreen(userID: user.uid);
+      return HomeScreen();
   }
 }

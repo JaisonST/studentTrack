@@ -14,7 +14,7 @@ class Enclosure extends StatelessWidget {
     return StreamProvider<Users>.value(
       value: AuthServices().user,
       child: MaterialApp(
-        initialRoute: '/',
+        initialRoute: Wrapper.id,
         routes: {
           Wrapper.id: (context) => Wrapper(),
           HomeScreen.id: (context) => HomeScreen(),
