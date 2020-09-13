@@ -8,7 +8,6 @@ import 'package:studenttrack/Screens/Home.dart';
 import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 
-
 class Enclosure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,13 +16,10 @@ class Enclosure extends StatelessWidget {
       child: MaterialApp(
         initialRoute: '/',
         routes: {
-          '/':(context) => Wrapper(),
-          '/home':(context) => HomeScreen(),
+          Wrapper.id: (context) => Wrapper(),
+          HomeScreen.id: (context) => HomeScreen(),
         },
       ),
     );
   }
 }
-
-
-

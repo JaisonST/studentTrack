@@ -28,7 +28,7 @@ class _AppState extends State<App> {
       setState(() {
         _initialized = true;
       });
-    } catch(e) {
+    } catch (e) {
       // Set `_error` state to true if Firebase initialization fails
       setState(() {
         _error = true;
@@ -45,14 +45,16 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     // Show error message if initialization failed
-    if(_error) {
+    if (_error) {
       return MaterialApp(
-        home: Scaffold(
-          body:Text(
-            'Something went wrong'
-          )
-        )
-      );
+          home: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Color(0xff4DD172),
+                title: Text('Something went wrong'),
+              ),
+              body: Center(
+                child: Text('Are you connected to the Network?'),
+              )));
     }
 
     // Show a loader until FlutterFire is initialized
