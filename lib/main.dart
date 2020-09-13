@@ -16,16 +16,24 @@ class StudentTrack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<Users>.value(
-        value: AuthServices().user,
-      child: MaterialApp(
-        initialRoute: '/',
-        routes: {
-          '/':(context) => Wrapper(),
-          '/home':(context) => HomeScreen(),
-        },
-      ),
-    );
+    return FutureBuilder(
+      future: _initialization,
+        builder: (context,snapshot){
+        if(snapshot.connectionState == ConnectionState.done){
+          return StreamProvider<Users>.value(
+            value: AuthServices().user,
+            child: MaterialApp(
+              initialRoute: '/',
+              routes: {
+                '/':(context) => Wrapper(),
+                '/home':(context) => HomeScreen(),
+              },
+            ),
+          );
+        }
+        }
+        );
+
   }
 }
 
