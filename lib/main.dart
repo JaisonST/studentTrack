@@ -9,30 +9,51 @@ import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 import 'package:studenttrack/Screens/Enclosure.dart';
 
-void main() => runApp(StudentTrack());
+void main() => runApp(App());
 
-class StudentTrack extends StatelessWidget {
+class App extends StatefulWidget {
+  _AppState createState() => _AppState();
+}
 
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+class _AppState extends State<App> {
+  // Set default `_initialized` and `_error` state to false
+  bool _initialized = false;
+  bool _error = false;
+
+  // Define an async function to initialize FlutterFire
+  void initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch(e) {
+      // Set `_error` state to true if Firebase initialization fails
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initialization,
+    // Show error message if initialization failed
+    // if(_error) {
+    //   return SomethingWentWrong();
+    // }
 
-        builder: (context,snapshot){
+    // Show a loader until FlutterFire is initialized
+    if (!_initialized) {
+      return Loading();
+    }
 
-
-
-        if(snapshot.connectionState == ConnectionState.done){
-          return Enclosure();
-        }
-
-
-        return Loading();
-        }
-        );
-
+    return Enclosure();
   }
 }
-
