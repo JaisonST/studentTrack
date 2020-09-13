@@ -45,9 +45,15 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     // Show error message if initialization failed
-    // if(_error) {
-    //   return SomethingWentWrong();
-    // }
+    if(_error) {
+      return MaterialApp(
+        home: Scaffold(
+          body:Text(
+            'Something went wrong'
+          )
+        )
+      );
+    }
 
     // Show a loader until FlutterFire is initialized
     if (!_initialized) {
