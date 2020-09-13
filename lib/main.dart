@@ -7,7 +7,7 @@ import 'package:studenttrack/AuthenticationSystem/User.dart';
 import 'package:studenttrack/Screens/Home.dart';
 import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
 import 'package:studenttrack/Screens/Loading.dart';
-
+import 'package:studenttrack/Screens/Enclosure.dart';
 
 void main() => runApp(StudentTrack());
 
@@ -30,16 +30,7 @@ class StudentTrack extends StatelessWidget {
           );
 
         if(snapshot.connectionState == ConnectionState.done){
-          return StreamProvider<Users>.value(
-            value: AuthServices().user,
-            child: MaterialApp(
-              initialRoute: '/',
-              routes: {
-                '/':(context) => Wrapper(),
-                '/home':(context) => HomeScreen(),
-              },
-            ),
-          );
+          return Enclosure();
         }
 
 
