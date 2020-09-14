@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studenttrack/components.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'HomeScreen';
@@ -56,7 +57,9 @@ class _TeacherUIState extends State<TeacherUI> {
             size: 40.0,
           ),
           backgroundColor: Color(0xff4DD172),
-          onPressed: () {},
+          onPressed: () {
+            clinicForm(context);
+          },
         ),
       ),
       body: Center(
