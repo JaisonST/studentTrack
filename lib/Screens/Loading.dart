@@ -5,8 +5,10 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Text('Patience is a Virtue',
-            style: TextStyle(color: Colors.black, fontSize: 20.0)),
+        body: Center(
+          child: Text('Patience is a Virtue',
+              style: TextStyle(color: Color(0xff4dd172), fontSize: 30.0)),
+        ),
       ),
     );
   }
