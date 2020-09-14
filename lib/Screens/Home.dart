@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:studenttrack/components.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../AuthenticationSystem/Auth.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'HomeScreen';
@@ -37,7 +40,9 @@ class _TeacherUIState extends State<TeacherUI> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
-              onPressed: () {},
+              onPressed: () {
+                AuthServices().signOut();
+              },
             ),
           ),
         ],
