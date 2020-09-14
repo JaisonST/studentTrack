@@ -25,8 +25,23 @@ class _TeacherUIState extends State<TeacherUI> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FlatButton(
+              color: Color(0xff4dd172),
+              child: Text(
+                'Sign Out',
+                style: TextStyle(color: Colors.white),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ],
         centerTitle: false,
-
         backgroundColor: Colors.white, //Color(0xff4DD172),
         title: Row(
           children: <Widget>[
@@ -40,7 +55,7 @@ class _TeacherUIState extends State<TeacherUI> {
             Text(
               'Track',
               style: TextStyle(
-                color: Colors.grey[350],
+                color: Colors.grey[400],
                 fontWeight: FontWeight.bold,
                 fontSize: 30.0,
               ),
