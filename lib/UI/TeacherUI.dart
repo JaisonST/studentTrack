@@ -26,7 +26,7 @@ class _TeacherUIState extends State<TeacherUI> {
                 borderRadius: BorderRadius.circular(15.0),
               ),
               onPressed: () {
-                AuthServices().signOut();
+                AuthServices().signOut(context);
               },
             ),
           ),

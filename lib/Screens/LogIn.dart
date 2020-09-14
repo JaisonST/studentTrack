@@ -3,7 +3,7 @@ import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 
 class LogIn extends StatefulWidget {
-  static String id = "DesignationScreen";
+  static String id = "LoginScreen";
   @override
   _LogInState createState() => _LogInState();
 }
@@ -40,7 +40,7 @@ class _LogInState extends State<LogIn> {
               ]),
             ),
             body: Padding(
-              padding: const EdgeInsets.fromLTRB(40.0, 90.0, 30.0, 0.0),
+              padding: const EdgeInsets.fromLTRB(40.0, 50.0, 30.0, 0.0),
               child: Form(
                   key: _formKey,
                   child: Column(
@@ -94,8 +94,8 @@ class _LogInState extends State<LogIn> {
                                 loading = true;
                               });
                               if (_formKey.currentState.validate()) {
-                                dynamic result =
-                                    await _auth.signIn(email, password);
+                                dynamic result = await _auth.signIn(
+                                    email, password, context);
                                 if (result == null) {
                                   setState(() {
                                     loading = false;
