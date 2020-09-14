@@ -10,10 +10,10 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
 
-    if (user == null)
-      return Designation();
-    else
-      //TODO: the app is automatically going to homescreen.. solve issue
+    if (user != null)
       return HomeScreen();
+
+
+      return Designation();
   }
 }
