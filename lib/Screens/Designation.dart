@@ -56,7 +56,7 @@ class DesignationButton extends StatelessWidget {
         elevation: 5.0,
         child: Image.asset(image),
         onPressed: () {
-          Navigator.pushReplacementNamed(context, LogIn.id);
+          Navigator.pushNamed(context, LogIn.id);
         },
         shape: CircleBorder(),
       ),
