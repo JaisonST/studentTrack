@@ -8,6 +8,7 @@ import 'package:studenttrack/Screens/Home.dart';
 import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 import 'package:studenttrack/Screens/Designation.dart';
+import 'package:studenttrack/Screens/LogIn.dart';
 
 void main() => runApp(App());
 
@@ -70,6 +71,7 @@ class _AppState extends State<App> {
           Wrapper.id: (context) => Wrapper(),
           HomeScreen.id: (context) => HomeScreen(),
           Designation.id: (context) => Designation(),
+          LogIn.id:(context) => LogIn()
         },
       ),
     );

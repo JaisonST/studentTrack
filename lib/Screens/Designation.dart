@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:studenttrack/Screens/LogIn.dart';
 class Designation extends StatelessWidget {
   static String id = "DesignationScreen";
   @override
@@ -55,7 +55,9 @@ class DesignationButton extends StatelessWidget {
       child: MaterialButton(
         elevation: 5.0,
         child: Image.asset(image),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, LogIn.id);
+        },
         shape: CircleBorder(),
       ),
     );
