@@ -10,7 +10,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
 
-    if (user.returnUid() == null)
+    if (user == null)
       return Designation();
     else
       return HomeScreen();

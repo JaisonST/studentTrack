@@ -7,7 +7,7 @@ import 'package:studenttrack/AuthenticationSystem/User.dart';
 import 'package:studenttrack/Screens/Home.dart';
 import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
 import 'package:studenttrack/Screens/Loading.dart';
-import 'package:studenttrack/Screens/Enclosure.dart';
+import 'package:studenttrack/Screens/Designation.dart';
 
 void main() => runApp(App());
 
@@ -62,6 +62,16 @@ class _AppState extends State<App> {
       return Loading();
     }
 
-    return Enclosure();
+    return StreamProvider<Users>.value(
+      value: AuthServices().user,
+      child: MaterialApp(
+        initialRoute: Wrapper.id,
+        routes: {
+          Wrapper.id: (context) => Wrapper(),
+          HomeScreen.id: (context) => HomeScreen(),
+          Designation.id: (context) => Designation(),
+        },
+      ),
+    );
   }
 }
