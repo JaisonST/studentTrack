@@ -10,7 +10,7 @@ class DatabaseLive{
         .add({
       'Name': name,
       'Class': grade,
-      'EntryTime': DateTime.now().toUtc().millisecondsSinceEpoch
+      'EntryTime': DateTime.now()
     })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
