@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studenttrack/AuthenticationSystem/Auth.dart';
+import 'package:studenttrack/components.dart';
 
 class ClinicUI extends StatefulWidget {
   @override
@@ -10,12 +11,7 @@ class _ClinicUIState extends State<ClinicUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.arrow_back),
-        onPressed: () {
-          AuthServices().signOut(context);
-        },
-      ),
+      appBar: HomeAppBar(),
     );
   }
 }
