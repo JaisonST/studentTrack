@@ -48,6 +48,27 @@ clinicForm(context) {
       ]).show();
 }
 
+//Clinic Button to add the form made here
+class ClinicAddButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 70.0,
+      width: 70.0,
+      child: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          size: 40.0,
+        ),
+        backgroundColor: Color(0xff4DD172),
+        onPressed: () {
+          clinicForm(context);
+        },
+      ),
+    );
+  }
+}
+
 //App bar used in TeacherUi and ClinicUI
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override

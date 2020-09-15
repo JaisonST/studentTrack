@@ -14,20 +14,7 @@ class _TeacherUIState extends State<TeacherUI> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: HomeAppBar(),
-      floatingActionButton: Container(
-        height: 70.0,
-        width: 70.0,
-        child: FloatingActionButton(
-          child: Icon(
-            Icons.add,
-            size: 40.0,
-          ),
-          backgroundColor: Color(0xff4DD172),
-          onPressed: () {
-            clinicForm(context);
-          },
-        ),
-      ),
+      floatingActionButton: ClinicAddButton(),
       body: Center(
         child: Column(
           children: <Widget>[
