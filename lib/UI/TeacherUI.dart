@@ -7,6 +7,8 @@ class TeacherUI extends StatefulWidget {
 }
 
 class _TeacherUIState extends State<TeacherUI> {
+
+  int liveCases = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +69,7 @@ class _TeacherUIState extends State<TeacherUI> {
                           ),
                           Center(
                             child: Text(
-                              '#',
+                              '$liveCases',
                               style: TextStyle(
                                 fontSize: 100.0,
                                 color: Colors.grey,
