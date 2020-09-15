@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/components.dart';
 
 class ClinicUI extends StatefulWidget {
@@ -12,6 +11,7 @@ class _ClinicUIState extends State<ClinicUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(),
+      floatingActionButton: ClinicAddButton(),
     );
   }
 }
