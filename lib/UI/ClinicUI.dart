@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:studenttrack/components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ClinicUI extends StatefulWidget {
   @override
@@ -54,7 +55,24 @@ class _ClinicUIState extends State<ClinicUI> {
                           ],
                         ),
                         RawMaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Alert(
+                              context: context,
+                              title: "Confirmation",
+                              desc:
+                                  "Do you want to Archive ${student.data()["Name"]}'s record",
+                              buttons: [
+                                DialogButton(
+                                  child: Text(
+                                    'ARCHIVE',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20.0),
+                                  ),
+                                  color: Color(0xff4DD172),
+                                )
+                              ],
+                            ).show();
+                          },
                           elevation: 1,
                           fillColor: Colors.white,
                           child: Icon(
