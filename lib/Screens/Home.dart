@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studenttrack/Screens/Loading.dart';
 import 'package:studenttrack/UI/TeacherUI.dart';
 import 'package:studenttrack/DatabaseServices/Database.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -12,18 +13,28 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
-  bool isClinic = true;
+  String isClinic = "first";
 
   @override
   void initState() {
-    isClinic =
-        DatabaseServices(uid: _auth.currentUser.uid).returnDesignation() ==
-            "Clinic";
+    DatabaseServices(uid: _auth.currentUser.uid)
+        .returnDesignation()
+        .then((result) {
+      setState(() {
+        isClinic = result;
+      });
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return isClinic ? ClinicUI() : TeacherUI();
+    if (isClinic == "first") {
+      return Loading();
+    } else if (isClinic == "Clinic") {
+      return ClinicUI();
+    } else {
+      return TeacherUI();
+    }
   }
 }

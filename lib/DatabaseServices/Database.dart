@@ -1,18 +1,17 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DatabaseServices{
+class DatabaseServices {
   final String uid;
   DatabaseServices({this.uid});
 
-  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('Users');
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection('Users');
 
-  String returnDesignation(){
-    Map<String, dynamic> data;
-    FirebaseFirestore.instance.collection('Users').doc(uid).snapshots().listen((snapshot){
-       data = snapshot.data();
+  Future<String> returnDesignation() async {
+    String returnValue;
+    await users.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
+      returnValue = documentSnapshot.data()['Designation'];
     });
-    return data['Designation'];
+    return returnValue;
   }
 }
