@@ -13,17 +13,14 @@ class _TeacherUIState extends State<TeacherUI> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('Live')
-            .snapshots(),
+        stream: FirebaseFirestore.instance.collection('Live').snapshots(),
         builder: (context, snapshot) {
           liveCases = snapshot.data.documents.length;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: HomeAppBar(),
-            floatingActionButton: liveCases > 4
-                ? EmergencyAddButton()
-                : ClinicAddButton(),
+            floatingActionButton:
+                liveCases > 4 ? EmergencyAddButton() : ClinicAddButton(),
             body: Center(
               child: Column(
                 children: <Widget>[
@@ -65,17 +62,15 @@ class _TeacherUIState extends State<TeacherUI> {
                                 ),
                                 Center(
                                     child: Text(
-                                      '$liveCases',
-                                      style: TextStyle(
-                                          fontSize: 100,
-                                          color: Color(0xff4DD172)),
-                                    )
-                                )
+                                  '$liveCases',
+                                  style: TextStyle(
+                                      fontSize: 100, color: Color(0xff4DD172)),
+                                ))
                               ],
                             ),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(30.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30.0)),
                               color: Color(0xfff2f9f3),
                             ),
                           ),
@@ -84,50 +79,73 @@ class _TeacherUIState extends State<TeacherUI> {
                           flex: 1,
                           child: SizedBox(),
                         ),
-
                       ],
                     ),
                   ),
                   Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  ),
+                  EmergencyWarning(liveCases: liveCases),
+                  Expanded(
                     flex: 4,
                     child: SizedBox(),
                   ),
-                  Expanded(
-                    flex: 2,
-                    child: liveCases <= 4 ? Container() : Container(
-                        padding: EdgeInsets.all(20.0),
-                        child: Column(
-
-                          children: [
-                            Text(
-                              'CLINIC LIMIT REACHED',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-
-                              ),
-                            ),
-                            Text(
-                              'In case of emergency, click the red button to contact relevant authorities'
-                                  ,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                            )
-                            )
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                          color: Colors.red[400],
-                        )
-                    ),
-                  )
                 ],
               ),
             ),
           );
-        }
+        });
+  }
+}
+
+class EmergencyWarning extends StatelessWidget {
+  final int liveCases;
+  EmergencyWarning({@required this.liveCases});
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: 2,
+      child: liveCases <= 4
+          ? Container()
+          : Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: SizedBox(),
+                ),
+                Expanded(
+                  flex: 8,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          'CLINIC LIMIT REACHED',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        Text('Add only If emergency',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                            ))
+                      ],
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      color: Colors.red[400],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: SizedBox(),
+                ),
+              ],
+            ),
     );
   }
 }
