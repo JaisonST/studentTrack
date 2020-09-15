@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 import 'package:studenttrack/components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -69,6 +70,9 @@ class _ClinicUIState extends State<ClinicUI> {
                                         color: Colors.white, fontSize: 20.0),
                                   ),
                                   color: Color(0xff4DD172),
+                                  onPressed: () async {
+                                    await DatabaseLive().moveRecordFromLiveToHistory(student.id);
+                                  },
                                 )
                               ],
                             ).show();
