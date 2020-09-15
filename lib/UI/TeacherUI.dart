@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:studenttrack/components.dart';
 
@@ -7,7 +8,6 @@ class TeacherUI extends StatefulWidget {
 }
 
 class _TeacherUIState extends State<TeacherUI> {
-
   int liveCases = 0;
   @override
   Widget build(BuildContext context) {
@@ -68,14 +68,19 @@ class _TeacherUIState extends State<TeacherUI> {
                             height: 20.0,
                           ),
                           Center(
-                            child: Text(
-                              '$liveCases',
-                              style: TextStyle(
-                                fontSize: 100.0,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
+                              child: StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('Live')
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    liveCases = snapshot.data.documents.length;
+                                    return Text(
+                                      '$liveCases',
+                                      style: TextStyle(
+                                          fontSize: 100,
+                                          color: Color(0xff4DD172)),
+                                    );
+                                  })),
                         ],
                       ),
                       decoration: BoxDecoration(

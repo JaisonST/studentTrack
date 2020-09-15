@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:time/time.dart';
 
 class DatabaseServices {
   final String uid;
@@ -7,7 +6,6 @@ class DatabaseServices {
 
   final CollectionReference users =
       FirebaseFirestore.instance.collection('Users');
-
 
   Future<String> returnDesignation() async {
     String returnValue;
