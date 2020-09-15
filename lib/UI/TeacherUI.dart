@@ -9,105 +9,125 @@ class TeacherUI extends StatefulWidget {
 
 class _TeacherUIState extends State<TeacherUI> {
   int liveCases = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: HomeAppBar(),
-      floatingActionButton: liveCases>4? EmergencyAddButton():ClinicAddButton(),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: SizedBox(),
-            ),
-            Expanded(
-              flex: 6,
-              child: Row(
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('Live')
+            .snapshots(),
+        builder: (context, snapshot) {
+          liveCases = snapshot.data.documents.length;
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: HomeAppBar(),
+            floatingActionButton: liveCases > 4
+                ? EmergencyAddButton()
+                : ClinicAddButton(),
+            body: Center(
+              child: Column(
                 children: <Widget>[
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: SizedBox(),
                   ),
                   Expanded(
-                    flex: 8,
-                    child: Container(
-                      padding: EdgeInsets.all(20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Number of Students',
-                            style: TextStyle(
-                              fontSize: 25.0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Text(
-                            'at clinic:',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Center(
-                              child: StreamBuilder(
-                                  stream: FirebaseFirestore.instance
-                                      .collection('Live')
-                                      .snapshots(),
-                                  builder: (context, snapshot) {
-                                    liveCases = snapshot.data.documents.length;
-                                    return Text(
+                    flex: 6,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(),
+                        ),
+                        Expanded(
+                          flex: 8,
+                          child: Container(
+                            padding: EdgeInsets.all(20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Number of Students',
+                                  style: TextStyle(
+                                    fontSize: 25.0,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Text(
+                                  'at clinic:',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Center(
+                                    child: Text(
                                       '$liveCases',
                                       style: TextStyle(
                                           fontSize: 100,
                                           color: Color(0xff4DD172)),
-                                    );
-                                  })),
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                        color: Color(0xfff2f9f3),
-                      ),
+                                    )
+                                )
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(30.0)),
+                              color: Color(0xfff2f9f3),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(),
+                        ),
+
+                      ],
                     ),
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 4,
                     child: SizedBox(),
                   ),
+                  Expanded(
+                    flex: 2,
+                    child: liveCases <= 4 ? Container() : Container(
+                        padding: EdgeInsets.all(20.0),
+                        child: Column(
 
+                          children: [
+                            Text(
+                              'CLINIC LIMIT REACHED',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+
+                              ),
+                            ),
+                            Text(
+                              'In case of emergency, click the red button to contact relevant authorities'
+                                  ,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.0,
+                            )
+                            )
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                          color: Colors.red[400],
+                        )
+                    ),
+                  )
                 ],
               ),
             ),
-            Expanded(
-              flex: 4,
-              child: SizedBox(),
-            ),
-            Expanded(
-              flex:4,
-              child: liveCases<=4?Container():Container(
-                padding: EdgeInsets.all(20.0),
-                child:Text(
-                  'The number of patients in the clinic has reached the limit.If the case is an emergency ,click on the Red icon below and a mail will be sent to the team concerned.',
-                  style: TextStyle(
-                    color:Colors.red,
-
-                  ),
-                ),
-                decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(30.0)),
-        color: Colors.redAccent,
-                )
-              ) ,
-            )
-          ],
-        ),
-      ),
+          );
+        }
     );
   }
 }
