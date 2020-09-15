@@ -4,7 +4,7 @@ import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 
 //function for the clinic form
-clinicForm(context) {
+clinicForm(context,String str) {
   String studentName;
   String studentClass;
   Alert(
@@ -36,9 +36,14 @@ clinicForm(context) {
         DialogButton(
           color: Color(0xff4DD172),
           onPressed: () {
-            DatabaseLive()
-                .addRecordToLive(studentName, studentClass)
-                .then((value) => Navigator.pop(context));
+            if(str == 'standard') {
+              DatabaseLive()
+                  .addRecordToLive(studentName, studentClass)
+                  .then((value) => Navigator.pop(context));
+            }
+            else{
+              print('Email Sent');
+            }
           },
           child: Text(
             "SUBMIT",
@@ -62,12 +67,33 @@ class ClinicAddButton extends StatelessWidget {
         ),
         backgroundColor: Color(0xff4DD172),
         onPressed: () {
-          clinicForm(context);
+          clinicForm(context,'standard');
         },
       ),
     );
   }
 }
+
+class EmergencyAddButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 70.0,
+      width: 70.0,
+      child: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          size: 40.0,
+        ),
+        backgroundColor: Colors.red,
+        onPressed: () {
+          clinicForm(context,'emergency');
+        },
+      ),
+    );
+  }
+}
+
 
 //App bar used in TeacherUi and ClinicUI
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {

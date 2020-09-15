@@ -14,7 +14,7 @@ class _TeacherUIState extends State<TeacherUI> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: HomeAppBar(),
-      floatingActionButton: ClinicAddButton(),
+      floatingActionButton: liveCases>4? EmergencyAddButton():ClinicAddButton(),
       body: Center(
         child: Column(
           children: <Widget>[
@@ -80,12 +80,30 @@ class _TeacherUIState extends State<TeacherUI> {
                     flex: 1,
                     child: SizedBox(),
                   ),
+
                 ],
               ),
             ),
             Expanded(
               flex: 4,
               child: SizedBox(),
+            ),
+            Expanded(
+              flex:4,
+              child: liveCases<=4?Container():Container(
+                padding: EdgeInsets.all(20.0),
+                child:Text(
+                  'The number of patients in the clinic has reached the limit.If the case is an emergency ,click on the Red icon below and a mail will be sent to the team concerned.',
+                  style: TextStyle(
+                    color:Colors.red,
+
+                  ),
+                ),
+                decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+        color: Colors.redAccent,
+                )
+              ) ,
             )
           ],
         ),
