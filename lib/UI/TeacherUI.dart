@@ -20,7 +20,7 @@ class _TeacherUIState extends State<TeacherUI> {
             backgroundColor: Colors.white,
             appBar: HomeAppBar(),
             floatingActionButton:
-                liveCases > 4 ? EmergencyAddButton() : ClinicAddButton(),
+                liveCases >= 4 ? EmergencyAddButton() : ClinicAddButton(),
             body: Center(
               child: Column(
                 children: <Widget>[
@@ -106,7 +106,7 @@ class EmergencyWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       flex: 2,
-      child: liveCases <= 4
+      child: liveCases < 4
           ? Container()
           : Row(
               children: <Widget>[
