@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
+//import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 
 //function for the clinic form
 clinicForm(context, String localTitle, String localDesc, Color localColor) {
   String studentName;
   String studentClass;
-  Email email;
+//  Email email;
   Alert(
       context: context,
       title: localTitle,
@@ -39,18 +41,17 @@ clinicForm(context, String localTitle, String localDesc, Color localColor) {
         DialogButton(
           color: localColor,
           onPressed: () async {
-
-            if(localTitle == 'Emergency - Form'){
-                 email = Email(
-                   body:'Sir/Madam,\nThis is to inform you that ${studentName} of class ${studentClass} is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYour sincerely,\nStudent Track\nNote:This message was computer generated, Do not reply to this email.',
-                   subject:'Emergency Case',
-                   recipients:['joelmathewcherian@gmail.com'],
-
-                 );
-
-                 await FlutterEmailSender.send(email);
-            }
-            else {
+            if (localTitle == 'Emergency - Form') {
+//                 email = Email(
+//                   body:'Sir/Madam,\nThis is to inform you that ${studentName} of class ${studentClass} is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYour sincerely,\nStudent Track\nNote:This message was computer generated, Do not reply to this email.',
+//                   subject:'Emergency Case',
+//                   recipients:['joelmathewcherian@gmail.com'],
+//
+//                 );
+//
+//                 await FlutterEmailSender.send(email);
+              sendMail().then((value) => Navigator.pop(context));
+            } else {
               DatabaseLive()
                   .addRecordToLive(studentName, studentClass)
                   .then((value) => Navigator.pop(context));
@@ -155,5 +156,29 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
     );
+  }
+}
+
+sendMail() async {
+  String username = 'studenttrack.ois@gmail.com';
+  String password = 'jaisonjoelsanath';
+
+  final smtpServer = gmail(username, password);
+
+  // Create our message.
+  final message = Message()
+    ..from = Address(username, 'Student Track')
+    ..recipients.add('jaisonmanu@gmail.com')
+    ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
+    ..text = 'This is the plain text.\nThis is line 2 of the text part.';
+
+  try {
+    final sendReport = await send(message, smtpServer);
+    print('Message sent: ' + sendReport.toString());
+  } on MailerException catch (e) {
+    print('Message not sent. \n: $e');
+    for (var p in e.problems) {
+      print('Problem: ${p.code}: ${p.msg}');
+    }
   }
 }
