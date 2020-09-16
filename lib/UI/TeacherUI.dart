@@ -117,8 +117,8 @@ class EmergencyWarning extends StatelessWidget {
                 Expanded(
                   flex: 8,
                   child: Container(
-                    padding: EdgeInsets.only(top: 15.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'CLINIC LIMIT REACHED',
