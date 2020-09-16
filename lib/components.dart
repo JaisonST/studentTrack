@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
@@ -7,6 +8,7 @@ import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 clinicForm(context, String localTitle, String localDesc, Color localColor) {
   String studentName;
   String studentClass;
+  Email email;
   Alert(
       context: context,
       title: localTitle,
@@ -36,10 +38,23 @@ clinicForm(context, String localTitle, String localDesc, Color localColor) {
       buttons: [
         DialogButton(
           color: localColor,
-          onPressed: () {
-            DatabaseLive()
-                .addRecordToLive(studentName, studentClass)
-                .then((value) => Navigator.pop(context));
+          onPressed: () async {
+
+            if(localTitle == 'Emergency - Form'){
+                 email = Email(
+                   body:'Sir/Madam,\nThis is to inform you that ${studentName} of class ${studentClass} is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYour sincerely,\nStudent Track\nNote:This message was computer generated, Do not reply to this email.',
+                   subject:'Emergency Case',
+                   recipients:['joelmathewcherian@gmail.com'],
+
+                 );
+
+                 await FlutterEmailSender.send(email);
+            }
+            else {
+              DatabaseLive()
+                  .addRecordToLive(studentName, studentClass)
+                  .then((value) => Navigator.pop(context));
+            }
           },
           child: Text(
             "SUBMIT",
