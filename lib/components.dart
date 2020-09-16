@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
@@ -10,7 +9,7 @@ import 'package:mailer/smtp_server.dart';
 clinicForm(context, String localTitle, String localDesc, Color localColor) {
   String studentName;
   String studentClass;
-//  Email email;
+
   Alert(
       context: context,
       title: localTitle,
@@ -46,14 +45,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor) {
               String subject = 'Emergency Case';
               String body =
                   'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
-//                 email = Email(
-//                   body:'Sir/Madam,\nThis is to inform you that ${studentName} of class ${studentClass} is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYour sincerely,\nStudent Track\nNote:This message was computer generated, Do not reply to this email.',
-//                   subject:,
-//                   recipients:['joelmathewcherian@gmail.com'],
-//
-//                 );
-//
-//                 await FlutterEmailSender.send(email);
+
               sendMail(email: email, subject: subject, body: body)
                   .then((value) => Navigator.pop(context));
             } else {
