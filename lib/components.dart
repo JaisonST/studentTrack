@@ -42,15 +42,20 @@ clinicForm(context, String localTitle, String localDesc, Color localColor) {
           color: localColor,
           onPressed: () async {
             if (localTitle == 'Emergency - Form') {
+              String email = 'jaisonmanu@gmail.com';
+              String subject = 'Emergency Case';
+              String body =
+                  'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
 //                 email = Email(
 //                   body:'Sir/Madam,\nThis is to inform you that ${studentName} of class ${studentClass} is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYour sincerely,\nStudent Track\nNote:This message was computer generated, Do not reply to this email.',
-//                   subject:'Emergency Case',
+//                   subject:,
 //                   recipients:['joelmathewcherian@gmail.com'],
 //
 //                 );
 //
 //                 await FlutterEmailSender.send(email);
-              sendMail().then((value) => Navigator.pop(context));
+              sendMail(email: email, subject: subject, body: body)
+                  .then((value) => Navigator.pop(context));
             } else {
               DatabaseLive()
                   .addRecordToLive(studentName, studentClass)
@@ -159,7 +164,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-sendMail() async {
+sendMail({@required String email, String subject, String body}) async {
   String username = 'studenttrack.ois@gmail.com';
   String password = 'jaisonjoelsanath';
 
@@ -168,9 +173,9 @@ sendMail() async {
   // Create our message.
   final message = Message()
     ..from = Address(username, 'Student Track')
-    ..recipients.add('jaisonmanu@gmail.com')
-    ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
-    ..text = 'This is the plain text.\nThis is line 2 of the text part.';
+    ..recipients.add(email)
+    ..subject = subject
+    ..text = body;
 
   try {
     final sendReport = await send(message, smtpServer);
