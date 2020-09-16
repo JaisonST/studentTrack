@@ -4,12 +4,13 @@ import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 
 //function for the clinic form
-clinicForm(context) {
+clinicForm(context, String localTitle, String localDesc, Color localColor) {
   String studentName;
   String studentClass;
   Alert(
       context: context,
-      title: "Clinic Form",
+      title: localTitle,
+      desc: localDesc,
       content: Column(
         children: <Widget>[
           TextField(
@@ -34,7 +35,7 @@ clinicForm(context) {
       ),
       buttons: [
         DialogButton(
-          color: Color(0xff4DD172),
+          color: localColor,
           onPressed: () {
             DatabaseLive()
                 .addRecordToLive(studentName, studentClass)
@@ -62,7 +63,29 @@ class ClinicAddButton extends StatelessWidget {
         ),
         backgroundColor: Color(0xff4DD172),
         onPressed: () {
-          clinicForm(context);
+          clinicForm(context, 'Clinic Form', 'Please Fill in Details',
+              Color(0xff4DD172));
+        },
+      ),
+    );
+  }
+}
+
+class EmergencyAddButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 70.0,
+      width: 70.0,
+      child: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          size: 40.0,
+        ),
+        backgroundColor: Colors.red,
+        onPressed: () {
+          clinicForm(context, 'Emergency - Form',
+              'Alert will be sent to MSO team', Colors.red);
         },
       ),
     );
