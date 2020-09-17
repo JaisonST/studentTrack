@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/AuthenticationSystem/Auth.dart';
+import 'package:studenttrack/DatabaseServices/Database.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 
 //function for the clinic form
 clinicForm(context, String localTitle, String localDesc, Color localColor) {
   String studentName;
   String studentClass;
+
   Alert(
       context: context,
       title: localTitle,
@@ -36,10 +40,20 @@ clinicForm(context, String localTitle, String localDesc, Color localColor) {
       buttons: [
         DialogButton(
           color: localColor,
-          onPressed: () {
-            DatabaseLive()
-                .addRecordToLive(studentName, studentClass)
-                .then((value) => Navigator.pop(context));
+          onPressed: () async {
+            if (localTitle == 'Emergency - Form') {
+              String email = 'joelmathewcherian@gmail.com';
+              String subject = 'Emergency Case';
+              String body =
+                  'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
+
+              sendMail(email: email, subject: subject, body: body)
+                  .then((value) => Navigator.pop(context));
+            } else {
+              DatabaseLive()
+                  .addRecordToLive(studentName, studentClass)
+                  .then((value) => Navigator.pop(context));
+            }
           },
           child: Text(
             "SUBMIT",
@@ -140,5 +154,31 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
     );
+  }
+}
+
+sendMail({@required String email, String subject, String body}) async {
+  String username = 'studenttrack.ois@gmail.com';
+  String password = '';
+
+  password = await DatabaseServices(uid:'Admin').returnPass();
+
+  final smtpServer = gmail(username, password);
+
+  // Create our message.
+  final message = Message()
+    ..from = Address(username, 'Student Track')
+    ..recipients.add(email)
+    ..subject = subject
+    ..text = body;
+
+  try {
+    final sendReport = await send(message, smtpServer);
+    print('Message sent: ' + sendReport.toString());
+  } on MailerException catch (e) {
+    print('Message not sent. \n: $e');
+    for (var p in e.problems) {
+      print('Problem: ${p.code}: ${p.msg}');
+    }
   }
 }
