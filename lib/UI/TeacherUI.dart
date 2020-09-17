@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:studenttrack/components.dart';
+import 'package:studenttrack/Screens/Loading.dart';
 
 class TeacherUI extends StatefulWidget {
   @override
@@ -15,6 +16,9 @@ class _TeacherUIState extends State<TeacherUI> {
     return StreamBuilder(
         stream: FirebaseFirestore.instance.collection('Live').snapshots(),
         builder: (context, snapshot) {
+          if(snapshot.data == null){
+            return Loading();
+          }
           liveCases = snapshot.data.documents.length;
           return Scaffold(
             backgroundColor: Colors.white,
