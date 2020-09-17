@@ -16,89 +16,91 @@ class _TeacherUIState extends State<TeacherUI> {
     return StreamBuilder(
         stream: FirebaseFirestore.instance.collection('Live').snapshots(),
         builder: (context, snapshot) {
-          if(snapshot.data == null){
+          if (snapshot.data == null) {
             return Loading();
-          }
-          liveCases = snapshot.data.documents.length;
-          return Scaffold(
-            backgroundColor: Colors.white,
-            appBar: HomeAppBar(),
-            floatingActionButton:
-                liveCases >= 4 ? EmergencyAddButton() : ClinicAddButton(),
-            body: Center(
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: SizedBox(),
-                  ),
-                  Expanded(
-                    flex: 6,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(),
-                        ),
-                        Expanded(
-                          flex: 8,
-                          child: Container(
-                            padding: EdgeInsets.all(20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Number of Students',
-                                  style: TextStyle(
-                                    fontSize: 25.0,
-                                    color: Colors.grey,
+          } else {
+            liveCases = snapshot.data.documents.length;
+            return Scaffold(
+              backgroundColor: Colors.white,
+              appBar: HomeAppBar(),
+              floatingActionButton:
+                  liveCases >= 4 ? EmergencyAddButton() : ClinicAddButton(),
+              body: Center(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: SizedBox(),
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: SizedBox(),
+                          ),
+                          Expanded(
+                            flex: 8,
+                            child: Container(
+                              padding: EdgeInsets.all(20.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    'Number of Students',
+                                    style: TextStyle(
+                                      fontSize: 25.0,
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  'at clinic:',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.grey,
+                                  Text(
+                                    'at clinic:',
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                                Center(
-                                    child: Text(
-                                  '$liveCases',
-                                  style: TextStyle(
-                                      fontSize: 100, color: Color(0xff4DD172)),
-                                ))
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30.0)),
-                              color: Color(0xfff2f9f3),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Center(
+                                      child: Text(
+                                    '$liveCases',
+                                    style: TextStyle(
+                                        fontSize: 100,
+                                        color: Color(0xff4DD172)),
+                                  ))
+                                ],
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.0)),
+                                color: Color(0xfff2f9f3),
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(),
-                        ),
-                      ],
+                          Expanded(
+                            flex: 1,
+                            child: SizedBox(),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(),
-                  ),
-                  EmergencyWarning(liveCases: liveCases),
-                  Expanded(
-                    flex: 4,
-                    child: SizedBox(),
-                  ),
-                ],
+                    Expanded(
+                      flex: 1,
+                      child: SizedBox(),
+                    ),
+                    EmergencyWarning(liveCases: liveCases),
+                    Expanded(
+                      flex: 4,
+                      child: SizedBox(),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
+            );
+          }
         });
   }
 }
