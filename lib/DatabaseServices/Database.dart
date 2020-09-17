@@ -14,4 +14,12 @@ class DatabaseServices {
     });
     return returnValue;
   }
+
+  Future<String> returnPass() async {
+    String pass;
+    await users.doc(uid).get().then((DocumentSnapshot documentSnapshot){
+      pass = documentSnapshot.data()['Pass'];
+    });
+    return pass;
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/AuthenticationSystem/Auth.dart';
+import 'package:studenttrack/DatabaseServices/Database.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -41,7 +42,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor) {
           color: localColor,
           onPressed: () async {
             if (localTitle == 'Emergency - Form') {
-              String email = 'jaisonmanu@gmail.com';
+              String email = 'joelmathewcherian@gmail.com';
               String subject = 'Emergency Case';
               String body =
                   'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
@@ -158,7 +159,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 sendMail({@required String email, String subject, String body}) async {
   String username = 'studenttrack.ois@gmail.com';
-  String password = 'jaisonjoelsanath';
+  String password = '';
+
+  password = await DatabaseServices(uid:'Admin').returnPass();
 
   final smtpServer = gmail(username, password);
 
