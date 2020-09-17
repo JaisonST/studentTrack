@@ -47,12 +47,11 @@ clinicForm(context, String localTitle, String localDesc, Color localColor) {
               String body =
                   'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
 
-              sendMail(email: email, subject: subject, body: body)
-                  .then((value) => Navigator.pop(context));
+              Navigator.pop((context));
+              sendMail(email: email, subject: subject, body: body);
             } else {
-              DatabaseLive()
-                  .addRecordToLive(studentName, studentClass)
-                  .then((value) => Navigator.pop(context));
+              Navigator.pop((context));
+              DatabaseLive().addRecordToLive(studentName, studentClass);
             }
           },
           child: Text(
@@ -161,7 +160,7 @@ sendMail({@required String email, String subject, String body}) async {
   String username = 'studenttrack.ois@gmail.com';
   String password = '';
 
-  password = await DatabaseServices(uid:'Admin').returnPass();
+  password = await DatabaseServices(uid: 'Admin').returnPass();
 
   final smtpServer = gmail(username, password);
 
