@@ -50,9 +50,8 @@ clinicForm(context, String localTitle, String localDesc, Color localColor) {
               sendMail(email: email, subject: subject, body: body)
                   .then((value) => Navigator.pop(context));
             } else {
-              DatabaseLive()
-                  .addRecordToLive(studentName, studentClass)
-                  .then((value) => Navigator.pop(context));
+              Navigator.pop((context));
+              DatabaseLive().addRecordToLive(studentName, studentClass);
             }
           },
           child: Text(
@@ -161,7 +160,7 @@ sendMail({@required String email, String subject, String body}) async {
   String username = 'studenttrack.ois@gmail.com';
   String password = '';
 
-  password = await DatabaseServices(uid:'Admin').returnPass();
+  password = await DatabaseServices(uid: 'Admin').returnPass();
 
   final smtpServer = gmail(username, password);
 
