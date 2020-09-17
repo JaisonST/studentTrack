@@ -25,7 +25,10 @@ class _LogInState extends State<LogIn> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               titleSpacing: 0.0,
-              leading: Icon(Icons.arrow_back),
+              leading: FlatButton(
+                child: Icon(Icons.arrow_back),
+                onPressed: () => Navigator.pop(context),
+              ),
               iconTheme: IconThemeData(
                   color: Color(0xff696969), size: 30.0 //change your color here
                   ),
