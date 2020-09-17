@@ -24,20 +24,27 @@ class _LogInState extends State<LogIn> {
         : Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
-              title: Row(children: <Widget>[
-                Text('Student',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                      color: Color(0xff4dd172),
-                    )),
-                Text('Track',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                      color: Color(0xff696969),
-                    ))
-              ]),
+              titleSpacing: 0.0,
+              leading: Icon(Icons.arrow_back),
+              iconTheme: IconThemeData(
+                  color: Color(0xff696969), size: 30.0 //change your color here
+                  ),
+              title: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text('Student',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30.0,
+                          color: Color(0xff4dd172),
+                        )),
+                    Text('Track',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30.0,
+                          color: Color(0xff696969),
+                        ))
+                  ]),
             ),
             body: Padding(
               padding: const EdgeInsets.fromLTRB(40.0, 50.0, 30.0, 0.0),
