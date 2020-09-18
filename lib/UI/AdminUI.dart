@@ -72,11 +72,10 @@ class _AdminUIState extends State<AdminUI> {
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 20.0),
                                     ),
-                                    color: Color(0xff4DD172),
+                                    color: Colors.red,
                                     onPressed: () async {
                                       await DatabaseLive()
-                                          .moveRecordFromLiveToHistory(
-                                              student.id)
+                                          .deleteRecord(student.id)
                                           .then((value) =>
                                               Navigator.pop(context));
                                     },
