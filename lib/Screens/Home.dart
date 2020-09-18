@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studenttrack/Screens/Loading.dart';
+import 'package:studenttrack/UI/AdminUI.dart';
 import 'package:studenttrack/UI/TeacherUI.dart';
 import 'package:studenttrack/DatabaseServices/Database.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -33,8 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
       return Loading();
     } else if (isClinic == "Clinic") {
       return ClinicUI();
-    } else {
+    } else if (isClinic == "Teacher") {
       return TeacherUI();
+    } else {
+      return AdminUI();
     }
   }
 }
