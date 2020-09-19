@@ -27,7 +27,8 @@ dependencies:
   rflutter_alert: ^1.0.8
   time: ^1.3.0
   mailer: ^3.2.1
-
+  path_provider: ^1.6.16
+  csv: ^4.0.3
 
 dev_dependencies:
   flutter_test:
