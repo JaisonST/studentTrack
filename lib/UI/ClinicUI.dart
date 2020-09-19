@@ -84,11 +84,10 @@ class _ClinicUIState extends State<ClinicUI> {
                                       ),
                                       color: Color(0xff4DD172),
                                       onPressed: () async {
+                                        Navigator.pop(context);
                                         await DatabaseLive()
                                             .moveRecordFromLiveToHistory(
-                                                student.id)
-                                            .then((value) =>
-                                                Navigator.pop(context));
+                                                student.id);
                                       },
                                     )
                                   ],
