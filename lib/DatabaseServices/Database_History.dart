@@ -10,8 +10,8 @@ class DatabaseHistory{
     rows.add([
       'Name',
       'Class',
-      'Time of Entry'
-          'Time of Exit'
+      'Time of Entry',
+      'Time of Exit'
     ]);
 
     var cloud = FirebaseFirestore.instance.collection('History');
@@ -36,8 +36,3 @@ class DatabaseHistory{
   }
 }
 
-// await live.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
-// name = documentSnapshot.data()['Name'];
-// grade = documentSnapshot.data()['Class'];
-// t = documentSnapshot.data()['EntryTime'];
-// });
