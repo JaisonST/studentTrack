@@ -116,8 +116,11 @@ class _AdminUIState extends State<AdminUI> {
                   Expanded(
                       flex: 1,
                       child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.pinkAccent,
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        ),
                         margin: EdgeInsets.all(15),
-                        color: Colors.pinkAccent,
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
