@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/DatabaseServices/Database.dart';
+import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -49,6 +50,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor) {
 
               Navigator.pop((context));
               sendMail(email: email, subject: subject, body: body);
+              DatabaseEmergency().addRecordToEmergency(studentName, studentClass);
             } else {
               Navigator.pop((context));
               DatabaseLive().addRecordToLive(studentName, studentClass);
