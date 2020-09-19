@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:studenttrack/components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:studenttrack/DatabaseServices/Database_Live.dart';
+import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 
 class AdminUI extends StatefulWidget {
@@ -16,7 +16,7 @@ class _AdminUIState extends State<AdminUI> {
     return Scaffold(
       appBar: HomeAppBar(),
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('Live').snapshots(),
+          stream: FirebaseFirestore.instance.collection('Emergency').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               return Loading();
@@ -80,7 +80,7 @@ class _AdminUIState extends State<AdminUI> {
                                           ),
                                           color: Colors.red,
                                           onPressed: () async {
-                                            await DatabaseLive()
+                                            await DatabaseEmergency()
                                                 .deleteRecord(student.id)
                                                 .then((value) =>
                                                     Navigator.pop(context));
