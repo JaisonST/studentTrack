@@ -44,7 +44,7 @@ class DatabaseHistory{
     String body = 'Dear Sir/Madam,\n Attached below is the record of patient history.\n\nStudent Track Team';
 
 
-    sendMail(email, subject, body,attach);
+
 
 
 

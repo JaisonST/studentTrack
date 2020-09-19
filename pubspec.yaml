@@ -29,7 +29,7 @@ dependencies:
   mailer: ^3.2.1
   path_provider: ^1.6.16
   csv: ^4.0.3
-
+  permission_handler: ^5.0.1+1
 dev_dependencies:
   flutter_test:
     sdk: flutter
