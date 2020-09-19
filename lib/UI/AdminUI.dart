@@ -16,7 +16,8 @@ class _AdminUIState extends State<AdminUI> {
     return Scaffold(
       appBar: HomeAppBar(),
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('Emergency').snapshots(),
+          stream:
+              FirebaseFirestore.instance.collection('Emergency').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               return Loading();
@@ -25,84 +26,92 @@ class _AdminUIState extends State<AdminUI> {
                 children: <Widget>[
                   Expanded(
                     flex: 5,
-                    child: ListView.builder(
-                        itemCount: snapshot.data.documents.length,
-                        itemBuilder: (context, index) {
-                          DocumentSnapshot student =
-                              snapshot.data.documents[index];
-
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xfff2f9f3),
-                              border: Border(
-                                top: BorderSide(
-                                  width: 2.0,
-                                  color: Color(0xff4DD172),
-                                ),
-                              ),
+                    child: snapshot.data.documents.length == 0
+                        ? Center(
+                            child: Text(
+                              'There are no Cases right now',
+                              style: TextStyle(fontSize: 20.0),
                             ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 20.0),
-                            margin: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 10, top: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          )
+                        : ListView.builder(
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (context, index) {
+                              DocumentSnapshot student =
+                                  snapshot.data.documents[index];
+
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: Color(0xfff2f9f3),
+                                  border: Border(
+                                    top: BorderSide(
+                                      width: 2.0,
+                                      color: Color(0xff4DD172),
+                                    ),
+                                  ),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10.0, vertical: 20.0),
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 10, top: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    Text(
-                                      '${student.data()["Name"]}',
-                                      style: TextStyle(
-                                          fontSize: 20.0,
-                                          color: Color(0xff4DD172),
-                                          fontWeight: FontWeight.bold),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          '${student.data()["Name"]}',
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Color(0xff4DD172),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          '${student.data()["Class"]}',
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      '${student.data()["Class"]}',
-                                    ),
+                                    RawMaterialButton(
+                                      onPressed: () {
+                                        Alert(
+                                          context: context,
+                                          title: "Confirmation",
+                                          desc:
+                                              "Do you want to Delete ${student.data()["Name"]}'s record",
+                                          buttons: [
+                                            DialogButton(
+                                              child: Text(
+                                                'DELETE',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20.0),
+                                              ),
+                                              color: Colors.red,
+                                              onPressed: () async {
+                                                Navigator.pop(context);
+                                                await DatabaseEmergency()
+                                                    .deleteRecord(student.id);
+                                              },
+                                            )
+                                          ],
+                                        ).show();
+                                      },
+                                      elevation: 1,
+                                      fillColor: Colors.white,
+                                      child: Icon(
+                                        Icons.delete_forever,
+                                        size: 35.0,
+                                        color: Colors.red,
+                                      ),
+                                      padding: EdgeInsets.all(15.0),
+                                      shape: CircleBorder(),
+                                    )
                                   ],
                                 ),
-                                RawMaterialButton(
-                                  onPressed: () {
-                                    Alert(
-                                      context: context,
-                                      title: "Confirmation",
-                                      desc:
-                                          "Do you want to Delete ${student.data()["Name"]}'s record",
-                                      buttons: [
-                                        DialogButton(
-                                          child: Text(
-                                            'DELETE',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20.0),
-                                          ),
-                                          color: Colors.red,
-                                          onPressed: () async {
-                                            await DatabaseEmergency()
-                                                .deleteRecord(student.id)
-                                                .then((value) =>
-                                                    Navigator.pop(context));
-                                          },
-                                        )
-                                      ],
-                                    ).show();
-                                  },
-                                  elevation: 1,
-                                  fillColor: Colors.white,
-                                  child: Icon(
-                                    Icons.delete_forever,
-                                    size: 35.0,
-                                    color: Colors.red,
-                                  ),
-                                  padding: EdgeInsets.all(15.0),
-                                  shape: CircleBorder(),
-                                )
-                              ],
-                            ),
-                          );
-                        }),
+                              );
+                            }),
                   ),
                   Expanded(
                       flex: 1,
