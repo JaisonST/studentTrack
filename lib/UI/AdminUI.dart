@@ -137,15 +137,10 @@ class _AdminUIState extends State<AdminUI> {
                               FlatButton(
                                 child: Text('Print'),
                                 onPressed: () async {
-                                  print('HI');
-                                  Permission permission = Permission.storage;
-                                  final status = await permission.request();
-                                  if(status == PermissionStatus.granted){
-                                    DatabaseHistory().getCSV();
-                                  }
-                                  else{
-                                    print("No Permissions");
-                                  }
+                                  final PermissionHandler _permissionHandler = PermissionHandler();
+                                  var result = await _permissionHandler.requestPermissions([PermissionGroup.storage]);
+
+                                  DatabaseHistory().getCSV();
                                 },
                                 color: Colors.white,
                               ),
