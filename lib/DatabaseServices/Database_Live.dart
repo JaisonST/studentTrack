@@ -8,18 +8,18 @@ class DatabaseLive {
 
   Future addRecordToLive(String name, String grade) {
     return live
-        .add({'Name': name, 'Class': grade, 'EntryTime': DateTime.now()})
+        .add({'Name': name, 'Class': grade, 'EntryTime': DateTime.now().toString()})
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
 
-  Future addRecordToHistory(String name, String grade, Timestamp t) {
+  Future addRecordToHistory(String name, String grade, String t) {
     return history
         .add({
           'Name': name,
           'Class': grade,
           'EntryTime': t,
-          'ExitTime': DateTime.now()
+          'ExitTime': DateTime.now().toString()
         })
         .then((value) => print('User moved to history'))
         .catchError((error) => print('Failed to move user:$error'));
@@ -28,7 +28,7 @@ class DatabaseLive {
   Future moveRecordFromLiveToHistory(String uid) async {
     String name;
     String grade;
-    Timestamp t;
+    String t;
     await live.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
       name = documentSnapshot.data()['Name'];
       grade = documentSnapshot.data()['Class'];

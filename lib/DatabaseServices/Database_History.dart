@@ -2,14 +2,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
 import 'package:mailer/mailer.dart';
-import 'package:studenttrack/FileSystem.dart';
 import 'dart:io';
 import 'package:studenttrack/components.dart';
+import 'package:path_provider/path_provider.dart';
+
+
 class DatabaseHistory{
 
   void getCSV() async {
 
-    FileSystem f;
+    final directory = (await getExternalStorageDirectory()).path;
+    print(directory);
+    File f =  File(directory + '/Records.csv');
 
     List<List<dynamic>> rows = List<List<dynamic>>();
     rows.add([
@@ -29,15 +33,20 @@ class DatabaseHistory{
         row.clear();
         row.add(doc.data()['Name']);
         row.add(doc.data()['Class']);
-        row.add(doc.data()['TimeOfEntry']);
-        row.add(doc.data()['TimeOfExit']);
+        row.add(doc.data()['EntryTime']);
+        row.add(doc.data()['ExitTime']);
+        rows.add(row);
       });
-      rows.add(row);
+
     });
+
+
 
     String csv = ListToCsvConverter().convert(rows);
 
-     f.writeFile(csv);
+    print(csv);
+
+     f.writeAsString(csv);
 
     String email = 'joelmathewcherian@gmail.com';
     String subject = 'Records of Patient History';
