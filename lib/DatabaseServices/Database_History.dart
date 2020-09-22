@@ -51,7 +51,11 @@ class DatabaseHistory{
     String subject = 'Records of Patient History';
     String body = 'Dear Sir/Madam,\n Attached below is the record of patient history.\n\nStudent Track Team';
 
+    FileAttachment att = FileAttachment(f);
+    List<Attachment> att_list = List<Attachment>();
+    att_list.add(att);
 
+   await sendMail(email: email,subject: subject,body: body,attach: att_list);
 
 
 
