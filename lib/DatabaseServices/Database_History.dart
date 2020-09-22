@@ -12,7 +12,6 @@ class DatabaseHistory{
   void getCSV() async {
 
     final directory = (await getExternalStorageDirectory()).path;
-    print(directory);
     File f =  File(directory + '/Records.csv');
 
     List<List<dynamic>> rows = List<List<dynamic>>();
@@ -44,7 +43,7 @@ class DatabaseHistory{
 
     String csv = ListToCsvConverter().convert(rows);
 
-    print(csv);
+
 
      f.writeAsString(csv);
 
