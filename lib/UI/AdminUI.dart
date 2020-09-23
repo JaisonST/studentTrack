@@ -13,6 +13,64 @@ class AdminUI extends StatefulWidget {
 }
 
 class _AdminUIState extends State<AdminUI> {
+  /////////////////////////////////////////////////////////////////////////
+  // this segment of code pulls up the alert
+  recordDateForm(context, DateTime setDate) {
+    Alert(
+        context: context,
+        title: 'Print Record',
+        desc: 'Choose date of oldest Record',
+        content: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 10.0,
+            ),
+            Row(children: <Widget>[
+              Expanded(
+                  flex: 3,
+                  child: PickerFormat(
+                    localText:
+                        '${setDate.day}-${setDate.month}-${setDate.year}',
+                    pickerFunction: () => selectedDate(context, setDate),
+                  )),
+            ]),
+          ],
+        ),
+        buttons: [
+          DialogButton(
+            color: Colors.pinkAccent,
+            onPressed: () async {
+              Navigator.pop((context));
+              await DatabaseHistory().getCSV();
+            },
+            child: Text(
+              "SUBMIT",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ]).show();
+  }
+
+  Future<Null> selectedDate(BuildContext context, DateTime setDate) async {
+    await showDatePicker(
+            context: context,
+            initialDate: setDate,
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2022))
+        .then((picked) {
+      if (picked != null && picked != setDate) {
+        setState(() {
+          setDate = picked;
+          Navigator.pop(context);
+          recordDateForm(context, setDate);
+        });
+      }
+    });
+  }
+
+  // alert
+  ///////////////////////////////////////////////////////////////////////////
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,10 +196,11 @@ class _AdminUIState extends State<AdminUI> {
                                 child: Text('Print'),
                                 onPressed: () async {
                                   if (await Permission.storage.isGranted) {
-                                    recordDateForm(context);
+                                    recordDateForm(context, DateTime.now());
                                   } else {
                                     await Permission.storage.request().then(
-                                        (value) => recordDateForm(context));
+                                        (value) => recordDateForm(
+                                            context, DateTime.now()));
                                   }
                                 },
                                 color: Colors.white,
@@ -155,6 +214,27 @@ class _AdminUIState extends State<AdminUI> {
               );
             }
           }),
+    );
+  }
+}
+
+class PickerFormat extends StatelessWidget {
+  PickerFormat({@required this.localText, this.pickerFunction});
+
+  final Function pickerFunction;
+  final String localText;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: pickerFunction,
+      child: Text(
+        localText,
+        style: TextStyle(color: Colors.white),
+      ),
+      fillColor: Colors.pinkAccent,
+      constraints: BoxConstraints(minHeight: 50.0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
     );
   }
 }

@@ -56,37 +56,3 @@ uploadFile(File record) async {
 openUrl(String url) {
   launch(url);
 }
-
-recordDateForm(context) {
-  String date;
-  Alert(
-      context: context,
-      title: 'Print Record',
-      desc: 'Enter date of oldest Record',
-      content: Column(
-        children: <Widget>[
-          TextField(
-            onChanged: (value) {
-              date = value;
-            },
-            decoration: InputDecoration(
-              icon: Icon(Icons.calendar_today),
-              labelText: 'Date',
-            ),
-          ),
-        ],
-      ),
-      buttons: [
-        DialogButton(
-          color: Colors.pinkAccent,
-          onPressed: () async {
-            Navigator.pop((context));
-            await DatabaseHistory().getCSV();
-          },
-          child: Text(
-            "SUBMIT",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        )
-      ]).show();
-}
