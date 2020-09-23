@@ -6,6 +6,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:io';
 
 class AdminUI extends StatefulWidget {
   @override
@@ -137,14 +138,15 @@ class _AdminUIState extends State<AdminUI> {
                               FlatButton(
                                 child: Text('Print'),
                                 onPressed: () async {
-
-                                  if(await Permission.storage.isGranted){
+                                if(Platform.isAndroid) {
+                                  if (await Permission.storage.isGranted) {
                                     print('GRANTED');
                                     DatabaseHistory().getCSV();
                                   }
-                                  else{
+                                  else {
                                     await Permission.storage.request();
                                   }
+                                }
 
                                   DatabaseHistory().getCSV();
                                 },

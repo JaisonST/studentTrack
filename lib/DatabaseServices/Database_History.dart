@@ -9,10 +9,16 @@ import 'package:path_provider/path_provider.dart';
 
 class DatabaseHistory{
 
+  File f;
   void getCSV() async {
+    if(Platform.isAndroid) {
+       final directory = (await getExternalStorageDirectory()).path;
+        f =  File(directory + '/Records.csv');
+    }
 
-    final directory = (await getExternalStorageDirectory()).path;
-    File f =  File(directory + '/Records.csv');
+
+
+
 
     List<List<dynamic>> rows = List<List<dynamic>>();
     rows.add([
@@ -47,15 +53,15 @@ class DatabaseHistory{
 
      f.writeAsString(csv);
 
-    String email = 'joelmathewcherian@gmail.com';
-    String subject = 'Records of Patient History';
-    String body = 'Dear Sir/Madam,\n Attached below is the record of patient history.\n\nStudent Track Team';
-
-    FileAttachment att = FileAttachment(f);
-    List<Attachment> att_list = List<Attachment>();
-    att_list.add(att);
-
-   await sendMail(email: email,subject: subject,body: body,attach: att_list);
+   //  String email = 'joelmathewcherian@gmail.com';
+   //  String subject = 'Records of Patient History';
+   //  String body = 'Dear Sir/Madam,\n Attached below is the record of patient history.\n\nStudent Track Team';
+   //
+   //  FileAttachment att = FileAttachment(f);
+   //  List<Attachment> att_list = List<Attachment>();
+   //  att_list.add(att);
+   //
+   // await sendMail(email: email,subject: subject,body: body,attach: att_list);
 
 
 
