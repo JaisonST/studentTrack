@@ -49,8 +49,10 @@ clinicForm(context, String localTitle, String localDesc, Color localColor) {
                   'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
 
               Navigator.pop((context));
-              sendMail(email: email, subject: subject, body: body,attach: null);
-              DatabaseEmergency().addRecordToEmergency(studentName, studentClass);
+              sendMail(
+                  email: email, subject: subject, body: body, attach: null);
+              DatabaseEmergency()
+                  .addRecordToEmergency(studentName, studentClass);
             } else {
               Navigator.pop((context));
               DatabaseLive().addRecordToLive(studentName, studentClass);
@@ -158,7 +160,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-sendMail({@required String email, String subject, String body,List<Attachment> attach}) async {
+sendMail(
+    {@required String email,
+    String subject,
+    String body,
+    List<Attachment> attach}) async {
   String username = 'studenttrack.ois@gmail.com';
   String password = '';
 
@@ -172,7 +178,7 @@ sendMail({@required String email, String subject, String body,List<Attachment> a
     ..recipients.add(email)
     ..subject = subject
     ..text = body
-  ..attachments = attach;
+    ..attachments = attach;
 
   try {
     final sendReport = await send(message, smtpServer);
@@ -182,5 +188,27 @@ sendMail({@required String email, String subject, String body,List<Attachment> a
     for (var p in e.problems) {
       print('Problem: ${p.code}: ${p.msg}');
     }
+  }
+}
+
+//Date pciker Format
+class PickerFormat extends StatelessWidget {
+  PickerFormat({@required this.localText, this.pickerFunction});
+
+  final Function pickerFunction;
+  final String localText;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: pickerFunction,
+      child: Text(
+        localText,
+        style: TextStyle(color: Colors.white),
+      ),
+      fillColor: Colors.pinkAccent,
+      constraints: BoxConstraints(minHeight: 50.0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+    );
   }
 }

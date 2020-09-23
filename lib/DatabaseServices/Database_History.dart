@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:studenttrack/components.dart';
 
 class DatabaseHistory {
   File f;
@@ -56,3 +57,58 @@ uploadFile(File record) async {
 openUrl(String url) {
   launch(url);
 }
+
+/////////////////////////////////////////////////////////////////////////
+// this segment of code pulls up the alert
+recordDateForm(context, DateTime setDate) {
+  Alert(
+      context: context,
+      title: 'Print Record',
+      desc: 'Choose date of oldest Record',
+      content: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 10.0,
+          ),
+          Row(children: <Widget>[
+            Expanded(
+                flex: 3,
+                child: PickerFormat(
+                  localText: '${setDate.day}-${setDate.month}-${setDate.year}',
+                  pickerFunction: () => selectedDate(context, setDate),
+                )),
+          ]),
+        ],
+      ),
+      buttons: [
+        DialogButton(
+          color: Colors.pinkAccent,
+          onPressed: () async {
+            Navigator.pop((context));
+            await DatabaseHistory().getCSV();
+          },
+          child: Text(
+            "SUBMIT",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        )
+      ]).show();
+}
+
+Future<Null> selectedDate(BuildContext context, DateTime setDate) async {
+  await showDatePicker(
+          context: context,
+          initialDate: setDate,
+          firstDate: DateTime.now(),
+          lastDate: DateTime(2022))
+      .then((picked) {
+    if (picked != null && picked != setDate) {
+      setDate = picked;
+      Navigator.pop(context);
+      recordDateForm(context, setDate);
+    }
+  });
+}
+
+// alert
+///////////////////////////////////////////////////////////////////////////
