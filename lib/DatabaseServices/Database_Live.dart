@@ -13,6 +13,7 @@ class DatabaseLive {
         .catchError((error) => print("Failed to add user: $error"));
   }
 
+
   Future addRecordToHistory(String name, String grade, String t,Timestamp d) {
     return history
         .add({
@@ -39,6 +40,7 @@ class DatabaseLive {
     });
 
     addRecordToHistory(name, grade, t,d);
+
 
     return live
         .doc(uid)

@@ -49,6 +49,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor) {
                   'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
 
               Navigator.pop((context));
+
               sendMail(
                   email: email, subject: subject, body: body, attach: null);
               DatabaseEmergency()

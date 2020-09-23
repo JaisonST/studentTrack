@@ -136,6 +136,7 @@ class _AdminUIState extends State<AdminUI> {
                               ),
                               FlatButton(
                                 child: Text('Print'),
+
                                 onPressed: () async {
                                   if (await Permission.storage.isGranted) {
                                     recordDateForm(context, DateTime.now());
@@ -145,6 +146,7 @@ class _AdminUIState extends State<AdminUI> {
                                             context, DateTime.now()));
                                   }
                                 },
+
                                 color: Colors.white,
                               ),
                               SizedBox(
