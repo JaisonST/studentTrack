@@ -138,10 +138,10 @@ class _AdminUIState extends State<AdminUI> {
                                 child: Text('Print'),
                                 onPressed: () async {
                                   if (await Permission.storage.isGranted) {
-                                    DatabaseHistory().getCSV();
+                                    recordDateForm(context);
                                   } else {
                                     await Permission.storage.request().then(
-                                        (value) => DatabaseHistory().getCSV());
+                                        (value) => recordDateForm(context));
                                   }
                                 },
                                 color: Colors.white,

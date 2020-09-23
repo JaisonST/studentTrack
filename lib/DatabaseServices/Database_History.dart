@@ -4,11 +4,13 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:flutter/material.dart';
 
 class DatabaseHistory {
   File f;
   String directory;
-  void getCSV() async {
+  Future<void> getCSV() async {
     Platform.isIOS
         ? directory = (await getApplicationDocumentsDirectory()).path
         : directory = (await getExternalStorageDirectory()).path;
@@ -40,8 +42,9 @@ class DatabaseHistory {
 }
 
 uploadFile(File record) async {
-  StorageReference storageFirebase =
-      FirebaseStorage.instance.ref().child('History_xls/StudentTrackRecord.csv');
+  StorageReference storageFirebase = FirebaseStorage.instance
+      .ref()
+      .child('History_xls/StudentTrackRecord.csv');
   StorageUploadTask uploadTask = storageFirebase.putFile(record);
 
   String uploadedFileURL =
@@ -52,4 +55,38 @@ uploadFile(File record) async {
 
 openUrl(String url) {
   launch(url);
+}
+
+recordDateForm(context) {
+  String date;
+  Alert(
+      context: context,
+      title: 'Print Record',
+      desc: 'Enter date of oldest Record',
+      content: Column(
+        children: <Widget>[
+          TextField(
+            onChanged: (value) {
+              date = value;
+            },
+            decoration: InputDecoration(
+              icon: Icon(Icons.calendar_today),
+              labelText: 'Date',
+            ),
+          ),
+        ],
+      ),
+      buttons: [
+        DialogButton(
+          color: Colors.pinkAccent,
+          onPressed: () async {
+            Navigator.pop((context));
+            await DatabaseHistory().getCSV();
+          },
+          child: Text(
+            "SUBMIT",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        )
+      ]).show();
 }
