@@ -6,7 +6,6 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:io';
 
 class AdminUI extends StatefulWidget {
   @override
@@ -141,7 +140,8 @@ class _AdminUIState extends State<AdminUI> {
                                   if (await Permission.storage.isGranted) {
                                     DatabaseHistory().getCSV();
                                   } else {
-                                    await Permission.storage.request();
+                                    await Permission.storage.request().then(
+                                        (value) => DatabaseHistory().getCSV());
                                   }
                                 },
                                 color: Colors.white,
