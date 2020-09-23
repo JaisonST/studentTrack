@@ -12,8 +12,6 @@ class DatabaseHistory {
   File f;
   String directory;
   Future<void> getCSV({DateTime date}) async {
-
-
     Platform.isIOS
         ? directory = (await getApplicationDocumentsDirectory()).path
         : directory = (await getExternalStorageDirectory()).path;
@@ -21,23 +19,22 @@ class DatabaseHistory {
     print(directory);
 
     List<List<dynamic>> rows = List<List<dynamic>>();
-    rows.add(['Name', 'Class', 'Time of Entry', 'Time of Exit','Index']);
+    rows.add(['Name', 'Class', 'Time of Entry', 'Time of Exit', 'Index']);
 
     var cloud = FirebaseFirestore.instance.collection('History');
 
     await cloud.get().then((QuerySnapshot snapshot) {
       List<dynamic> row = List<dynamic>();
-      snapshot.docs.forEach((doc) async {
+      snapshot.docs.forEach((doc) {
         row = [];
-        Timestamp t =  await doc.data()['Index'];
-        DateTime d = t.toDate();
-        if(d.millisecondsSinceEpoch >= date.millisecondsSinceEpoch) {
-          print('came here');
+        Timestamp t = doc.data()['Index'];
+        DateTime recordDate = t.toDate();
+        if (!date.difference(recordDate).isNegative) {
           row.add(doc.data()['Name']);
           row.add(doc.data()['Class']);
           row.add(doc.data()['EntryTime']);
           row.add(doc.data()['ExitTime']);
-        //  row.add(d.millisecondsSinceEpoch);
+          row.add(doc.data()['Index'].millisecondsSinceEpoch);
           rows.add(row);
         }
       });
@@ -45,23 +42,26 @@ class DatabaseHistory {
 
     print(rows);
 
-    int i,j;
+    int i, j;
     List<dynamic> temp = [];
-    for(i = 1;i<rows.length;++i){
+    for (i = 1; i < rows.length; ++i) {
       j = i;
-      while(j>1 && rows[j-1][4]>rows[j][4]){
-            temp = rows[j];
-            rows[j] = rows[j-1];
-            rows[j-1] = temp;
+      while (j > 1 && rows[j - 1][4] > rows[j][4]) {
+        temp = rows[j];
+        rows[j] = rows[j - 1];
+        rows[j - 1] = temp;
       }
     }
 
+    for (i = 0; i < rows.length; ++i) {
+      rows[i].removeAt(4);
+    }
     print('SORTED = ');
     print(rows);
 
     String csv = ListToCsvConverter().convert(rows);
 
-   // f.writeAsString(csv).then((value) => uploadFile(f));
+    f.writeAsString(csv).then((value) => uploadFile(f));
   }
 }
 
