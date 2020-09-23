@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:studenttrack/DatabaseServices/Database_History.dart';
 import 'package:studenttrack/components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/Screens/Loading.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AdminUI extends StatefulWidget {
   @override
@@ -134,7 +136,17 @@ class _AdminUIState extends State<AdminUI> {
                               ),
                               FlatButton(
                                 child: Text('Print'),
-                                onPressed: () {},
+
+                                onPressed: () async {
+                                  if (await Permission.storage.isGranted) {
+                                    recordDateForm(context, DateTime.now());
+                                  } else {
+                                    await Permission.storage.request().then(
+                                        (value) => recordDateForm(
+                                            context, DateTime.now()));
+                                  }
+                                },
+
                                 color: Colors.white,
                               ),
                               SizedBox(

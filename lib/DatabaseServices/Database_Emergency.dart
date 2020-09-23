@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseEmergency {
+
+  String uid;
+
   final CollectionReference emergency =
   FirebaseFirestore.instance.collection('Emergency');
 
