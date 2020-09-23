@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
-import 'package:flutter/material.dart';
-import 'package:mailer/mailer.dart';
 import 'dart:io';
-import 'package:studenttrack/components.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DatabaseHistory {
   File f;
@@ -38,16 +36,6 @@ class DatabaseHistory {
     String csv = ListToCsvConverter().convert(rows);
 
     f.writeAsString(csv).then((value) => uploadFile(f));
-
-    //  String email = 'joelmathewcherian@gmail.com';
-    //  String subject = 'Records of Patient History';
-    //  String body = 'Dear Sir/Madam,\n Attached below is the record of patient history.\n\nStudent Track Team';
-    //
-    //  FileAttachment att = FileAttachment(f);
-    //  List<Attachment> att_list = List<Attachment>();
-    //  att_list.add(att);
-    //
-    // await sendMail(email: email,subject: subject,body: body,attach: att_list);
   }
 }
 
@@ -59,4 +47,9 @@ uploadFile(File record) async {
   String uploadedFileURL =
       await (await uploadTask.onComplete).ref.getDownloadURL();
   print(uploadedFileURL);
+  openUrl(uploadedFileURL);
+}
+
+openUrl(String url) {
+  launch(url);
 }
