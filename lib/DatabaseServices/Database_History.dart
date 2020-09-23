@@ -11,7 +11,9 @@ import 'package:studenttrack/components.dart';
 class DatabaseHistory {
   File f;
   String directory;
-  Future<void> getCSV() async {
+  Future<void> getCSV({DateTime date}) async {
+
+
     Platform.isIOS
         ? directory = (await getApplicationDocumentsDirectory()).path
         : directory = (await getExternalStorageDirectory()).path;
@@ -19,26 +21,47 @@ class DatabaseHistory {
     print(directory);
 
     List<List<dynamic>> rows = List<List<dynamic>>();
-    rows.add(['Name', 'Class', 'Time of Entry', 'Time of Exit']);
+    rows.add(['Name', 'Class', 'Time of Entry', 'Time of Exit','Index']);
 
     var cloud = FirebaseFirestore.instance.collection('History');
 
     await cloud.get().then((QuerySnapshot snapshot) {
       List<dynamic> row = List<dynamic>();
-      snapshot.docs.forEach((doc) {
+      snapshot.docs.forEach((doc) async {
         row = [];
-        row.add(doc.data()['Name']);
-        row.add(doc.data()['Class']);
-        row.add(doc.data()['EntryTime']);
-        print(doc.data()['Name']);
-        row.add(doc.data()['ExitTime']);
-        rows.add(row);
+        Timestamp t =  await doc.data()['Index'];
+        DateTime d = t.toDate();
+        if(d.millisecondsSinceEpoch >= date.millisecondsSinceEpoch) {
+          print('came here');
+          row.add(doc.data()['Name']);
+          row.add(doc.data()['Class']);
+          row.add(doc.data()['EntryTime']);
+          row.add(doc.data()['ExitTime']);
+        //  row.add(d.millisecondsSinceEpoch);
+          rows.add(row);
+        }
       });
     });
+
     print(rows);
+
+    int i,j;
+    List<dynamic> temp = [];
+    for(i = 1;i<rows.length;++i){
+      j = i;
+      while(j>1 && rows[j-1][4]>rows[j][4]){
+            temp = rows[j];
+            rows[j] = rows[j-1];
+            rows[j-1] = temp;
+      }
+    }
+
+    print('SORTED = ');
+    print(rows);
+
     String csv = ListToCsvConverter().convert(rows);
 
-    f.writeAsString(csv).then((value) => uploadFile(f));
+   // f.writeAsString(csv).then((value) => uploadFile(f));
   }
 }
 
@@ -85,7 +108,7 @@ recordDateForm(context, DateTime setDate) {
           color: Colors.pinkAccent,
           onPressed: () async {
             Navigator.pop((context));
-            await DatabaseHistory().getCSV();
+            await DatabaseHistory().getCSV(date: setDate);
           },
           child: Text(
             "SUBMIT",
@@ -99,8 +122,8 @@ Future<Null> selectedDate(BuildContext context, DateTime setDate) async {
   await showDatePicker(
           context: context,
           initialDate: setDate,
-          firstDate: DateTime.now(),
-          lastDate: DateTime(2022))
+          firstDate: DateTime(2020),
+          lastDate: DateTime.now())
       .then((picked) {
     if (picked != null && picked != setDate) {
       setDate = picked;
