@@ -30,6 +30,8 @@ dependencies:
   path_provider: ^1.5.1
   csv: ^4.0.3
   permission_handler: ^5.0.1+1
+  firebase_storage: ^4.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

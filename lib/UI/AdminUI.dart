@@ -138,17 +138,21 @@ class _AdminUIState extends State<AdminUI> {
                               FlatButton(
                                 child: Text('Print'),
                                 onPressed: () async {
-                                if(Platform.isAndroid) {
-                                  if (await Permission.storage.isGranted) {
-                                    print('GRANTED');
-                                    DatabaseHistory().getCSV();
+                                  if (Platform.isAndroid) {
+                                    if (await Permission.storage.isGranted) {
+                                      print('GRANTED');
+                                      DatabaseHistory().getCSV();
+                                    } else {
+                                      await Permission.storage.request();
+                                    }
+                                  } else if (Platform.isIOS) {
+                                    if (await Permission.storage.isGranted) {
+                                      print('GRANTED');
+                                      DatabaseHistory().getCSV();
+                                    } else {
+                                      await Permission.storage.request();
+                                    }
                                   }
-                                  else {
-                                    await Permission.storage.request();
-                                  }
-                                }
-
-                                  DatabaseHistory().getCSV();
                                 },
                                 color: Colors.white,
                               ),
