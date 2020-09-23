@@ -41,7 +41,7 @@ class DatabaseHistory {
 
 uploadFile(File record) async {
   StorageReference storageFirebase =
-      FirebaseStorage.instance.ref().child('History_xls/StudentTrackRecord');
+      FirebaseStorage.instance.ref().child('History_xls/StudentTrackRecord.csv');
   StorageUploadTask uploadTask = storageFirebase.putFile(record);
 
   String uploadedFileURL =
