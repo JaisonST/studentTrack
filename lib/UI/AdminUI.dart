@@ -116,48 +116,73 @@ class _AdminUIState extends State<AdminUI> {
                             }),
                   ),
                   Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.pinkAccent,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        margin: EdgeInsets.all(15),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              SizedBox(
-                                width: 5.0,
-                              ),
-                              Text(
-                                'Do you want to Print database?',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 15),
-                              ),
-                              FlatButton(
-                                child: Text('Print'),
-
-                                onPressed: () async {
-                                  if (await Permission.storage.isGranted) {
-                                    recordDateForm(context, DateTime.now());
-                                  } else {
-                                    await Permission.storage.request().then(
-                                        (value) => recordDateForm(
-                                            context, DateTime.now()));
-                                  }
-                                },
-
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 5.0,
-                              )
-                            ]),
-                      )),
+                    flex: 1,
+                    child: PrintContainer(
+                      description: 'Do you want to Print database?',
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: PrintContainer(
+                      description: 'Print Live database?',
+                    ),
+                  ),
                 ],
               );
             }
           }),
+    );
+  }
+}
+
+class PrintContainer extends StatelessWidget {
+  PrintContainer({@required this.description});
+
+  String description;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.pinkAccent,
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+      margin: EdgeInsets.all(15),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: SizedBox(),
+            ),
+            Expanded(
+              flex: 7,
+              child: Text(
+                description,
+                style: TextStyle(color: Colors.white, fontSize: 15),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: FlatButton(
+                child: Text('Print'),
+                onPressed: () async {
+                  if (await Permission.storage.isGranted) {
+                    recordDateForm(context, DateTime.now());
+                  } else {
+                    await Permission.storage.request().then(
+                        (value) => recordDateForm(context, DateTime.now()));
+                  }
+                },
+                color: Colors.white,
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: SizedBox(
+                width: 5.0,
+              ),
+            )
+          ]),
     );
   }
 }
