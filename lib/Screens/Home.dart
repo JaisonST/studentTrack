@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
   String isClinic = "first";
-
+  String studentDB = "first";
   @override
   void initState() {
     DatabaseServices(uid: _auth.currentUser.uid)
@@ -25,17 +25,24 @@ class _HomeScreenState extends State<HomeScreen> {
         isClinic = result;
       });
     });
+    DatabaseServices(uid: _auth.currentUser.uid).returnDB().then((result) {
+      setState(() {
+        studentDB = result;
+      });
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isClinic == "first") {
+    if (isClinic == "first" || studentDB == "first") {
       return Loading();
     } else if (isClinic == "Clinic") {
       return ClinicUI();
     } else if (isClinic == "Teacher") {
-      return TeacherUI();
+      return TeacherUI(
+        schoolDB: studentDB,
+      );
     } else {
       return AdminUI();
     }
