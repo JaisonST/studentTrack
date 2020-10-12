@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 class DatabaseLive {
   final String schoolDB;
+  CollectionReference history;
   CollectionReference live;
   DatabaseLive({@required this.schoolDB}) {
     print(schoolDB);
@@ -10,10 +11,11 @@ class DatabaseLive {
         .collection('Schools')
         .doc(schoolDB)
         .collection('LiveC');
+    history = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('HistoryC');
   }
-
-  final CollectionReference history =
-      FirebaseFirestore.instance.collection('History');
 
   Future addRecordToLive(String name, String grade) {
     return live

@@ -91,7 +91,8 @@ class _ClinicUIState extends State<ClinicUI> {
                                       color: Color(0xff4DD172),
                                       onPressed: () async {
                                         Navigator.pop(context);
-                                        await DatabaseLive()
+                                        await DatabaseLive(
+                                                schoolDB: widget.schoolDB)
                                             .moveRecordFromLiveToHistory(
                                                 student.id);
                                       },
