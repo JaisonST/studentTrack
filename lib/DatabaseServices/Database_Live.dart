@@ -1,12 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:studenttrack/DatabaseServices/Database.dart';
+import 'package:flutter/cupertino.dart';
 
 class DatabaseLive {
-  final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
+  final String schoolDB;
+  CollectionReference live;
+  DatabaseLive({@required this.schoolDB}) {
+    print(schoolDB);
+    live = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('LiveC');
+  }
 
-  final CollectionReference live =
-      FirebaseFirestore.instance.collection('LiveC');
   final CollectionReference history =
       FirebaseFirestore.instance.collection('History');
 

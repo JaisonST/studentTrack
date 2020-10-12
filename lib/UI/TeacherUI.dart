@@ -29,8 +29,9 @@ class _TeacherUIState extends State<TeacherUI> {
             return Scaffold(
               backgroundColor: Colors.white,
               appBar: HomeAppBar(),
-              floatingActionButton:
-                  liveCases >= 4 ? EmergencyAddButton() : ClinicAddButton(),
+              floatingActionButton: liveCases >= 4
+                  ? EmergencyAddButton(schoolDB: widget.schoolDB)
+                  : ClinicAddButton(schoolDB: widget.schoolDB),
               body: Center(
                 child: Column(
                   children: <Widget>[
