@@ -38,11 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isClinic == "first" || studentDB == "first") {
       return Loading();
     } else if (isClinic == "Clinic") {
-      return ClinicUI();
+      return ClinicUI(schoolDB: studentDB);
     } else if (isClinic == "Teacher") {
-      return TeacherUI(
-        schoolDB: studentDB,
-      );
+      return TeacherUI(schoolDB: studentDB);
     } else {
       return AdminUI();
     }

@@ -6,6 +6,8 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 
 class ClinicUI extends StatefulWidget {
+  final String schoolDB;
+  ClinicUI({@required this.schoolDB});
   @override
   _ClinicUIState createState() => _ClinicUIState();
 }
@@ -17,7 +19,11 @@ class _ClinicUIState extends State<ClinicUI> {
       appBar: HomeAppBar(),
       floatingActionButton: ClinicAddButton(),
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('Live').snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection('Schools')
+              .doc(widget.schoolDB)
+              .collection('LiveC')
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               return Loading();
