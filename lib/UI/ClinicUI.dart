@@ -17,7 +17,7 @@ class _ClinicUIState extends State<ClinicUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(),
-      floatingActionButton: ClinicAddButton(),
+      floatingActionButton: ClinicAddButton(schoolDB: widget.schoolDB),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('Schools')
