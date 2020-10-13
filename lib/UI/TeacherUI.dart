@@ -4,6 +4,8 @@ import 'package:studenttrack/components.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 
 class TeacherUI extends StatefulWidget {
+  final String schoolDB;
+  TeacherUI({@required this.schoolDB});
   @override
   _TeacherUIState createState() => _TeacherUIState();
 }
@@ -14,7 +16,11 @@ class _TeacherUIState extends State<TeacherUI> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Live').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('Schools')
+            .doc(widget.schoolDB)
+            .collection('LiveC')
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return Loading();
@@ -23,8 +29,9 @@ class _TeacherUIState extends State<TeacherUI> {
             return Scaffold(
               backgroundColor: Colors.white,
               appBar: HomeAppBar(),
-              floatingActionButton:
-                  liveCases >= 4 ? EmergencyAddButton() : ClinicAddButton(),
+              floatingActionButton: liveCases >= 4
+                  ? EmergencyAddButton(schoolDB: widget.schoolDB)
+                  : ClinicAddButton(schoolDB: widget.schoolDB),
               body: Center(
                 child: Column(
                   children: <Widget>[
