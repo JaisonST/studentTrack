@@ -14,7 +14,7 @@ class DatabaseLive {
     history = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
-        .collection('HistoryC');
+        .collection('History');
   }
 
   Future addRecordToLive(String name, String grade) {
