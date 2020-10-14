@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (isClinic == "Teacher") {
       return TeacherUI(schoolDB: studentDB);
     } else {
-      return AdminUI();
+      return AdminUI(schoolDB: studentDB);
     }
   }
 }
