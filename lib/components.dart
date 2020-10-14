@@ -53,7 +53,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
 
               sendMail(
                   email: email, subject: subject, body: body, attach: null);
-              DatabaseEmergency()
+              DatabaseEmergency(schoolDB: schoolDB)
                   .addRecordToEmergency(studentName, studentClass);
             } else {
               Navigator.pop((context));
@@ -166,6 +166,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 }
+
+
 
 sendMail(
     {@required String email,

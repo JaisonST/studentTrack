@@ -23,7 +23,7 @@ class _AdminUIState extends State<AdminUI> {
       appBar: HomeAppBar(),
       body: StreamBuilder(
           stream:
-              FirebaseFirestore.instance.collection('Emergency').snapshots(),
+              FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('Emergency').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               return Loading();
@@ -97,8 +97,9 @@ class _AdminUIState extends State<AdminUI> {
                                               color: Colors.red,
                                               onPressed: () async {
                                                 Navigator.pop(context);
-                                                await DatabaseEmergency()
+                                                await DatabaseEmergency(schoolDB: schoolDB)
                                                     .deleteRecord(student.id);
+
                                               },
                                             )
                                           ],
