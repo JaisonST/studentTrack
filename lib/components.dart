@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/DatabaseServices/Database.dart';
+import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
 import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 import 'package:mailer/mailer.dart';
@@ -44,7 +45,8 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
           color: localColor,
           onPressed: () async {
             if (localTitle == 'Emergency - Form') {
-              List<String> email = ['joelmathewcherian@gmail.com','annasusanc@gmail.com'];
+              List<String> emails = await DatabaseAdmin(schoolDB: schoolDB).generateRecipientList();
+              print(emails);
               String subject = 'Emergency Case';
               String body =
                   'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
@@ -52,7 +54,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
               Navigator.pop((context));
 
               sendMail(
-                  emails: email, subject: subject, body: body, attach: null);
+                  emails: emails, subject: subject, body: body, attach: null);
               DatabaseEmergency(schoolDB: schoolDB)
                   .addRecordToEmergency(studentName, studentClass);
             } else {
