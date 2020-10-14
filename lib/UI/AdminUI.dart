@@ -97,8 +97,9 @@ class _AdminUIState extends State<AdminUI> {
                                               color: Colors.red,
                                               onPressed: () async {
                                                 Navigator.pop(context);
-                                                await DatabaseEmergency()
+                                                await DatabaseEmergency(schoolDB: schoolDB)
                                                     .deleteRecord(student.id);
+
                                               },
                                             )
                                           ],
