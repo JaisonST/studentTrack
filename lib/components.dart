@@ -44,7 +44,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
           color: localColor,
           onPressed: () async {
             if (localTitle == 'Emergency - Form') {
-              String email = 'joelmathewcherian@gmail.com';
+              List<String> email = ['joelmathewcherian@gmail.com','annasusanc@gmail.com'];
               String subject = 'Emergency Case';
               String body =
                   'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
@@ -52,7 +52,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
               Navigator.pop((context));
 
               sendMail(
-                  email: email, subject: subject, body: body, attach: null);
+                  emails: email, subject: subject, body: body, attach: null);
               DatabaseEmergency(schoolDB: schoolDB)
                   .addRecordToEmergency(studentName, studentClass);
             } else {
@@ -170,7 +170,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 
 sendMail(
-    {@required String email,
+    {@required List<String> emails,
     String subject,
     String body,
     List<Attachment> attach}) async {
@@ -184,7 +184,7 @@ sendMail(
   // Create our message.
   final message = Message()
     ..from = Address(username, 'Student Track')
-    ..recipients.add(email)
+    ..recipients.addAll(emails)
     ..subject = subject
     ..text = body
     ..attachments = attach;
