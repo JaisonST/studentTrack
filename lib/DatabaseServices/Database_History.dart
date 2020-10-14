@@ -30,7 +30,7 @@ class DatabaseHistory {
         row = [];
         Timestamp t = doc.data()['Index'];
         DateTime recordDate = t.toDate();
-        if (!date.difference(recordDate).isNegative) {
+        if (!recordDate.difference(date).isNegative) {
           row.add(doc.data()['Name']);
           row.add(doc.data()['Class']);
           row.add(doc.data()['EntryTime']);
@@ -127,6 +127,7 @@ Future<Null> selectedDate(BuildContext context, DateTime setDate,String schoolDB
           lastDate: DateTime.now())
       .then((picked) {
     if (picked != null && picked != setDate) {
+
       setDate = picked;
       Navigator.pop(context);
       recordDateForm(context, setDate,schoolDB);
