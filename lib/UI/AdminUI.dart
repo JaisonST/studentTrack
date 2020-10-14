@@ -8,11 +8,15 @@ import 'package:studenttrack/Screens/Loading.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class AdminUI extends StatefulWidget {
+  String schoolDB;
+  AdminUI({this.schoolDB});
   @override
-  _AdminUIState createState() => _AdminUIState();
+  _AdminUIState createState() => _AdminUIState(schoolDB: schoolDB);
 }
 
 class _AdminUIState extends State<AdminUI> {
+  String schoolDB;
+  _AdminUIState({this.schoolDB});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,12 +123,14 @@ class _AdminUIState extends State<AdminUI> {
                     flex: 1,
                     child: PrintContainer(
                       description: 'Do you want to Print database?',
+                      schoolDB: schoolDB
                     ),
                   ),
                   Expanded(
                     flex: 1,
                     child: PrintContainer(
                       description: 'Print Live database?',
+                      schoolDB: schoolDB
                     ),
                   ),
                 ],
@@ -136,8 +142,8 @@ class _AdminUIState extends State<AdminUI> {
 }
 
 class PrintContainer extends StatelessWidget {
-  PrintContainer({@required this.description});
-
+  PrintContainer({@required this.description,this.schoolDB});
+  String schoolDB;
   String description;
   @override
   Widget build(BuildContext context) {
@@ -167,10 +173,10 @@ class PrintContainer extends StatelessWidget {
                 child: Text('Print'),
                 onPressed: () async {
                   if (await Permission.storage.isGranted) {
-                    recordDateForm(context, DateTime.now());
+                    recordDateForm(context, DateTime.now(),schoolDB);
                   } else {
                     await Permission.storage.request().then(
-                        (value) => recordDateForm(context, DateTime.now()));
+                        (value) => recordDateForm(context, DateTime.now(),schoolDB));
                   }
                 },
                 color: Colors.white,
