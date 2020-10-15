@@ -30,6 +30,8 @@ class DatabaseAdmin {
     await admin.doc(uid).delete().then((value) => print('Admin Email Deleted')).catchError((error) => print("Failed to delete user: ${error}"));
   }
 
+  //Washroom List Functions
+
   Future<List<String>> returnWashroomList() async {
     var admin =  FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('Admin').doc('WashroomList');
     return await admin.get().then((value){
@@ -38,9 +40,23 @@ class DatabaseAdmin {
   }
 
 
-  void addWashroomList(String washroom) async {
+  void addToWashroomList(String washroom) async {
     List<String> washroomList = await returnWashroomList();
     washroomList.add(washroom);
+    var admin =  FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('Admin');
+    return admin.doc('WashroomList').set({
+      'Washrooms': washroomList,
+    });
+  }
+
+  void deleteFromWashroomList(String washroom) async {
+    List<String> washroomList = await returnWashroomList();
+    int i;
+    for(i = 0;i<washroomList.length;++i){
+      if(washroom == washroomList[i])
+              break;
+    }
+    washroomList.removeAt(i);
     var admin =  FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('Admin');
     return admin.doc('WashroomList').set({
       'Washrooms': washroomList,
