@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studenttrack/UI/TeacherWashroomUI.dart';
+import '../DatabaseServices/Database_Admin.dart';
 import '../components.dart';
 import '../components.dart';
 import 'TeacherClinicUI.dart';
@@ -47,13 +48,19 @@ class _TeacherUIState extends State<TeacherUI> {
               child: MaterialButton(
                 color: Colors.blue,
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          TeacherWashroomUI(schoolDB: widget.schoolDB),
-                    ),
-                  );
+                  DatabaseAdmin(schoolDB: widget.schoolDB)
+                      .returnWashroomList()
+                      .then((value) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TeacherWashroomUI(
+                          schoolDB: widget.schoolDB,
+                          washroomList: value,
+                        ),
+                      ),
+                    );
+                  });
                 },
               ),
             ),
