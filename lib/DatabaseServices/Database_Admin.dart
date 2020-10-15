@@ -5,43 +5,50 @@ class DatabaseAdmin {
 
   DatabaseAdmin({this.schoolDB});
 
-  Future<List<String>> generateRecipientList() async {
+  Future<List<String>> getRecipientList() async {
     var admin = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
-        .collection('Admin');
+        .collection('Admin').doc('EmailList');
     List<String> recipients = [];
-    await admin.get().then((QuerySnapshot) {
-      QuerySnapshot.docs.forEach((member) {
-        recipients.add(member['Email']);
+    await admin.get().then((value) {
+      recipients = value['Emails'];
       });
-    });
+
     return recipients;
   }
 
   void addRecipient(String email) async {
+    List<String> emails = await getRecipientList();
+    emails.add(email);
     var admin = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin');
-    await admin
-        .add({
-          'Email': email,
+    await admin.doc('EmailList').set({
+          'Emails': emails,
         })
         .then((value) => print('Admin Email added'))
-        .catchError((error) => print("Failed to add user: ${error}"));
+        .catchError((error) => print("Failed to add email: $error"));
   }
 
-  void deleteRecipient(String uid) async {
+  void deleteRecipient(String email) async {
+    List<String> emails = await getRecipientList();
+    int i;
+    for(i = 0;i<emails.length;++i){
+      if(emails[i] == email)
+         break;
+    }
+    emails.removeAt(i);
     var admin = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin');
-    await admin
-        .doc(uid)
-        .delete()
-        .then((value) => print('Admin Email Deleted'))
-        .catchError((error) => print("Failed to delete user: ${error}"));
+    await admin.doc('EmailList').set({
+      'Emails': emails,
+    })
+        .then((value) => print('Admin Email deleted'))
+        .catchError((error) => print("Failed to delete email: $error"));
   }
 
   //Washroom List Functions

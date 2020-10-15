@@ -46,7 +46,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
           onPressed: () async {
             if (localTitle == 'Emergency - Form') {
               List<String> emails = await DatabaseAdmin(schoolDB: schoolDB)
-                  .generateRecipientList();
+                  .getRecipientList();
               print(emails);
               String subject = 'Emergency Case';
               String body =
