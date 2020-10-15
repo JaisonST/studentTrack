@@ -35,7 +35,7 @@ class DatabaseAdmin {
   Future<List<String>> returnWashroomList() async {
     var admin =  FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('Admin').doc('WashroomList');
     return await admin.get().then((value){
-      return value['WashroomList'];
+      return value['Washrooms'];
     });
   }
 
