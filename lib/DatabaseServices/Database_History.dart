@@ -20,11 +20,11 @@ class DatabaseHistory {
     print(directory);
 
     List<List<dynamic>> rows = List<List<dynamic>>();
-    rows.add(['Name', 'Class', 'Time of Entry', 'Time of Exit', 'Index']);
+    rows.add(['Name', 'Class', 'Time of Entry', 'Time of Exit']);
 
     var cloud = FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('History');
 
-    await cloud.get().then((QuerySnapshot snapshot) {
+    await cloud.orderBy('Index',descending: false).get().then((QuerySnapshot snapshot) {
       List<dynamic> row = List<dynamic>();
       snapshot.docs.forEach((doc) {
         row = [];
@@ -35,29 +35,11 @@ class DatabaseHistory {
           row.add(doc.data()['Class']);
           row.add(doc.data()['EntryTime']);
           row.add(doc.data()['ExitTime']);
-          row.add(doc.data()['Index'].millisecondsSinceEpoch);
           rows.add(row);
         }
       });
     });
 
-    print(rows);
-
-    int i, j;
-    List<dynamic> temp = [];
-    for (i = 1; i < rows.length; ++i) {
-      j = i;
-      while (j > 1 && rows[j - 1][4] > rows[j][4]) {
-        temp = rows[j];
-        rows[j] = rows[j - 1];
-        rows[j - 1] = temp;
-      }
-    }
-
-    for (i = 0; i < rows.length; ++i) {
-      rows[i].removeAt(4);
-    }
-    print('SORTED = ');
     print(rows);
 
     String csv = ListToCsvConverter().convert(rows);
