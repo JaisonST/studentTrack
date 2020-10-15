@@ -26,6 +26,14 @@ class DatabaseLive {
     });
   }
 
+  //Washroom Functions
+  void createNewLocation(String description) async {
+    var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
+
+    await live.collection(collectionName).doc('Details').set({
+      'Description': description,
+    });
+  }
   //Live Functions
 
   Future addRecordToLive(String name, String grade) {
