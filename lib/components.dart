@@ -10,7 +10,7 @@ import 'package:mailer/smtp_server.dart';
 
 //function for the clinic form
 clinicForm(context, String localTitle, String localDesc, Color localColor,
-    String schoolDB) {
+    String schoolDB,String collectionName) {
   String studentName;
   String studentClass;
 
@@ -60,7 +60,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
                   .addRecordToEmergency(studentName, studentClass);
             } else {
               Navigator.pop((context));
-              DatabaseLive(schoolDB: schoolDB)
+              DatabaseLive(schoolDB: schoolDB,collectionName: collectionName)
                   .addRecordToLive(studentName, studentClass);
             }
           },
@@ -75,7 +75,8 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
 //Clinic Button to add the form made here
 class ClinicAddButton extends StatelessWidget {
   final schoolDB;
-  ClinicAddButton({@required this.schoolDB});
+  final collectionName;
+  ClinicAddButton({@required this.schoolDB,this.collectionName});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -89,7 +90,7 @@ class ClinicAddButton extends StatelessWidget {
         backgroundColor: Color(0xff4DD172),
         onPressed: () {
           clinicForm(context, 'Clinic Form', 'Please Fill in Details',
-              Color(0xff4DD172), schoolDB);
+              Color(0xff4DD172), schoolDB,collectionName);
         },
       ),
     );
@@ -98,7 +99,8 @@ class ClinicAddButton extends StatelessWidget {
 
 class EmergencyAddButton extends StatelessWidget {
   final schoolDB;
-  EmergencyAddButton({@required this.schoolDB});
+  final collectionName;
+  EmergencyAddButton({@required this.schoolDB,this.collectionName});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -112,7 +114,7 @@ class EmergencyAddButton extends StatelessWidget {
         backgroundColor: Colors.red,
         onPressed: () {
           clinicForm(context, 'Emergency - Form',
-              'Alert will be sent to MSO team', Colors.red, schoolDB);
+              'Alert will be sent to MSO team', Colors.red, schoolDB,collectionName);
         },
       ),
     );
