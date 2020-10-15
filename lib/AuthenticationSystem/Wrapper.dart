@@ -4,9 +4,11 @@ import 'package:studenttrack/Screens/Home.dart';
 import 'package:studenttrack/Screens/Designation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:studenttrack/Screens/LogIn.dart';
+import 'package:studenttrack/UI/TeacherClinicUI.dart';
 
 import '../Screens/Designation.dart';
 import '../Screens/Home.dart';
+import '../UI/TeacherUI.dart';
 
 class Wrapper extends StatefulWidget {
   static String id = 'Wrapper';

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 import 'package:studenttrack/UI/AdminUI.dart';
-import 'package:studenttrack/UI/TeacherUI.dart';
+import 'package:studenttrack/UI/TeacherClinicUI.dart';
 import 'package:studenttrack/DatabaseServices/Database.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:studenttrack/UI/ClinicUI.dart';
+import 'package:studenttrack/UI/TeacherUI.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'HomeScreen';
