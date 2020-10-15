@@ -7,7 +7,8 @@ import 'package:studenttrack/Screens/Loading.dart';
 
 class ClinicUI extends StatefulWidget {
   final String schoolDB;
-  ClinicUI({@required this.schoolDB});
+  final String collectionName;
+  ClinicUI({@required this.schoolDB,@required this.collectionName});
   @override
   _ClinicUIState createState() => _ClinicUIState();
 }
@@ -22,7 +23,7 @@ class _ClinicUIState extends State<ClinicUI> {
           stream: FirebaseFirestore.instance
               .collection('Schools')
               .doc(widget.schoolDB)
-              .collection('LiveC')
+              .collection(widget.collectionName)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
@@ -92,7 +93,7 @@ class _ClinicUIState extends State<ClinicUI> {
                                       onPressed: () async {
                                         Navigator.pop(context);
                                         await DatabaseLive(
-                                                schoolDB: widget.schoolDB)
+                                                schoolDB: widget.schoolDB,collectionName: widget.collectionName)
                                             .moveRecordFromLiveToHistory(
                                                 student.id);
                                       },
