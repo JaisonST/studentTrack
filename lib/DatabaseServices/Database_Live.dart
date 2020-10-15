@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
 
 class DatabaseLive {
   String schoolDB;
@@ -26,6 +27,24 @@ class DatabaseLive {
     });
   }
 
+  //Washroom Functions
+  void createNewWashroom(String description) async {
+    var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
+    DatabaseAdmin(schoolDB: schoolDB).addToWashroomList(collectionName);
+    await live.collection(collectionName).doc('Details').set({
+      'Description': description,
+    });
+  }
+
+  void deleteWashroom() async {
+    var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
+    DatabaseAdmin(schoolDB: schoolDB).deleteFromWashroomList(collectionName);
+    await live.collection(collectionName).get().then((QuerySnapshot){
+      for(DocumentSnapshot d in QuerySnapshot.docs){
+        d.reference.delete();
+      }
+    });
+  }
   //Live Functions
 
   Future addRecordToLive(String name, String grade) {
