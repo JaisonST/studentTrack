@@ -39,8 +39,8 @@ class _TeacherClinicUIState extends State<TeacherClinicUI> {
                 backgroundColor: Color(0xff4DD172),
               ),
               floatingActionButton: liveCases >= 4
-                  ? EmergencyAddButton(schoolDB: widget.schoolDB)
-                  : ClinicAddButton(schoolDB: widget.schoolDB),
+                  ? EmergencyAddButton(schoolDB: widget.schoolDB,collectionName: 'Clinic',)
+                  : ClinicAddButton(schoolDB: widget.schoolDB,collectionName: 'Clinic',),
               body: Center(
                 child: Column(
                   children: <Widget>[

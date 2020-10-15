@@ -14,6 +14,7 @@ class TeacherWashroomUI extends StatefulWidget {
 
 class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
   int liveCases = 0;
+  int cap = 4;
   String val;
   List<DropdownMenuItem<dynamic>> _items = [];
 
@@ -60,12 +61,12 @@ class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
                 ),
                 backgroundColor: Color(0xff4DD172),
               ),
-              floatingActionButton: liveCases >= 4
+              floatingActionButton: liveCases >= cap
                   ? FloatingActionButton(
                       backgroundColor: Colors.grey,
                       child: Icon(Icons.add),
                     )
-                  : ClinicAddButton(schoolDB: widget.schoolDB),
+                  : ClinicAddButton(schoolDB: widget.schoolDB,collectionName: val,),
               body: Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
