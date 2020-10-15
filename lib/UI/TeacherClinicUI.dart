@@ -22,7 +22,7 @@ class _TeacherClinicUIState extends State<TeacherClinicUI> {
         stream: FirebaseFirestore.instance
             .collection('Schools')
             .doc(widget.schoolDB)
-            .collection('LiveC')
+            .collection('Clinic')
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
