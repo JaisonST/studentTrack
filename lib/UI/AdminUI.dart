@@ -6,6 +6,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'ConfigUI.dart';
 
 class AdminUI extends StatefulWidget {
   String schoolDB;
@@ -125,19 +126,23 @@ class _AdminUIState extends State<AdminUI> {
                   ),
                   Expanded(
                     flex: 2,
-                    child: Container(
-                      color: Colors.pink,
+                    child: PrintContainer(
+                      description: 'App Configuration',
+                      schoolDB: schoolDB,
+                      color: Color(0xff4DD172),
+                      title: 'Config',
+                      fn: 'Config',
                     ),
                   ),
                   Expanded(
                     flex: 2,
                     child: PrintContainer(
-                        description: 'Want to Print database?',
-                        schoolDB: schoolDB),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(),
+                      description: 'Want to Print database?',
+                      schoolDB: schoolDB,
+                      color: Colors.pinkAccent,
+                      title: 'Print',
+                      fn: 'Print',
+                    ),
                   ),
                 ],
               );
@@ -148,14 +153,22 @@ class _AdminUIState extends State<AdminUI> {
 }
 
 class PrintContainer extends StatelessWidget {
-  PrintContainer({@required this.description, this.schoolDB});
+  PrintContainer(
+      {@required this.description,
+      this.schoolDB,
+      this.color,
+      this.title,
+      this.fn});
   String schoolDB;
   String description;
+  Color color;
+  String title;
+  String fn;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.pinkAccent,
+        color: color,
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       margin: EdgeInsets.all(15),
@@ -176,13 +189,24 @@ class PrintContainer extends StatelessWidget {
             Expanded(
               flex: 3,
               child: FlatButton(
-                child: Text('Print'),
+                child: Text('$title'),
                 onPressed: () async {
-                  if (await Permission.storage.isGranted) {
-                    recordDateForm(context, DateTime.now(), schoolDB);
+                  if (fn == 'Print') {
+                    if (await Permission.storage.isGranted) {
+                      recordDateForm(context, DateTime.now(), schoolDB);
+                    } else {
+                      await Permission.storage.request().then((value) =>
+                          recordDateForm(context, DateTime.now(), schoolDB));
+                    }
                   } else {
-                    await Permission.storage.request().then((value) =>
-                        recordDateForm(context, DateTime.now(), schoolDB));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ConfigUI(
+                          schoolDB: schoolDB,
+                        ),
+                      ),
+                    );
                   }
                 },
                 color: Colors.white,
