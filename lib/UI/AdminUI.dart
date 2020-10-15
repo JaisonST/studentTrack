@@ -9,15 +9,14 @@ import 'package:permission_handler/permission_handler.dart';
 import 'ConfigUI.dart';
 
 class AdminUI extends StatefulWidget {
-  String schoolDB;
+  final String schoolDB;
   AdminUI({this.schoolDB});
   @override
-  _AdminUIState createState() => _AdminUIState(schoolDB: schoolDB);
+  _AdminUIState createState() => _AdminUIState();
 }
 
 class _AdminUIState extends State<AdminUI> {
-  String schoolDB;
-  _AdminUIState({this.schoolDB});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +24,7 @@ class _AdminUIState extends State<AdminUI> {
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('Schools')
-              .doc(schoolDB)
+              .doc(widget.schoolDB)
               .collection('Emergency')
               .snapshots(),
           builder: (context, snapshot) {
@@ -102,7 +101,7 @@ class _AdminUIState extends State<AdminUI> {
                                               onPressed: () async {
                                                 Navigator.pop(context);
                                                 await DatabaseEmergency(
-                                                        schoolDB: schoolDB)
+                                                        schoolDB: widget.schoolDB)
                                                     .deleteRecord(student.id);
                                               },
                                             )
@@ -128,7 +127,7 @@ class _AdminUIState extends State<AdminUI> {
                     flex: 2,
                     child: PrintContainer(
                       description: 'App Configuration',
-                      schoolDB: schoolDB,
+                      schoolDB: widget.schoolDB,
                       color: Color(0xff4DD172),
                       title: 'Config',
                       fn: 'Config',
@@ -138,7 +137,7 @@ class _AdminUIState extends State<AdminUI> {
                     flex: 2,
                     child: PrintContainer(
                       description: 'Want to Print database?',
-                      schoolDB: schoolDB,
+                      schoolDB: widget.schoolDB,
                       color: Colors.pinkAccent,
                       title: 'Print',
                       fn: 'Print',
