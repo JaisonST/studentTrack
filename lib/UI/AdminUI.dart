@@ -6,6 +6,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'ConfigUI.dart';
 
 class AdminUI extends StatefulWidget {
   String schoolDB;
@@ -22,8 +23,11 @@ class _AdminUIState extends State<AdminUI> {
     return Scaffold(
       appBar: HomeAppBar(),
       body: StreamBuilder(
-          stream:
-              FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('Emergency').snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection('Schools')
+              .doc(schoolDB)
+              .collection('Emergency')
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               return Loading();
@@ -31,7 +35,7 @@ class _AdminUIState extends State<AdminUI> {
               return Column(
                 children: <Widget>[
                   Expanded(
-                    flex: 5,
+                    flex: 6,
                     child: snapshot.data.documents.length == 0
                         ? Center(
                             child: Text(
@@ -97,9 +101,9 @@ class _AdminUIState extends State<AdminUI> {
                                               color: Colors.red,
                                               onPressed: () async {
                                                 Navigator.pop(context);
-                                                await DatabaseEmergency(schoolDB: schoolDB)
+                                                await DatabaseEmergency(
+                                                        schoolDB: schoolDB)
                                                     .deleteRecord(student.id);
-
                                               },
                                             )
                                           ],
@@ -121,17 +125,23 @@ class _AdminUIState extends State<AdminUI> {
                             }),
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: PrintContainer(
-                      description: 'Do you want to Print database?',
-                      schoolDB: schoolDB
+                      description: 'App Configuration',
+                      schoolDB: schoolDB,
+                      color: Color(0xff4DD172),
+                      title: 'Config',
+                      fn: 'Config',
                     ),
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: PrintContainer(
-                      description: 'Print Live database?',
-                      schoolDB: schoolDB
+                      description: 'Want to Print database?',
+                      schoolDB: schoolDB,
+                      color: Colors.pinkAccent,
+                      title: 'Print',
+                      fn: 'Print',
                     ),
                   ),
                 ],
@@ -143,14 +153,22 @@ class _AdminUIState extends State<AdminUI> {
 }
 
 class PrintContainer extends StatelessWidget {
-  PrintContainer({@required this.description,this.schoolDB});
+  PrintContainer(
+      {@required this.description,
+      this.schoolDB,
+      this.color,
+      this.title,
+      this.fn});
   String schoolDB;
   String description;
+  Color color;
+  String title;
+  String fn;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.pinkAccent,
+        color: color,
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       margin: EdgeInsets.all(15),
@@ -171,13 +189,24 @@ class PrintContainer extends StatelessWidget {
             Expanded(
               flex: 3,
               child: FlatButton(
-                child: Text('Print'),
+                child: Text('$title'),
                 onPressed: () async {
-                  if (await Permission.storage.isGranted) {
-                    recordDateForm(context, DateTime.now(),schoolDB);
+                  if (fn == 'Print') {
+                    if (await Permission.storage.isGranted) {
+                      recordDateForm(context, DateTime.now(), schoolDB);
+                    } else {
+                      await Permission.storage.request().then((value) =>
+                          recordDateForm(context, DateTime.now(), schoolDB));
+                    }
                   } else {
-                    await Permission.storage.request().then(
-                        (value) => recordDateForm(context, DateTime.now(),schoolDB));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ConfigUI(
+                          schoolDB: schoolDB,
+                        ),
+                      ),
+                    );
                   }
                 },
                 color: Colors.white,
