@@ -45,7 +45,8 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
           color: localColor,
           onPressed: () async {
             if (localTitle == 'Emergency - Form') {
-              List<String> emails = await DatabaseAdmin(schoolDB: schoolDB).generateRecipientList();
+              List<String> emails = await DatabaseAdmin(schoolDB: schoolDB)
+                  .generateRecipientList();
               print(emails);
               String subject = 'Emergency Case';
               String body =
@@ -169,8 +170,6 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-
-
 sendMail(
     {@required List<String> emails,
     String subject,
@@ -220,6 +219,59 @@ class PickerFormat extends StatelessWidget {
       fillColor: Colors.pinkAccent,
       constraints: BoxConstraints(minHeight: 50.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+    );
+  }
+}
+
+class HomeAppBarWithBack extends StatelessWidget
+    implements PreferredSizeWidget {
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  final Function backBuild;
+  HomeAppBarWithBack({@required this.backBuild});
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      actions: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FlatButton(
+            color: Color(0xff4dd172),
+            child: Text(
+              'Sign Out',
+              style: TextStyle(color: Colors.white),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            onPressed: () {
+              AuthServices().signOut(context);
+            },
+          ),
+        ),
+      ],
+      centerTitle: false,
+      backgroundColor: Colors.white, //Color(0xff4DD172),
+      title: Row(
+        children: <Widget>[
+          Icon(Icons.arrow_back_ios),
+          Text(
+            'Student',
+            style: TextStyle(
+                color: Color(0xff4DD172),
+                fontWeight: FontWeight.bold,
+                fontSize: 30.0),
+          ),
+          Text(
+            'Track',
+            style: TextStyle(
+              color: Colors.grey[400],
+              fontWeight: FontWeight.bold,
+              fontSize: 30.0,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
