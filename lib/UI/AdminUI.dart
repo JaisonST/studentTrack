@@ -22,8 +22,11 @@ class _AdminUIState extends State<AdminUI> {
     return Scaffold(
       appBar: HomeAppBar(),
       body: StreamBuilder(
-          stream:
-              FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('Emergency').snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection('Schools')
+              .doc(schoolDB)
+              .collection('Emergency')
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               return Loading();
@@ -31,7 +34,7 @@ class _AdminUIState extends State<AdminUI> {
               return Column(
                 children: <Widget>[
                   Expanded(
-                    flex: 5,
+                    flex: 6,
                     child: snapshot.data.documents.length == 0
                         ? Center(
                             child: Text(
@@ -97,9 +100,9 @@ class _AdminUIState extends State<AdminUI> {
                                               color: Colors.red,
                                               onPressed: () async {
                                                 Navigator.pop(context);
-                                                await DatabaseEmergency(schoolDB: schoolDB)
+                                                await DatabaseEmergency(
+                                                        schoolDB: schoolDB)
                                                     .deleteRecord(student.id);
-
                                               },
                                             )
                                           ],
@@ -121,18 +124,20 @@ class _AdminUIState extends State<AdminUI> {
                             }),
                   ),
                   Expanded(
-                    flex: 1,
-                    child: PrintContainer(
-                      description: 'Do you want to Print database?',
-                      schoolDB: schoolDB
+                    flex: 2,
+                    child: Container(
+                      color: Colors.pink,
                     ),
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: PrintContainer(
-                      description: 'Print Live database?',
-                      schoolDB: schoolDB
-                    ),
+                        description: 'Want to Print database?',
+                        schoolDB: schoolDB),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(),
                   ),
                 ],
               );
@@ -143,7 +148,7 @@ class _AdminUIState extends State<AdminUI> {
 }
 
 class PrintContainer extends StatelessWidget {
-  PrintContainer({@required this.description,this.schoolDB});
+  PrintContainer({@required this.description, this.schoolDB});
   String schoolDB;
   String description;
   @override
@@ -174,10 +179,10 @@ class PrintContainer extends StatelessWidget {
                 child: Text('Print'),
                 onPressed: () async {
                   if (await Permission.storage.isGranted) {
-                    recordDateForm(context, DateTime.now(),schoolDB);
+                    recordDateForm(context, DateTime.now(), schoolDB);
                   } else {
-                    await Permission.storage.request().then(
-                        (value) => recordDateForm(context, DateTime.now(),schoolDB));
+                    await Permission.storage.request().then((value) =>
+                        recordDateForm(context, DateTime.now(), schoolDB));
                   }
                 },
                 color: Colors.white,
