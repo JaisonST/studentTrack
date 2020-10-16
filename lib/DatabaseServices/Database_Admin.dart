@@ -95,4 +95,15 @@ class DatabaseAdmin {
       'Washrooms': washroomList,
     });
   }
+
+  Future<int> returnCap(String collectionName) async {
+    var adminCap = FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('Admin').doc('Cap');
+
+    return await adminCap.get().then((DocumentSnapshot d){
+      return d[collectionName];
+    });
+
+
+  }
+
 }

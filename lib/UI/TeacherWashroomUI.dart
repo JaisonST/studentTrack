@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 import 'package:studenttrack/components.dart';
 
@@ -14,7 +15,7 @@ class TeacherWashroomUI extends StatefulWidget {
 
 class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
   int liveCases = 0;
-  int cap = 4;
+  int cap = 0;
   String val;
   List<DropdownMenuItem<dynamic>> _items = [];
 
@@ -36,6 +37,12 @@ class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
   initState() {
     val = widget.washroomList[0];
     _items = buildItems(widget.washroomList);
+    DatabaseAdmin(schoolDB: widget.schoolDB).returnCap(val).then((value){
+      setState(() {
+        cap = value;
+      });
+
+    });
     super.initState();
   }
 
@@ -106,8 +113,9 @@ class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
                                         color: Colors.white,
                                       ),
                                       onChanged: (value) {
-                                        setState(() {
+                                        setState(() async {
                                           val = value;
+                                          cap = await DatabaseAdmin(schoolDB: widget.schoolDB).returnCap(val);
                                         });
                                       }),
                                 ),
