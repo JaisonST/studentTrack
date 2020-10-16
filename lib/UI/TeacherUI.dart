@@ -20,51 +20,59 @@ class _TeacherUIState extends State<TeacherUI> {
     return Scaffold(
       appBar: HomeAppBar(),
       body: Container(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 6,
-              child: MaterialButton(
-                color: Colors.red,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          TeacherClinicUI(schoolDB: widget.schoolDB),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: SizedBox(),
-            ),
-            Expanded(
-              flex: 6,
-              child: MaterialButton(
-                color: Colors.blue,
-                onPressed: () {
-                  DatabaseAdmin(schoolDB: widget.schoolDB)
-                      .returnWashroomList()
-                      .then((value) {
+        padding: EdgeInsets.symmetric(vertical: 30.0),
+        child: Center(
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                flex: 6,
+                child: MaterialButton(
+                  padding: EdgeInsets.all(0),
+                  elevation: 0.0,
+                  color: Colors.white,
+                  child: Image.asset("images/clinic.png"),
+                  onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => TeacherWashroomUI(
-                          schoolDB: widget.schoolDB,
-                          washroomList: value,
-                        ),
+                        builder: (context) =>
+                            TeacherClinicUI(schoolDB: widget.schoolDB),
                       ),
                     );
-                  });
-                },
+                  },
+                ),
               ),
-            ),
-          ],
+              Expanded(
+                flex: 1,
+                child: SizedBox(),
+              ),
+              Expanded(
+                flex: 6,
+                child: MaterialButton(
+                  padding: EdgeInsets.all(0),
+                  elevation: 0.0,
+                  color: Colors.white,
+                  child: Image.asset("images/washroom.png"),
+                  onPressed: () {
+                    DatabaseAdmin(schoolDB: widget.schoolDB)
+                        .returnWashroomList()
+                        .then((value) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TeacherWashroomUI(
+                            schoolDB: widget.schoolDB,
+                            washroomList: value,
+                          ),
+                        ),
+                      );
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
