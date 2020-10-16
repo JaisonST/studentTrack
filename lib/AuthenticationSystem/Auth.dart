@@ -40,6 +40,7 @@ class AuthServices {
         sendMail(emails: emails, subject: subject, body: body, attach: null);
       }
     } catch (e) {
+      print("or here");
       print(e.toString());
       return null;
     }

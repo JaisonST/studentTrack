@@ -37,9 +37,14 @@ class DatabaseLive {
 
     await AuthServices()
         .createNewUser(collectionName, schoolDB, username, password);
-    await FirebaseFirestore.instance.collection('Schools').doc('Cap').update({
-      collectionName: cap
-    });
+    await FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('Admin')
+        .doc('Cap')
+        .set({
+      collectionName: cap,
+    }, SetOptions(merge: true));
   }
 
   Future<void> deleteWashroom() async {
@@ -49,11 +54,12 @@ class DatabaseLive {
       for (DocumentSnapshot d in QuerySnapshot.docs) {
         d.reference.delete();
       }
-       FirebaseFirestore.instance.collection('Schools').doc('Cap').update({
-        collectionName: FieldValue.delete()
-      });
-
-
+      FirebaseFirestore.instance
+          .collection('Schools')
+          .doc(schoolDB)
+          .collection("Admin")
+          .doc('Cap')
+          .update({collectionName: FieldValue.delete()});
     });
   }
   //Live Functions
