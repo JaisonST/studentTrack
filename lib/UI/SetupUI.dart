@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
+import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 
 class SetupUI extends StatefulWidget {
   final List<dynamic> items;
@@ -47,57 +48,67 @@ class _SetupUIState extends State<SetupUI> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
-                            '${setupItems[index]}',
-                            style: TextStyle(
-                                fontSize: 15.0,
-                                color: Color(0xff4DD172),
-                                fontWeight: FontWeight.bold),
-                          ),
-                          RawMaterialButton(
-                            onPressed: () {
-                              Alert(
-                                context: context,
-                                title: "Confirmation",
-                                desc:
-                                    "Do you want to delete ${setupItems[index]}",
-                                buttons: [
-                                  DialogButton(
-                                    child: Text(
-                                      'Delete',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20.0),
-                                    ),
-                                    color: Color(0xff4DD172),
-                                    onPressed: () async {
-                                      if (widget.display == "Email") {
-                                        await DatabaseAdmin(
-                                                schoolDB: widget.schoolDB)
-                                            .deleteRecipient(setupItems[index]);
-                                      } else if (widget.display == "Washroom") {
-                                        await DatabaseAdmin(
-                                                schoolDB: widget.schoolDB)
-                                            .deleteFromWashroomList(
-                                                setupItems[index]);
-                                      }
-                                      setState(() {
-                                        setupItems.removeAt(index);
-                                      });
-                                      Navigator.pop(context);
-                                    },
-                                  )
-                                ],
-                              ).show();
-                            },
-                            elevation: 1,
-                            fillColor: Colors.white,
-                            child: Icon(
-                              Icons.delete_outline,
-                              size: 35.0,
-                              color: Colors.red,
+                          Expanded(
+                            flex: 8,
+                            child: Text(
+                              '${setupItems[index]}',
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Color(0xff4DD172),
+                                  fontWeight: FontWeight.bold),
                             ),
-                            padding: EdgeInsets.all(15.0),
-                            shape: CircleBorder(),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: RawMaterialButton(
+                              onPressed: () {
+                                Alert(
+                                  context: context,
+                                  title: "Confirmation",
+                                  desc:
+                                      "Do you want to delete ${setupItems[index]}",
+                                  buttons: [
+                                    DialogButton(
+                                      child: Text(
+                                        'Delete',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0),
+                                      ),
+                                      color: Color(0xff4DD172),
+                                      onPressed: () async {
+                                        if (widget.display == "Email") {
+                                          await DatabaseAdmin(
+                                                  schoolDB: widget.schoolDB)
+                                              .deleteRecipient(
+                                                  setupItems[index]);
+                                        } else if (widget.display ==
+                                            "Washroom") {
+                                          await DatabaseLive(
+                                                  schoolDB: widget.schoolDB,
+                                                  collectionName:
+                                                      setupItems[index])
+                                              .deleteWashroom();
+                                        }
+                                        setState(() {
+                                          setupItems.removeAt(index);
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    )
+                                  ],
+                                ).show();
+                              },
+                              elevation: 1,
+                              fillColor: Colors.white,
+                              child: Icon(
+                                Icons.delete_outline,
+                                size: 35.0,
+                                color: Colors.red,
+                              ),
+                              padding: EdgeInsets.all(15.0),
+                              shape: CircleBorder(),
+                            ),
                           )
                         ],
                       ),
@@ -136,8 +147,10 @@ class _SetupUIState extends State<SetupUI> {
                               await DatabaseAdmin(schoolDB: widget.schoolDB)
                                   .addRecipient(newVal);
                             } else if (widget.display == "Washroom") {
-                              await DatabaseAdmin(schoolDB: widget.schoolDB)
-                                  .addToWashroomList(newVal);
+                              await DatabaseLive(
+                                      schoolDB: widget.schoolDB,
+                                      collectionName: newVal)
+                                  .createNewWashroom(newVal, context);
                             }
                             Navigator.pop(context);
                           },

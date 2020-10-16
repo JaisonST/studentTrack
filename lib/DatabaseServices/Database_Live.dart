@@ -7,7 +7,7 @@ class DatabaseLive {
   String schoolDB;
   String collectionName;
 
-  DatabaseLive({this.schoolDB,this.collectionName});
+  DatabaseLive({this.schoolDB, this.collectionName});
   //Wrapper Functions
 
   void createNewLocation(String description) async {
@@ -21,30 +21,31 @@ class DatabaseLive {
   void deleteLocation() async {
     var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
 
-    await live.collection(collectionName).get().then((QuerySnapshot){
-      for(DocumentSnapshot d in QuerySnapshot.docs){
+    await live.collection(collectionName).get().then((QuerySnapshot) {
+      for (DocumentSnapshot d in QuerySnapshot.docs) {
         d.reference.delete();
       }
     });
   }
 
   //Washroom Functions
-  void createNewWashroom(String description,context) async {
+  Future<void> createNewWashroom(String description, context) async {
     String username = collectionName + "." + schoolDB + "@strack.com";
-    String password = "123456";                                                         //Default password
+    String password = collectionName + "_" + schoolDB; //Default password
     var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
     DatabaseAdmin(schoolDB: schoolDB).addToWashroomList(collectionName);
     await live.collection(collectionName).doc('Details').set({
       'Description': description,
     });
-    await AuthServices().createNewUser(collectionName, schoolDB, username, password,context);
+    await AuthServices()
+        .createNewUser(collectionName, schoolDB, username, password, context);
   }
 
-  void deleteWashroom() async {
+  Future<void> deleteWashroom() async {
     var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
     DatabaseAdmin(schoolDB: schoolDB).deleteFromWashroomList(collectionName);
-    await live.collection(collectionName).get().then((QuerySnapshot){
-      for(DocumentSnapshot d in QuerySnapshot.docs){
+    await live.collection(collectionName).get().then((QuerySnapshot) {
+      for (DocumentSnapshot d in QuerySnapshot.docs) {
         d.reference.delete();
       }
     });
@@ -52,15 +53,18 @@ class DatabaseLive {
   //Live Functions
 
   Future addRecordToLive(String name, String grade) {
-    var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection(collectionName);
+    var live = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection(collectionName);
     return live
         .add({
-      'Name': name,
-      'Class': grade,
-      'EntryTime': DateTime.now().toString(),
-      'Location': collectionName,
-      'Index': DateTime.now()
-    })
+          'Name': name,
+          'Class': grade,
+          'EntryTime': DateTime.now().toString(),
+          'Location': collectionName,
+          'Index': DateTime.now()
+        })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
@@ -72,13 +76,13 @@ class DatabaseLive {
         .collection('History');
     return history
         .add({
-      'Name': name,
-      'Class': grade,
-      'EntryTime': t,
-      'ExitTime': DateTime.now().toString(),
-      'Location': collectionName,
-      'Index': d,
-    })
+          'Name': name,
+          'Class': grade,
+          'EntryTime': t,
+          'ExitTime': DateTime.now().toString(),
+          'Location': collectionName,
+          'Index': d,
+        })
         .then((value) => print('User moved to history'))
         .catchError((error) => print('Failed to move user:$error'));
   }
@@ -88,7 +92,10 @@ class DatabaseLive {
     String grade;
     String t;
     Timestamp d;
-    var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection(collectionName);
+    var live = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection(collectionName);
     await live.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
       name = documentSnapshot.data()['Name'];
       grade = documentSnapshot.data()['Class'];
@@ -104,6 +111,4 @@ class DatabaseLive {
         .then((value) => print("User deleted"))
         .catchError((error) => print("Failed to delete user: $error"));
   }
-
-
 }
