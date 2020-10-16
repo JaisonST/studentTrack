@@ -38,7 +38,7 @@ class _AdminUIState extends State<AdminUI> {
                     child: snapshot.data.documents.length == 0
                         ? Center(
                             child: Text(
-                              'There are no Cases right now',
+                              'There are no Emergency Cases right now',
                               style: TextStyle(fontSize: 20.0),
                             ),
                           )
