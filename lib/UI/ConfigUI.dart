@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:studenttrack/UI/EmailSetup.dart';
 import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
+import 'package:studenttrack/UI/WashroomSetup.dart';
 
 class ConfigUI extends StatefulWidget {
   final String schoolDB;
@@ -53,6 +54,21 @@ class _ConfigUIState extends State<ConfigUI> {
             flex: 2,
             child: ConfigChoice(
               display: "Set Up Washrooms",
+              fn: () {
+                DatabaseAdmin(schoolDB: widget.schoolDB)
+                    .returnWashroomList()
+                    .then((value) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WashroomSetup(
+                        washrooms: value,
+                        schoolDB: widget.schoolDB,
+                      ),
+                    ),
+                  );
+                });
+              },
             ),
           ),
           Expanded(
