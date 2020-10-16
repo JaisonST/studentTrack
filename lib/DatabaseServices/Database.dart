@@ -37,4 +37,10 @@ class DatabaseServices {
     });
     return pass;
   }
+
+  Future<int> returnVersion() async {
+    return await users.doc('Admin').get().then((DocumentSnapshot d) {
+      return d['Version'];
+    });
+  }
 }
