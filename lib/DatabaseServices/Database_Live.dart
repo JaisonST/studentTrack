@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
 
 class DatabaseLive {
@@ -28,12 +29,15 @@ class DatabaseLive {
   }
 
   //Washroom Functions
-  void createNewWashroom(String description) async {
+  void createNewWashroom(String description,context) async {
+    String username = collectionName + "." + schoolDB + "@strack.com";
+    String password = "123456";                                                         //Default password
     var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
     DatabaseAdmin(schoolDB: schoolDB).addToWashroomList(collectionName);
     await live.collection(collectionName).doc('Details').set({
       'Description': description,
     });
+    await AuthServices().createNewUser(collectionName, schoolDB, username, password,context);
   }
 
   void deleteWashroom() async {
