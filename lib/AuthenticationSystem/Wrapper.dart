@@ -6,6 +6,7 @@ import 'package:studenttrack/Screens/LogIn.dart';
 import 'package:studenttrack/UI/TeacherClinicUI.dart';
 import '../Screens/Home.dart';
 import '../UI/TeacherUI.dart';
+import 'package:studenttrack/AuthenticationSystem/Version.dart';
 
 class Wrapper extends StatefulWidget {
   static String id = 'Wrapper';
@@ -15,6 +16,7 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   bool loggedIn;
+  String id;
 
   @override
   void initState() {
@@ -22,6 +24,7 @@ class _WrapperState extends State<Wrapper> {
     FirebaseAuth.instance.currentUser != null
         ? setState(() {
             loggedIn = true;
+            id = FirebaseAuth.instance.currentUser.uid;
           })
         : print('no user');
     super.initState();
@@ -34,6 +37,7 @@ class _WrapperState extends State<Wrapper> {
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
         LogIn.id: (context) => LogIn(),
+        Version.id: (context) => Version(uid: id ),
       },
     );
   }
