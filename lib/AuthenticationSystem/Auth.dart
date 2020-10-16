@@ -26,6 +26,8 @@ class AuthServices {
 
   Future createNewUser(
       String loc, String schoolDB, String email, String password) async {
+    email = email.replaceAll(' ', '');
+    password = password.replaceAll(' ', '');
     String subject = "$loc Setup Complete: Ready to Track";
     String body =
         "Sir/Madam,\n\nWashroom:$loc has been set up for tracking. A unique username and password has been assigned to access the control page of $loc. The details are as follows:\n\tName of Collection:$loc \n\tUsername:  $email\n\tPassword:  $password\n\nWith Regards\nStudent Track Team\n\nNote:Do not reply to this message as it is a computer generated one.";
