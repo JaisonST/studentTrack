@@ -22,7 +22,7 @@ class DatabaseHistory {
 
     List<List<dynamic>> rows = List<List<dynamic>>();
 
-    List<dynamic> classes = await DatabaseAdmin(schoolDB: schoolDB).getRecipientList();
+    List<dynamic> classes = await DatabaseAdmin(schoolDB: schoolDB).returnWashroomList();
     classes.add('Clinic');
 
     var cloud = FirebaseFirestore.instance.collection('Schools')
