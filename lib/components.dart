@@ -45,7 +45,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
           color: localColor,
           onPressed: () async {
             if (localTitle == 'Emergency - Form') {
-              List<String> emails =
+              List<dynamic> emails =
                   await DatabaseAdmin(schoolDB: schoolDB).getRecipientList();
               print(emails);
               String subject = 'Emergency Case';
