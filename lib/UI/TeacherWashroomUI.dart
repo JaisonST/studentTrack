@@ -37,11 +37,10 @@ class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
   initState() {
     val = widget.washroomList[0];
     _items = buildItems(widget.washroomList);
-    DatabaseAdmin(schoolDB: widget.schoolDB).returnCap(val).then((value){
+    DatabaseAdmin(schoolDB: widget.schoolDB).returnCap(val).then((value) {
       setState(() {
         cap = value;
       });
-
     });
     super.initState();
   }
@@ -113,9 +112,14 @@ class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
                                         color: Colors.white,
                                       ),
                                       onChanged: (value) {
-                                        setState(() async {
+                                        setState(() {
                                           val = value;
-                                          cap = await DatabaseAdmin(schoolDB: widget.schoolDB).returnCap(val);
+                                          DatabaseAdmin(
+                                                  schoolDB: widget.schoolDB)
+                                              .returnCap(val)
+                                              .then((value) {
+                                            cap = value;
+                                          });
                                         });
                                       }),
                                 ),
