@@ -13,7 +13,7 @@ class DatabaseHistory {
   File f;
   String directory;
   String schoolDB;
-  Future<void> getCSV({DateTime date,String schoolDB}) async {
+  Future<void> getCSV({DateTime date, String schoolDB}) async {
     Platform.isIOS
         ? directory = (await getApplicationDocumentsDirectory()).path
         : directory = (await getExternalStorageDirectory()).path;
@@ -22,32 +22,30 @@ class DatabaseHistory {
 
     List<List<dynamic>> rows = List<List<dynamic>>();
 
-    List<dynamic> classes = await DatabaseAdmin(schoolDB: schoolDB).returnWashroomList();
+    List<dynamic> classes =
+        await DatabaseAdmin(schoolDB: schoolDB).returnWashroomList();
     classes.add('Clinic');
 
-    var cloud = FirebaseFirestore.instance.collection('Schools')
+    var cloud = FirebaseFirestore.instance
+        .collection('Schools')
         .doc(schoolDB)
         .collection('History');
 
-    for(dynamic val in classes) {
-
-
+    for (dynamic val in classes) {
       rows.add([val]);
       rows.add(['Name', 'Class', 'Time of Entry', 'Time of Exit']);
 
-
-
-      await cloud.orderBy('Index', descending: false).get().then((
-          QuerySnapshot snapshot) {
+      await cloud
+          .orderBy('Index', descending: false)
+          .get()
+          .then((QuerySnapshot snapshot) {
         List<dynamic> row = List<dynamic>();
         snapshot.docs.forEach((doc) {
-          if(doc['Location'] == val) {
+          if (doc['Location'] == val) {
             row = [];
             Timestamp t = doc.data()['Index'];
             DateTime recordDate = t.toDate();
-            if (!recordDate
-                .difference(date)
-                .isNegative) {
+            if (!recordDate.difference(date).isNegative) {
               row.add(doc.data()['Name']);
               row.add(doc.data()['Class']);
               row.add(doc.data()['EntryTime']);
@@ -58,9 +56,7 @@ class DatabaseHistory {
         });
       });
 
-      rows.add(['']);
-      rows.add(['']);
-      rows.add(['']);
+      rows.add([' ']);
       print(rows);
     }
 
@@ -88,7 +84,7 @@ openUrl(String url) {
 
 /////////////////////////////////////////////////////////////////////////
 // this segment of code pulls up the alert
-recordDateForm(context, DateTime setDate,String schoolDB) {
+recordDateForm(context, DateTime setDate, String schoolDB) {
   Alert(
       context: context,
       title: 'Print Record',
@@ -103,7 +99,8 @@ recordDateForm(context, DateTime setDate,String schoolDB) {
                 flex: 3,
                 child: PickerFormat(
                   localText: '${setDate.day}-${setDate.month}-${setDate.year}',
-                  pickerFunction: () => selectedDate(context, setDate,schoolDB),
+                  pickerFunction: () =>
+                      selectedDate(context, setDate, schoolDB),
                 )),
           ]),
         ],
@@ -113,7 +110,7 @@ recordDateForm(context, DateTime setDate,String schoolDB) {
           color: Colors.pinkAccent,
           onPressed: () async {
             Navigator.pop((context));
-            await DatabaseHistory().getCSV(date: setDate,schoolDB: schoolDB);
+            await DatabaseHistory().getCSV(date: setDate, schoolDB: schoolDB);
           },
           child: Text(
             "SUBMIT",
@@ -123,7 +120,8 @@ recordDateForm(context, DateTime setDate,String schoolDB) {
       ]).show();
 }
 
-Future<Null> selectedDate(BuildContext context, DateTime setDate,String schoolDB) async {
+Future<Null> selectedDate(
+    BuildContext context, DateTime setDate, String schoolDB) async {
   await showDatePicker(
           context: context,
           initialDate: setDate,
@@ -131,10 +129,9 @@ Future<Null> selectedDate(BuildContext context, DateTime setDate,String schoolDB
           lastDate: DateTime.now())
       .then((picked) {
     if (picked != null && picked != setDate) {
-
       setDate = picked;
       Navigator.pop(context);
-      recordDateForm(context, setDate,schoolDB);
+      recordDateForm(context, setDate, schoolDB);
     }
   });
 }

@@ -16,7 +16,6 @@ class AdminUI extends StatefulWidget {
 }
 
 class _AdminUIState extends State<AdminUI> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +37,7 @@ class _AdminUIState extends State<AdminUI> {
                     child: snapshot.data.documents.length == 0
                         ? Center(
                             child: Text(
-                              'There are no Emergency Cases right now',
+                              'There are no Emergency Cases',
                               style: TextStyle(fontSize: 20.0),
                             ),
                           )
@@ -101,7 +100,8 @@ class _AdminUIState extends State<AdminUI> {
                                               onPressed: () async {
                                                 Navigator.pop(context);
                                                 await DatabaseEmergency(
-                                                        schoolDB: widget.schoolDB)
+                                                        schoolDB:
+                                                            widget.schoolDB)
                                                     .deleteRecord(student.id);
                                               },
                                             )
