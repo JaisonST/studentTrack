@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:studenttrack/Screens/Home.dart';
-import 'package:studenttrack/Screens/Designation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:studenttrack/Screens/LogIn.dart';
 import 'package:studenttrack/UI/TeacherClinicUI.dart';
-
-import '../Screens/Designation.dart';
 import '../Screens/Home.dart';
 import '../UI/TeacherUI.dart';
 
@@ -36,7 +33,6 @@ class _WrapperState extends State<Wrapper> {
       initialRoute: loggedIn ? HomeScreen.id : LogIn.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
-        Designation.id: (context) => Designation(),
         LogIn.id: (context) => LogIn(),
       },
     );

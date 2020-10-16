@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:studenttrack/DatabaseServices/Database.dart';
-import 'package:studenttrack/Screens/Designation.dart';
 import 'package:studenttrack/Screens/Home.dart';
+import 'package:studenttrack/Screens/LogIn.dart';
 import 'package:studenttrack/components.dart';
 import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
 
@@ -60,7 +60,7 @@ class AuthServices {
     try {
       await _auth.signOut();
       Navigator.pushNamedAndRemoveUntil(
-          context, Designation.id, (Route<dynamic> route) => false);
+          context, LogIn.id, (Route<dynamic> route) => false);
     } catch (e) {
       print(e.toString());
       return null;
