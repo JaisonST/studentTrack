@@ -58,9 +58,9 @@ class DatabaseHistory {
         });
       });
 
-      rows.add([]);
-      rows.add([]);
-      rows.add([]);
+      rows.add(['']);
+      rows.add(['']);
+      rows.add(['']);
       print(rows);
     }
 
