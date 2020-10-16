@@ -68,8 +68,8 @@ class DatabaseAdmin {
     });
   }
 
-  void addToWashroomList(String washroom) async {
-    List<String> washroomList = await returnWashroomList();
+  Future<void> addToWashroomList(String washroom) async {
+    List<dynamic> washroomList = await returnWashroomList();
     washroomList.add(washroom);
     var admin = FirebaseFirestore.instance
         .collection('Schools')
@@ -80,8 +80,8 @@ class DatabaseAdmin {
     });
   }
 
-  void deleteFromWashroomList(String washroom) async {
-    List<String> washroomList = await returnWashroomList();
+  Future<void> deleteFromWashroomList(String washroom) async {
+    List<dynamic> washroomList = await returnWashroomList();
     int i;
     for (i = 0; i < washroomList.length; ++i) {
       if (washroom == washroomList[i]) break;

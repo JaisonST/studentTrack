@@ -74,8 +74,12 @@ class _SetupUIState extends State<SetupUI> {
                                         await DatabaseAdmin(
                                                 schoolDB: widget.schoolDB)
                                             .deleteRecipient(setupItems[index]);
-                                      } else if (widget.display ==
-                                          "Washroom") {}
+                                      } else if (widget.display == "Washroom") {
+                                        await DatabaseAdmin(
+                                                schoolDB: widget.schoolDB)
+                                            .deleteFromWashroomList(
+                                                setupItems[index]);
+                                      }
                                       setState(() {
                                         setupItems.removeAt(index);
                                       });
@@ -131,7 +135,10 @@ class _SetupUIState extends State<SetupUI> {
                             if (widget.display == "Email") {
                               await DatabaseAdmin(schoolDB: widget.schoolDB)
                                   .addRecipient(newVal);
-                            } else if (widget.display == "Washroom") {}
+                            } else if (widget.display == "Washroom") {
+                              await DatabaseAdmin(schoolDB: widget.schoolDB)
+                                  .addToWashroomList(newVal);
+                            }
                             Navigator.pop(context);
                           },
                           child: Text(
