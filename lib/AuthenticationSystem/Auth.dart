@@ -33,7 +33,15 @@ class AuthServices {
     List<dynamic> emails =
         await DatabaseAdmin(schoolDB: schoolDB).getRecipientList();
     try {
-      auth.UserCredential userCredential = await register(email, password);
+      //temp firebase app so doesnt log into main app
+      FirebaseApp newApp = await Firebase.initializeApp(
+          name: 'Secondary', options: Firebase.app().options);
+      //sending temp account to use details
+      auth.UserCredential userCredential =
+          await auth.FirebaseAuth.instanceFor(app: newApp)
+              .createUserWithEmailAndPassword(email: email, password: password);
+      newApp.delete();
+
       if (userCredential.user != null) {
         id = userCredential.user.uid;
         await DatabaseServices(uid: id).createUser(schoolDB, loc);
@@ -44,14 +52,6 @@ class AuthServices {
       print(e.toString());
       return null;
     }
-  }
-
-  //register without login
-  Future<auth.UserCredential> register(String email, String password) async {
-    FirebaseApp newApp = await Firebase.initializeApp(
-        name: 'Secondary', options: Firebase.app().options);
-    return auth.FirebaseAuth.instanceFor(app: newApp)
-        .createUserWithEmailAndPassword(email: email, password: password);
   }
 
   Future signOut(context) async {
