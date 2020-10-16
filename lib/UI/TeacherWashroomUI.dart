@@ -63,10 +63,14 @@ class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
               ),
               floatingActionButton: liveCases >= cap
                   ? FloatingActionButton(
+                      onPressed: () {},
                       backgroundColor: Colors.grey,
                       child: Icon(Icons.add),
                     )
-                  : ClinicAddButton(schoolDB: widget.schoolDB,collectionName: val,),
+                  : ClinicAddButton(
+                      schoolDB: widget.schoolDB,
+                      collectionName: val,
+                    ),
               body: Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

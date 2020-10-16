@@ -5,15 +5,16 @@ class DatabaseAdmin {
 
   DatabaseAdmin({this.schoolDB});
 
-  Future<List<String>> getRecipientList() async {
+  Future<List<dynamic>> getRecipientList() async {
     var admin = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
-        .collection('Admin').doc('EmailList');
-    List<String> recipients = [];
+        .collection('Admin')
+        .doc('EmailList');
+    List<dynamic> recipients = [];
     await admin.get().then((value) {
       recipients = value['Emails'];
-      });
+    });
 
     return recipients;
   }
@@ -25,7 +26,9 @@ class DatabaseAdmin {
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin');
-    await admin.doc('EmailList').set({
+    await admin
+        .doc('EmailList')
+        .set({
           'Emails': emails,
         })
         .then((value) => print('Admin Email added'))
@@ -35,18 +38,19 @@ class DatabaseAdmin {
   void deleteRecipient(String email) async {
     List<String> emails = await getRecipientList();
     int i;
-    for(i = 0;i<emails.length;++i){
-      if(emails[i] == email)
-         break;
+    for (i = 0; i < emails.length; ++i) {
+      if (emails[i] == email) break;
     }
     emails.removeAt(i);
     var admin = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin');
-    await admin.doc('EmailList').set({
-      'Emails': emails,
-    })
+    await admin
+        .doc('EmailList')
+        .set({
+          'Emails': emails,
+        })
         .then((value) => print('Admin Email deleted'))
         .catchError((error) => print("Failed to delete email: $error"));
   }

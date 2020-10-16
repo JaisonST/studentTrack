@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:studenttrack/UI/EmailSetup.dart';
+import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
 
 class ConfigUI extends StatefulWidget {
   final String schoolDB;
@@ -28,7 +30,24 @@ class _ConfigUIState extends State<ConfigUI> {
           ),
           Expanded(
             flex: 2,
-            child: ConfigChoice(display: "Edit Emergency Emails"),
+            child: ConfigChoice(
+              display: "Edit Emergency Emails",
+              fn: () {
+                DatabaseAdmin(schoolDB: widget.schoolDB)
+                    .getRecipientList()
+                    .then((value) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EmailSetup(
+                        emails: value,
+                        schoolDB: widget.schoolDB,
+                      ),
+                    ),
+                  );
+                });
+              },
+            ),
           ),
           Expanded(
             flex: 2,
@@ -48,12 +67,13 @@ class _ConfigUIState extends State<ConfigUI> {
 
 class ConfigChoice extends StatelessWidget {
   final String display;
-  ConfigChoice({@required this.display});
+  final Function fn;
+  ConfigChoice({@required this.display, this.fn});
   @override
   Widget build(BuildContext context) {
     return Container(
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: fn,
         child: Row(
           children: [
             Expanded(
