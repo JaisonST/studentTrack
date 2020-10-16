@@ -37,21 +37,23 @@ class DatabaseHistory {
 
 
 
-      await cloud.where('Location',isEqualTo: val).orderBy('Index', descending: false).get().then((
+      await cloud.orderBy('Index', descending: false).get().then((
           QuerySnapshot snapshot) {
         List<dynamic> row = List<dynamic>();
         snapshot.docs.forEach((doc) {
-          row = [];
-          Timestamp t = doc.data()['Index'];
-          DateTime recordDate = t.toDate();
-          if (!recordDate
-              .difference(date)
-              .isNegative) {
-            row.add(doc.data()['Name']);
-            row.add(doc.data()['Class']);
-            row.add(doc.data()['EntryTime']);
-            row.add(doc.data()['ExitTime']);
-            rows.add(row);
+          if(doc['Location'] == val) {
+            row = [];
+            Timestamp t = doc.data()['Index'];
+            DateTime recordDate = t.toDate();
+            if (!recordDate
+                .difference(date)
+                .isNegative) {
+              row.add(doc.data()['Name']);
+              row.add(doc.data()['Class']);
+              row.add(doc.data()['EntryTime']);
+              row.add(doc.data()['ExitTime']);
+              rows.add(row);
+            }
           }
         });
       });
