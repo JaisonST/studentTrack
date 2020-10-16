@@ -104,10 +104,6 @@ class _LogInState extends State<LogIn> {
 }
 
 class StudentTrackTitle extends StatelessWidget {
-  const StudentTrackTitle({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Column(

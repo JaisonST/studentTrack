@@ -33,11 +33,11 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: loggedIn ? HomeScreen.id : LogIn.id,
+      initialRoute: loggedIn ? Version.id : LogIn.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
         LogIn.id: (context) => LogIn(),
-        Version.id: (context) => Version(uid: id ),
+        Version.id: (context) => Version(uid: id),
       },
     );
   }

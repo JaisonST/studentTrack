@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studenttrack/Screens/LogIn.dart';
 
 class Update extends StatelessWidget {
   static String id = "UpdateUI";
@@ -6,12 +7,25 @@ class Update extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: Text('App OutDated'),
+        body: Container(
+          padding: EdgeInsets.symmetric(vertical: 30.0),
+          child: Center(
+            child: Column(
+              children: [
+                Expanded(flex: 2, child: SizedBox()),
+                Expanded(flex: 3, child: StudentTrackTitle()),
+                Expanded(
+                    flex: 2,
+                    child: Text(
+                      "Please Update The App",
+                      style: TextStyle(fontSize: 20.0),
+                    )),
+                Expanded(flex: 3, child: SizedBox()),
+              ],
+            ),
           ),
-          body: Center(
-            child: Text("Please Download the Latest Version Of Our APP"),
-          )),
+        ),
+      ),
     );
   }
 }
