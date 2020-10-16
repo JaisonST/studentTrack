@@ -5,48 +5,52 @@ class DatabaseAdmin {
 
   DatabaseAdmin({this.schoolDB});
 
-  Future<List<String>> getRecipientList() async {
+  Future<List<dynamic>> getRecipientList() async {
     var admin = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
-        .collection('Admin').doc('EmailList');
-    List<String> recipients = [];
+        .collection('Admin')
+        .doc('EmailList');
+    List<dynamic> recipients = [];
     await admin.get().then((value) {
       recipients = value['Emails'];
-      });
+    });
 
     return recipients;
   }
 
-  void addRecipient(String email) async {
-    List<String> emails = await getRecipientList();
+  Future<void> addRecipient(String email) async {
+    List<dynamic> emails = await getRecipientList();
     emails.add(email);
     var admin = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin');
-    await admin.doc('EmailList').set({
+    await admin
+        .doc('EmailList')
+        .set({
           'Emails': emails,
         })
         .then((value) => print('Admin Email added'))
         .catchError((error) => print("Failed to add email: $error"));
   }
 
-  void deleteRecipient(String email) async {
-    List<String> emails = await getRecipientList();
+  Future<void> deleteRecipient(String email) async {
+    List<dynamic> emails = await getRecipientList();
     int i;
-    for(i = 0;i<emails.length;++i){
-      if(emails[i] == email)
-         break;
+    for (i = 0; i < emails.length; ++i) {
+      if (emails[i] == email) break;
     }
     emails.removeAt(i);
     var admin = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin');
-    await admin.doc('EmailList').set({
-      'Emails': emails,
-    })
+    await admin
+        .doc('EmailList')
+        .set({
+          'Emails': emails,
+        })
         .then((value) => print('Admin Email deleted'))
         .catchError((error) => print("Failed to delete email: $error"));
   }
@@ -64,8 +68,8 @@ class DatabaseAdmin {
     });
   }
 
-  void addToWashroomList(String washroom) async {
-    List<String> washroomList = await returnWashroomList();
+  Future<void> addToWashroomList(String washroom) async {
+    List<dynamic> washroomList = await returnWashroomList();
     washroomList.add(washroom);
     var admin = FirebaseFirestore.instance
         .collection('Schools')
@@ -76,8 +80,8 @@ class DatabaseAdmin {
     });
   }
 
-  void deleteFromWashroomList(String washroom) async {
-    List<String> washroomList = await returnWashroomList();
+  Future<void> deleteFromWashroomList(String washroom) async {
+    List<dynamic> washroomList = await returnWashroomList();
     int i;
     for (i = 0; i < washroomList.length; ++i) {
       if (washroom == washroomList[i]) break;
