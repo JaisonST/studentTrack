@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
@@ -17,6 +18,7 @@ class _SetupUIState extends State<SetupUI> {
   @override
   Widget build(BuildContext context) {
     String newVal;
+    int cap;
     List<dynamic> setupItems = widget.items;
     return Scaffold(
       appBar: AppBar(
@@ -125,7 +127,7 @@ class _SetupUIState extends State<SetupUI> {
                     Alert(
                       context: context,
                       title: "Add ${widget.display}",
-                      content: TextField(
+                      content: widget.display == "Email" ? TextField(
                         onChanged: (value) {
                           newVal = value;
                         },
@@ -136,6 +138,36 @@ class _SetupUIState extends State<SetupUI> {
                           ),
                           labelText: 'Enter ${widget.display}',
                         ),
+                      ):Column(
+                        children: [
+                          TextField(
+                            onChanged: (value) {
+                              newVal = value;
+                            },
+                            decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.account_circle,
+                                color: Color(0xff4DD172),
+                              ),
+                              labelText: 'Enter ${widget.display}',
+                            ),
+                          ),
+                          TextField(
+                            
+                            onChanged: (value) {
+                              cap = int.parse(value) ;
+                            },
+                            decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.account_circle,
+                                color: Color(0xff4DD172),
+                              ),
+                              labelText: 'Enter the cap limit',
+                            ),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                          )
+                        ],
                       ),
                       buttons: [
                         DialogButton(
@@ -151,7 +183,7 @@ class _SetupUIState extends State<SetupUI> {
                               await DatabaseLive(
                                       schoolDB: widget.schoolDB,
                                       collectionName: newVal)
-                                  .createNewWashroom();
+                                  .createNewWashroom(cap);
                             }
                           },
                           child: Text(
