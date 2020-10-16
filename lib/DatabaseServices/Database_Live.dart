@@ -29,7 +29,7 @@ class DatabaseLive {
   }
 
   //Washroom Functions
-  Future<void> createNewWashroom() async {
+  Future<void> createNewWashroom(int cap) async {
     String username = collectionName + "." + schoolDB + "@strack.com";
     String password = collectionName + "_" + schoolDB; //Default password
     var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
@@ -37,6 +37,14 @@ class DatabaseLive {
 
     await AuthServices()
         .createNewUser(collectionName, schoolDB, username, password);
+    await FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('Admin')
+        .doc('Cap')
+        .set({
+      collectionName: cap,
+    }, SetOptions(merge: true));
   }
 
   Future<void> deleteWashroom() async {
@@ -46,6 +54,12 @@ class DatabaseLive {
       for (DocumentSnapshot d in QuerySnapshot.docs) {
         d.reference.delete();
       }
+      FirebaseFirestore.instance
+          .collection('Schools')
+          .doc(schoolDB)
+          .collection("Admin")
+          .doc('Cap')
+          .update({collectionName: FieldValue.delete()});
     });
   }
   //Live Functions

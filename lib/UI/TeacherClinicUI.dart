@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
 import 'package:studenttrack/components.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 
@@ -15,7 +16,17 @@ class TeacherClinicUI extends StatefulWidget {
 
 class _TeacherClinicUIState extends State<TeacherClinicUI> {
   int liveCases = 0;
+  int cap = 0;
 
+  @override
+  void initState() {
+    DatabaseAdmin(schoolDB: widget.schoolDB).returnCap('Clinic').then((value){
+      setState(() {
+        cap = value;
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -38,7 +49,7 @@ class _TeacherClinicUIState extends State<TeacherClinicUI> {
                 ),
                 backgroundColor: Color(0xff4DD172),
               ),
-              floatingActionButton: liveCases >= 4
+              floatingActionButton: liveCases >= cap
                   ? EmergencyAddButton(schoolDB: widget.schoolDB,collectionName: 'Clinic',)
                   : ClinicAddButton(schoolDB: widget.schoolDB,collectionName: 'Clinic',),
               body: Center(
@@ -107,7 +118,7 @@ class _TeacherClinicUIState extends State<TeacherClinicUI> {
                       flex: 1,
                       child: SizedBox(),
                     ),
-                    EmergencyWarning(liveCases: liveCases),
+                    EmergencyWarning(liveCases: liveCases,cap: cap,),
                     Expanded(
                       flex: 4,
                       child: SizedBox(),
@@ -123,12 +134,13 @@ class _TeacherClinicUIState extends State<TeacherClinicUI> {
 
 class EmergencyWarning extends StatelessWidget {
   final int liveCases;
-  EmergencyWarning({@required this.liveCases});
+  final int cap;
+  EmergencyWarning({@required this.liveCases,@required this.cap});
   @override
   Widget build(BuildContext context) {
     return Expanded(
       flex: 2,
-      child: liveCases < 4
+      child: liveCases < cap
           ? Container()
           : Row(
               children: <Widget>[
