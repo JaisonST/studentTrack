@@ -15,27 +15,32 @@ class _EmailSetupState extends State<EmailSetup> {
   @override
   Widget build(BuildContext context) {
     return SetupUI(
-      setupItems: widget.emails,
+      items: widget.emails,
       schoolDB: widget.schoolDB,
       display: "Email",
     );
   }
 }
 
-class SetupUI extends StatelessWidget {
-  final List<dynamic> setupItems;
+class SetupUI extends StatefulWidget {
+  final List<dynamic> items;
   final String schoolDB;
   final String display;
-  SetupUI({@required this.setupItems, this.schoolDB, this.display});
+  SetupUI({@required this.items, this.schoolDB, this.display});
 
+  @override
+  _SetupUIState createState() => _SetupUIState();
+}
+
+class _SetupUIState extends State<SetupUI> {
   @override
   Widget build(BuildContext context) {
     String newVal;
-
+    List<dynamic> setupItems = widget.items;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "$display Setup",
+          "${widget.display} Setup",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Color(0xff4DD172),
@@ -85,8 +90,16 @@ class SetupUI extends StatelessWidget {
                                     ),
                                     color: Color(0xff4DD172),
                                     onPressed: () async {
+                                      if (widget.display == "Email") {
+                                        await DatabaseAdmin(
+                                                schoolDB: widget.schoolDB)
+                                            .deleteRecipient(setupItems[index]);
+                                      } else if (widget.display ==
+                                          "Washroom") {}
+                                      setState(() {
+                                        setupItems.removeAt(index);
+                                      });
                                       Navigator.pop(context);
-                                      DatabaseAdmin(schoolDB: schoolDB);
                                     },
                                   )
                                 ],
@@ -116,7 +129,7 @@ class SetupUI extends StatelessWidget {
                   onPressed: () {
                     Alert(
                       context: context,
-                      title: "Add $display",
+                      title: "Add ${widget.display}",
                       content: TextField(
                         onChanged: (value) {
                           newVal = value;
@@ -126,12 +139,19 @@ class SetupUI extends StatelessWidget {
                             Icons.account_circle,
                             color: Color(0xff4DD172),
                           ),
-                          labelText: 'Enter $display',
+                          labelText: 'Enter ${widget.display}',
                         ),
                       ),
                       buttons: [
                         DialogButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            setState(() {
+                              setupItems.add(newVal);
+                            });
+                            if (widget.display == "Email") {
+                              await DatabaseAdmin(schoolDB: widget.schoolDB)
+                                  .addRecipient(newVal);
+                            } else if (widget.display == "Washroom") {}
                             Navigator.pop(context);
                           },
                           child: Text(
@@ -147,7 +167,7 @@ class SetupUI extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Add $display",
+                        "Add ${widget.display}",
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                       Icon(

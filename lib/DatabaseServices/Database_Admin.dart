@@ -19,8 +19,8 @@ class DatabaseAdmin {
     return recipients;
   }
 
-  void addRecipient(String email) async {
-    List<String> emails = await getRecipientList();
+  Future<void> addRecipient(String email) async {
+    List<dynamic> emails = await getRecipientList();
     emails.add(email);
     var admin = FirebaseFirestore.instance
         .collection('Schools')
@@ -35,8 +35,8 @@ class DatabaseAdmin {
         .catchError((error) => print("Failed to add email: $error"));
   }
 
-  void deleteRecipient(String email) async {
-    List<String> emails = await getRecipientList();
+  Future<void> deleteRecipient(String email) async {
+    List<dynamic> emails = await getRecipientList();
     int i;
     for (i = 0; i < emails.length; ++i) {
       if (emails[i] == email) break;
