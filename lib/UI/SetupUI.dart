@@ -141,8 +141,9 @@ class _SetupUIState extends State<SetupUI> {
                         DialogButton(
                           onPressed: () async {
                             setState(() {
-                              setupItems.add(newVal);
+                              setupItems.add(newVal.replaceAll(' ', ''));
                             });
+                            Navigator.pop(context);
                             if (widget.display == "Email") {
                               await DatabaseAdmin(schoolDB: widget.schoolDB)
                                   .addRecipient(newVal);
@@ -150,9 +151,8 @@ class _SetupUIState extends State<SetupUI> {
                               await DatabaseLive(
                                       schoolDB: widget.schoolDB,
                                       collectionName: newVal)
-                                  .createNewWashroom(newVal, context);
+                                  .createNewWashroom();
                             }
-                            Navigator.pop(context);
                           },
                           child: Text(
                             "ADD",

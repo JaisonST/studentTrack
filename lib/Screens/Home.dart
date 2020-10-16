@@ -40,12 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
       return Loading();
     } else if (location == "Admin") {
       return AdminUI(schoolDB: studentDB);
-
-    } else if(location == "Teacher"){
+    } else if (location == "Teacher") {
       return TeacherUI(schoolDB: studentDB);
-    }else{
-      return ClinicUI(schoolDB: studentDB,collectionName: location,);
+    } else {
+      print(location);
+      return ClinicUI(
+        schoolDB: studentDB,
+        collectionName: location,
+      );
     }
   }
-  }
-
+}

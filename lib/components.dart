@@ -10,7 +10,7 @@ import 'package:mailer/smtp_server.dart';
 
 //function for the clinic form
 clinicForm(context, String localTitle, String localDesc, Color localColor,
-    String schoolDB,String collectionName) {
+    String schoolDB, String collectionName) {
   String studentName;
   String studentClass;
 
@@ -45,8 +45,8 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
           color: localColor,
           onPressed: () async {
             if (localTitle == 'Emergency - Form') {
-              List<String> emails = await DatabaseAdmin(schoolDB: schoolDB)
-                  .getRecipientList();
+              List<String> emails =
+                  await DatabaseAdmin(schoolDB: schoolDB).getRecipientList();
               print(emails);
               String subject = 'Emergency Case';
               String body =
@@ -60,7 +60,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
                   .addRecordToEmergency(studentName, studentClass);
             } else {
               Navigator.pop((context));
-              DatabaseLive(schoolDB: schoolDB,collectionName: collectionName)
+              DatabaseLive(schoolDB: schoolDB, collectionName: collectionName)
                   .addRecordToLive(studentName, studentClass);
             }
           },
@@ -76,7 +76,7 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
 class ClinicAddButton extends StatelessWidget {
   final schoolDB;
   final collectionName;
-  ClinicAddButton({@required this.schoolDB,this.collectionName});
+  ClinicAddButton({@required this.schoolDB, this.collectionName});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -90,7 +90,7 @@ class ClinicAddButton extends StatelessWidget {
         backgroundColor: Color(0xff4DD172),
         onPressed: () {
           clinicForm(context, 'Clinic Form', 'Please Fill in Details',
-              Color(0xff4DD172), schoolDB,collectionName);
+              Color(0xff4DD172), schoolDB, collectionName);
         },
       ),
     );
@@ -100,7 +100,7 @@ class ClinicAddButton extends StatelessWidget {
 class EmergencyAddButton extends StatelessWidget {
   final schoolDB;
   final collectionName;
-  EmergencyAddButton({@required this.schoolDB,this.collectionName});
+  EmergencyAddButton({@required this.schoolDB, this.collectionName});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -113,8 +113,13 @@ class EmergencyAddButton extends StatelessWidget {
         ),
         backgroundColor: Colors.red,
         onPressed: () {
-          clinicForm(context, 'Emergency - Form',
-              'Alert will be sent to MSO team', Colors.red, schoolDB,collectionName);
+          clinicForm(
+              context,
+              'Emergency - Form',
+              'Alert will be sent to MSO team',
+              Colors.red,
+              schoolDB,
+              collectionName);
         },
       ),
     );
@@ -173,7 +178,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 sendMail(
-    {@required List<String> emails,
+    {@required List<dynamic> emails,
     String subject,
     String body,
     List<Attachment> attach}) async {

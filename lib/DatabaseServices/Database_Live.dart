@@ -29,16 +29,14 @@ class DatabaseLive {
   }
 
   //Washroom Functions
-  Future<void> createNewWashroom(String description, context) async {
+  Future<void> createNewWashroom() async {
     String username = collectionName + "." + schoolDB + "@strack.com";
     String password = collectionName + "_" + schoolDB; //Default password
     var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
     DatabaseAdmin(schoolDB: schoolDB).addToWashroomList(collectionName);
-    await live.collection(collectionName).doc('Details').set({
-      'Description': description,
-    });
+
     await AuthServices()
-        .createNewUser(collectionName, schoolDB, username, password, context);
+        .createNewUser(collectionName, schoolDB, username, password);
   }
 
   Future<void> deleteWashroom() async {
