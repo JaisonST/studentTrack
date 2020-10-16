@@ -3,6 +3,7 @@ import 'package:csv/csv.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter/material.dart';
@@ -20,27 +21,46 @@ class DatabaseHistory {
     print(directory);
 
     List<List<dynamic>> rows = List<List<dynamic>>();
-    rows.add(['Name', 'Class', 'Time of Entry', 'Time of Exit']);
 
-    var cloud = FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('History');
+    List<dynamic> classes = await DatabaseAdmin(schoolDB: schoolDB).getRecipientList();
+    classes.add('Clinic');
 
-    await cloud.orderBy('Index',descending: false).get().then((QuerySnapshot snapshot) {
-      List<dynamic> row = List<dynamic>();
-      snapshot.docs.forEach((doc) {
-        row = [];
-        Timestamp t = doc.data()['Index'];
-        DateTime recordDate = t.toDate();
-        if (!recordDate.difference(date).isNegative) {
-          row.add(doc.data()['Name']);
-          row.add(doc.data()['Class']);
-          row.add(doc.data()['EntryTime']);
-          row.add(doc.data()['ExitTime']);
-          rows.add(row);
-        }
+    var cloud = FirebaseFirestore.instance.collection('Schools')
+        .doc(schoolDB)
+        .collection('History');
+
+    for(dynamic val in classes) {
+
+
+      rows.add([val]);
+      rows.add(['Name', 'Class', 'Time of Entry', 'Time of Exit']);
+
+
+
+      await cloud.where('Location',isEqualTo: val).orderBy('Index', descending: false).get().then((
+          QuerySnapshot snapshot) {
+        List<dynamic> row = List<dynamic>();
+        snapshot.docs.forEach((doc) {
+          row = [];
+          Timestamp t = doc.data()['Index'];
+          DateTime recordDate = t.toDate();
+          if (!recordDate
+              .difference(date)
+              .isNegative) {
+            row.add(doc.data()['Name']);
+            row.add(doc.data()['Class']);
+            row.add(doc.data()['EntryTime']);
+            row.add(doc.data()['ExitTime']);
+            rows.add(row);
+          }
+        });
       });
-    });
 
-    print(rows);
+      rows.add([]);
+      rows.add([]);
+      rows.add([]);
+      print(rows);
+    }
 
     String csv = ListToCsvConverter().convert(rows);
 
