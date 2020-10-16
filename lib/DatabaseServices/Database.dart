@@ -7,6 +7,13 @@ class DatabaseServices {
   final CollectionReference users =
       FirebaseFirestore.instance.collection('Users');
 
+  Future<void> createUser(String schoolDB,String collectionName) async {
+    await users.doc(uid).set({
+      'DB': schoolDB,
+      'Designation':collectionName,
+    });
+  }
+
   Future<String> returnDesignation() async {
     String returnValue;
     await users.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
