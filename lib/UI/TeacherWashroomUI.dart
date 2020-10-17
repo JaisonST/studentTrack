@@ -111,15 +111,14 @@ class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
                                         Icons.arrow_drop_down,
                                         color: Colors.white,
                                       ),
-                                      onChanged: (value) {
+                                      onChanged: (value) async {
+                                        cap = await DatabaseAdmin(
+                                                schoolDB: widget.schoolDB)
+                                            .returnCap(value);
                                         setState(() {
                                           val = value;
-                                          DatabaseAdmin(
-                                                  schoolDB: widget.schoolDB)
-                                              .returnCap(val)
-                                              .then((value) {
-                                            cap = value;
-                                          });
+                                          cap = cap;
+                                          print(cap);
                                         });
                                       }),
                                 ),
