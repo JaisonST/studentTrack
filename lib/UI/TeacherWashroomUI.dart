@@ -193,9 +193,9 @@ class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
                       flex: 1,
                       child: SizedBox(),
                     ),
-                    //EmergencyWarning(liveCases: liveCases),
+                    EmergencyWarning(liveCases: liveCases, cap: cap),
                     Expanded(
-                      flex: 4,
+                      flex: 3,
                       child: SizedBox(),
                     ),
                   ],
@@ -204,5 +204,52 @@ class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
             );
           }
         });
+  }
+}
+
+class EmergencyWarning extends StatelessWidget {
+  final int liveCases;
+  final int cap;
+  EmergencyWarning({@required this.liveCases, @required this.cap});
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: 2,
+      child: liveCases < cap
+          ? Container()
+          : Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: SizedBox(),
+                ),
+                Expanded(
+                  flex: 8,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'WASHROOM LIMIT REACHED',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      color: Colors.red[400],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: SizedBox(),
+                ),
+              ],
+            ),
+    );
   }
 }
