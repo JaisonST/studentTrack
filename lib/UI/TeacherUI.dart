@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:studenttrack/UI/TeacherWashroomUI.dart';
 import '../DatabaseServices/Database_Admin.dart';
 import '../components.dart';
-import '../components.dart';
 import 'TeacherClinicUI.dart';
 import 'package:studenttrack/components.dart';
 

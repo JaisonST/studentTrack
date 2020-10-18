@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
+import 'package:studenttrack/AuthenticationSystem/Version.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 
 void main() => runApp(App());
@@ -56,6 +56,6 @@ class _AppState extends State<App> {
       return Loading();
     }
 
-    return Wrapper();
+    return Version();
   }
 }
