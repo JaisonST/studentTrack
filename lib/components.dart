@@ -182,7 +182,7 @@ sendMail(
     String subject,
     String body,
     List<Attachment> attach}) async {
-  String username = 'studenttrack.ois@gmail.com';
+  String username = 'studenttrackteam@gmail.com';
   String password = '';
 
   password = await DatabaseServices(uid: 'Admin').returnPass();
