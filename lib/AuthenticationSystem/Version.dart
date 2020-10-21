@@ -1,17 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:studenttrack/AuthenticationSystem/Wrapper.dart';
 import 'package:studenttrack/DatabaseServices/Database.dart';
-import 'package:studenttrack/Screens/Home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:studenttrack/Screens/Loading.dart';
-import 'package:studenttrack/Screens/LogIn.dart';
 import 'package:studenttrack/Screens/Update.dart';
-import 'package:studenttrack/UI/TeacherClinicUI.dart';
-import '../Screens/Home.dart';
-import '../UI/TeacherUI.dart';
 
 class Version extends StatefulWidget {
   @override

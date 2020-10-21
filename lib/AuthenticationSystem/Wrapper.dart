@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:studenttrack/Screens/Home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:studenttrack/Screens/LogIn.dart';
-import 'package:studenttrack/UI/TeacherClinicUI.dart';
 import '../Screens/Home.dart';
-import '../UI/TeacherUI.dart';
-import 'package:studenttrack/AuthenticationSystem/Version.dart';
 
 class Wrapper extends StatefulWidget {
   static String id = 'Wrapper';
