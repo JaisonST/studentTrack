@@ -1,4 +1,4 @@
-package com.poor.studenttrack;
+package com.polymer.studenttrack;
 
 import io.flutter.embedding.android.FlutterActivity;
 
