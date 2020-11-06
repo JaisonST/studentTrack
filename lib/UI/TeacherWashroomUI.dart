@@ -142,7 +142,6 @@ class _TeacherWashroomUIState extends State<TeacherWashroomUI> {
                                             setState(() {
                                               val = value;
                                               cap = cap;
-                                              print(cap);
                                             });
                                           }),
                                     ),

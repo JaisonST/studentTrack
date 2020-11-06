@@ -89,7 +89,7 @@ class ClinicAddButton extends StatelessWidget {
         ),
         backgroundColor: Color(0xff4DD172),
         onPressed: () {
-          clinicForm(context, 'Clinic Form', 'Please Fill in Details',
+          clinicForm(context, '$collectionName', 'Please Fill in Details',
               Color(0xff4DD172), schoolDB, collectionName);
         },
       ),
