@@ -8,29 +8,6 @@ import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
-// class ClinicFormState extends StatefulWidget {
-//   ClinicFormState(
-//       {@required this.context,
-//       this.collectionName,
-//       this.schoolDB,
-//       this.localColor,
-//       this.localDesc,
-//       this.localTitle});
-//   final BuildContext context;
-//   final String localTitle, localDesc;
-//   final Color localColor;
-//   final String schoolDB, collectionName;
-//   @override
-//   _ClinicFormStateState createState() => _ClinicFormStateState();
-// }
-//
-// class _ClinicFormStateState extends State<ClinicFormState> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
-
 //function for the clinic form
 clinicForm(context, String localTitle, String localDesc, Color localColor,
     String schoolDB, String collectionName) {
