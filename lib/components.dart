@@ -13,7 +13,6 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
     String schoolDB, String collectionName) {
   String studentName;
   String studentClass;
-
   Alert(
       context: context,
       title: localTitle,
@@ -44,24 +43,31 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
         DialogButton(
           color: localColor,
           onPressed: () async {
-            if (localTitle == 'Emergency - Form') {
-              List<dynamic> emails =
-                  await DatabaseAdmin(schoolDB: schoolDB).getRecipientList();
-              print(emails);
-              String subject = 'Emergency Case';
-              String body =
-                  'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
-
-              Navigator.pop((context));
-
-              sendMail(
-                  emails: emails, subject: subject, body: body, attach: null);
-              DatabaseEmergency(schoolDB: schoolDB)
-                  .addRecordToEmergency(studentName, studentClass);
+            if (studentName == null || studentClass == null) {
+              Alert(
+                context: context,
+                title: 'Please Fill in All values',
+                buttons: [],
+                style: AlertStyle(titleStyle: TextStyle(color: Colors.red)),
+              ).show();
             } else {
-              Navigator.pop((context));
-              DatabaseLive(schoolDB: schoolDB, collectionName: collectionName)
-                  .addRecordToLive(studentName, studentClass);
+              if (localTitle == 'Emergency - Form') {
+                List<dynamic> emails =
+                    await DatabaseAdmin(schoolDB: schoolDB).getRecipientList();
+                print(emails);
+                String subject = 'Emergency Case';
+                String body =
+                    'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
+                Navigator.pop((context));
+                sendMail(
+                    emails: emails, subject: subject, body: body, attach: null);
+                DatabaseEmergency(schoolDB: schoolDB)
+                    .addRecordToEmergency(studentName, studentClass);
+              } else {
+                Navigator.pop((context));
+                DatabaseLive(schoolDB: schoolDB, collectionName: collectionName)
+                    .addRecordToLive(studentName, studentClass);
+              }
             }
           },
           child: Text(
@@ -89,7 +95,7 @@ class ClinicAddButton extends StatelessWidget {
         ),
         backgroundColor: Color(0xff4DD172),
         onPressed: () {
-          clinicForm(context, 'Clinic Form', 'Please Fill in Details',
+          clinicForm(context, '$collectionName', 'Please Fill in Details',
               Color(0xff4DD172), schoolDB, collectionName);
         },
       ),
