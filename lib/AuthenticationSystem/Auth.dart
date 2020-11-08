@@ -56,6 +56,25 @@ class AuthServices {
     }
   }
 
+  Future deleteUser(String val, String schoolDB) async {
+    try {
+      String localEmail = val + "." + schoolDB + "@strack.com";
+      String localPassword = val + "_" + schoolDB;
+
+      //temp firebase app so doesnt log into main app
+      FirebaseApp newApp = await Firebase.initializeApp(
+          name: 'Secondary', options: Firebase.app().options);
+      auth.UserCredential userCredential =
+          await auth.FirebaseAuth.instanceFor(app: newApp)
+              .signInWithEmailAndPassword(
+                  email: localEmail, password: localPassword);
+      userCredential.user.delete();
+      newApp.delete();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future signOut(context) async {
     try {
       await _auth.signOut();

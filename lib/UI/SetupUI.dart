@@ -18,7 +18,7 @@ class _SetupUIState extends State<SetupUI> {
   @override
   Widget build(BuildContext context) {
     String newVal;
-    int cap;
+    int cap = 0;
     List<dynamic> setupItems = widget.items;
     return Scaffold(
       appBar: AppBar(
@@ -127,63 +127,76 @@ class _SetupUIState extends State<SetupUI> {
                     Alert(
                       context: context,
                       title: "Add ${widget.display}",
-                      content: widget.display == "Email" ? TextField(
-                        onChanged: (value) {
-                          newVal = value;
-                        },
-                        decoration: InputDecoration(
-                          icon: Icon(
-                            Icons.account_circle,
-                            color: Color(0xff4DD172),
-                          ),
-                          labelText: 'Enter ${widget.display}',
-                        ),
-                      ):Column(
-                        children: [
-                          TextField(
-                            onChanged: (value) {
-                              newVal = value;
-                            },
-                            decoration: InputDecoration(
-                              icon: Icon(
-                                Icons.account_circle,
-                                color: Color(0xff4DD172),
+                      content: widget.display == "Email"
+                          ? TextField(
+                              onChanged: (value) {
+                                newVal = value;
+                              },
+                              decoration: InputDecoration(
+                                icon: Icon(
+                                  Icons.account_circle,
+                                  color: Color(0xff4DD172),
+                                ),
+                                labelText: 'Enter ${widget.display}',
                               ),
-                              labelText: 'Enter ${widget.display}',
+                            )
+                          : Column(
+                              children: [
+                                TextField(
+                                  onChanged: (value) {
+                                    newVal = value;
+                                  },
+                                  decoration: InputDecoration(
+                                    icon: Icon(
+                                      Icons.account_circle,
+                                      color: Color(0xff4DD172),
+                                    ),
+                                    labelText: 'Enter ${widget.display}',
+                                  ),
+                                ),
+                                TextField(
+                                  onChanged: (value) {
+                                    cap = int.parse(value);
+                                  },
+                                  decoration: InputDecoration(
+                                    icon: Icon(
+                                      Icons.account_circle,
+                                      color: Color(0xff4DD172),
+                                    ),
+                                    labelText: 'Enter the cap limit',
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                )
+                              ],
                             ),
-                          ),
-                          TextField(
-                            
-                            onChanged: (value) {
-                              cap = int.parse(value) ;
-                            },
-                            decoration: InputDecoration(
-                              icon: Icon(
-                                Icons.account_circle,
-                                color: Color(0xff4DD172),
-                              ),
-                              labelText: 'Enter the cap limit',
-                            ),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                          )
-                        ],
-                      ),
                       buttons: [
                         DialogButton(
                           onPressed: () async {
-                            setState(() {
-                              setupItems.add(newVal.replaceAll(' ', ''));
-                            });
-                            Navigator.pop(context);
-                            if (widget.display == "Email") {
-                              await DatabaseAdmin(schoolDB: widget.schoolDB)
-                                  .addRecipient(newVal);
-                            } else if (widget.display == "Washroom") {
-                              await DatabaseLive(
-                                      schoolDB: widget.schoolDB,
-                                      collectionName: newVal)
-                                  .createNewWashroom(cap);
+                            if (newVal != null || cap != 0) {
+                              setState(() {
+                                setupItems.add(newVal.replaceAll(' ', ''));
+                              });
+                              Navigator.pop(context);
+                              if (widget.display == "Email") {
+                                await DatabaseAdmin(schoolDB: widget.schoolDB)
+                                    .addRecipient(newVal);
+                              } else if (widget.display == "Washroom") {
+                                await DatabaseLive(
+                                        schoolDB: widget.schoolDB,
+                                        collectionName: newVal)
+                                    .createNewWashroom(cap);
+                              }
+                            } else {
+                              Alert(
+                                context: context,
+                                title: 'Please Fill in All values',
+                                buttons: [],
+                                style: AlertStyle(
+                                    titleStyle: TextStyle(color: Colors.red)),
+                              ).show();
                             }
                           },
                           child: Text(

@@ -47,6 +47,7 @@ class DatabaseLive {
   }
 
   Future<void> deleteWashroom() async {
+    AuthServices().deleteUser(collectionName, schoolDB);
     var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
     DatabaseAdmin(schoolDB: schoolDB).deleteFromWashroomList(collectionName);
     await live.collection(collectionName).get().then((QuerySnapshot) {
