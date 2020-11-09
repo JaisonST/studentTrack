@@ -16,17 +16,18 @@ class TeacherClinicUI extends StatefulWidget {
 
 class _TeacherClinicUIState extends State<TeacherClinicUI> {
   int liveCases = 0;
-  int cap = 0;
+  int cap = 20;
 
   @override
   void initState() {
-    DatabaseAdmin(schoolDB: widget.schoolDB).returnCap('Clinic').then((value){
+    DatabaseAdmin(schoolDB: widget.schoolDB).returnCap('Clinic').then((value) {
       setState(() {
         cap = value;
       });
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -50,8 +51,14 @@ class _TeacherClinicUIState extends State<TeacherClinicUI> {
                 backgroundColor: Color(0xff4DD172),
               ),
               floatingActionButton: liveCases >= cap
-                  ? EmergencyAddButton(schoolDB: widget.schoolDB,collectionName: 'Clinic',)
-                  : ClinicAddButton(schoolDB: widget.schoolDB,collectionName: 'Clinic',),
+                  ? EmergencyAddButton(
+                      schoolDB: widget.schoolDB,
+                      collectionName: 'Clinic',
+                    )
+                  : ClinicAddButton(
+                      schoolDB: widget.schoolDB,
+                      collectionName: 'Clinic',
+                    ),
               body: Center(
                 child: Column(
                   children: <Widget>[
@@ -118,7 +125,10 @@ class _TeacherClinicUIState extends State<TeacherClinicUI> {
                       flex: 1,
                       child: SizedBox(),
                     ),
-                    EmergencyWarning(liveCases: liveCases,cap: cap,),
+                    EmergencyWarning(
+                      liveCases: liveCases,
+                      cap: cap,
+                    ),
                     Expanded(
                       flex: 4,
                       child: SizedBox(),
@@ -135,7 +145,7 @@ class _TeacherClinicUIState extends State<TeacherClinicUI> {
 class EmergencyWarning extends StatelessWidget {
   final int liveCases;
   final int cap;
-  EmergencyWarning({@required this.liveCases,@required this.cap});
+  EmergencyWarning({@required this.liveCases, @required this.cap});
   @override
   Widget build(BuildContext context) {
     return Expanded(

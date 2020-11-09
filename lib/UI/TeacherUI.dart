@@ -19,15 +19,19 @@ class _TeacherUIState extends State<TeacherUI> {
     return Scaffold(
       appBar: HomeAppBar(),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 30.0),
+        padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
         child: Center(
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 flex: 6,
                 child: MaterialButton(
-                  padding: EdgeInsets.all(0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color: Color(0xff4dd172), width: 3.0),
+                  ),
+                  padding: EdgeInsets.all(10),
                   elevation: 0.0,
                   color: Colors.white,
                   child: Image.asset("images/clinic.png"),
@@ -49,10 +53,46 @@ class _TeacherUIState extends State<TeacherUI> {
               Expanded(
                 flex: 6,
                 child: MaterialButton(
-                  padding: EdgeInsets.all(0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color: Color(0xff4dd172), width: 3.0),
+                  ),
+                  padding: EdgeInsets.all(10),
                   elevation: 0.0,
                   color: Colors.white,
                   child: Image.asset("images/washroom.png"),
+                  onPressed: () {
+                    DatabaseAdmin(schoolDB: widget.schoolDB)
+                        .returnWashroomList()
+                        .then((value) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TeacherWashroomUI(
+                            schoolDB: widget.schoolDB,
+                            washroomList: value,
+                          ),
+                        ),
+                      );
+                    });
+                  },
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: SizedBox(),
+              ),
+              Expanded(
+                flex: 6,
+                child: MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color: Color(0xff4dd172), width: 3.0),
+                  ),
+                  padding: EdgeInsets.all(10),
+                  elevation: 0.0,
+                  color: Colors.white,
+                  child: Image.asset("images/room.png"),
                   onPressed: () {
                     DatabaseAdmin(schoolDB: widget.schoolDB)
                         .returnWashroomList()
