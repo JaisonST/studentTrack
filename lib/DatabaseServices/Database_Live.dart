@@ -34,8 +34,8 @@ class DatabaseLive {
     var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
     DatabaseAdmin(schoolDB: schoolDB).addToWashroomList(collectionName);
 
-    await AuthServices()
-        .createNewUser(collectionName, schoolDB, username, password);
+    await AuthServices().createNewUser(
+        collectionName, schoolDB, username, password, "Washroom");
     await FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
@@ -62,8 +62,42 @@ class DatabaseLive {
           .update({collectionName: FieldValue.delete()});
     });
   }
-  //Live Functions
 
+  //Room Functions
+  Future<void> createNewRoom(int cap) async {
+    String username = collectionName + "." + schoolDB + "@strack.com";
+    String password = collectionName + "_" + schoolDB; //Default password
+    DatabaseAdmin(schoolDB: schoolDB).addToRoomList(collectionName);
+    await AuthServices()
+        .createNewUser(collectionName, schoolDB, username, password, "Room");
+    await FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('Admin')
+        .doc('Cap')
+        .set({
+      collectionName: cap,
+    }, SetOptions(merge: true));
+  }
+
+  Future<void> deleteRoom() async {
+    AuthServices().deleteUser(collectionName, schoolDB);
+    var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
+    DatabaseAdmin(schoolDB: schoolDB).deleteFromRoomList(collectionName);
+    await live.collection(collectionName).get().then((QuerySnapshot) {
+      for (DocumentSnapshot d in QuerySnapshot.docs) {
+        d.reference.delete();
+      }
+      FirebaseFirestore.instance
+          .collection('Schools')
+          .doc(schoolDB)
+          .collection("Admin")
+          .doc('Cap')
+          .update({collectionName: FieldValue.delete()});
+    });
+  }
+
+  //Live Functions
   Future addRecordToLive(String name, String grade) {
     var live = FirebaseFirestore.instance
         .collection('Schools')

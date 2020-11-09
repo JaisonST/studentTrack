@@ -56,7 +56,6 @@ class DatabaseAdmin {
   }
 
   //Washroom List Functions
-
   Future returnWashroomList() async {
     var admin = FirebaseFirestore.instance
         .collection('Schools')
@@ -96,14 +95,55 @@ class DatabaseAdmin {
     });
   }
 
-  Future<int> returnCap(String collectionName) async {
-    var adminCap = FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('Admin').doc('Cap');
-
-    return await adminCap.get().then((DocumentSnapshot d){
-      return d[collectionName];
+  //Rooms List Functions
+  Future returnRoomList() async {
+    var admin = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('Admin')
+        .doc('List');
+    return await admin.get().then((value) {
+      return value['Rooms'];
     });
-
-
   }
 
+  Future<void> addToRoomList(String room) async {
+    List<dynamic> roomList = await returnRoomList();
+    roomList.add(room);
+    var admin = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('Admin');
+    return admin.doc('List').set({
+      'Rooms': roomList,
+    });
+  }
+
+  Future<void> deleteFromRoomList(String washroom) async {
+    List<dynamic> washroomList = await returnRoomList();
+    int i;
+    for (i = 0; i < washroomList.length; ++i) {
+      if (washroom == washroomList[i]) break;
+    }
+    washroomList.removeAt(i);
+    var admin = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('Admin');
+    return admin.doc('List').set({
+      'Rooms': washroomList,
+    });
+  }
+
+  Future<int> returnCap(String collectionName) async {
+    var adminCap = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('Admin')
+        .doc('Cap');
+
+    return await adminCap.get().then((DocumentSnapshot d) {
+      return d[collectionName];
+    });
+  }
 }
