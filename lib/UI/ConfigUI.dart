@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:studenttrack/UI/EmailSetup.dart';
 import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
 import 'package:studenttrack/UI/WashroomSetup.dart';
+import 'package:studenttrack/UI/RoomSetup.dart';
 
 class ConfigUI extends StatefulWidget {
   final String schoolDB;
@@ -82,8 +83,8 @@ class _ConfigUIState extends State<ConfigUI> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WashroomSetup(
-                        washrooms: value,
+                      builder: (context) => RoomSetup(
+                        rooms: value,
                         schoolDB: widget.schoolDB,
                       ),
                     ),
