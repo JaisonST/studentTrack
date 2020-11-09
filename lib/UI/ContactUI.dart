@@ -27,7 +27,7 @@ class _ContactUIState extends State<ContactUI> {
             Expanded(
               flex: 2,
               child: Text(
-                "Hey, we are a closed app although if interested in creating a system at your organization please contact us at:",
+                "Hey, we are a closed-system app. Although if interested in creating a system at your organization please contact us at:",
                 style: TextStyle(
                   color: Color(0xff4dd172),
                 ),

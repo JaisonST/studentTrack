@@ -30,159 +30,161 @@ class _LogInState extends State<LogIn> {
     return loading
         ? Loading()
         : Scaffold(
-            body: Padding(
-            padding: const EdgeInsets.fromLTRB(40.0, 50.0, 30.0, 20.0),
-            child: Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    Expanded(flex: 1, child: SizedBox()),
-                    Expanded(
-                        flex: _keyboardIsVisible() ? 1 : 5,
-                        child: StudentTrackTitle()),
-                    Expanded(flex: 2, child: SizedBox(height: 60.0)),
-                    Expanded(
-                      flex: 2,
-                      child: TextFormField(
-                          decoration: InputDecoration(
-                              hintText: 'Email Address',
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 2.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: Color(0xff696969),
-                                width: 2.0,
-                              ))),
-                          validator: (val) =>
-                              val.isEmpty ? "Enter a valid id" : null,
-                          onChanged: (val) {
-                            setState(() => email = val);
-                          }),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: SizedBox(),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: TextFormField(
-                          decoration: InputDecoration(
-                              hintText: 'Password',
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.white, width: 2.0)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(0xff696969), width: 2.0))),
-                          validator: (val) =>
-                              val.length < 6 ? 'Password not Valid' : null,
-                          obscureText: true,
-                          onChanged: (val) {
-                            setState(() => password = val);
-                          }),
-                    ),
-                    Expanded(flex: 2, child: SizedBox()),
-                    Expanded(
-                      flex: 2,
-                      child: SizedBox(
-                        width: 100.0,
-                        child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Color(0xff4dd172))),
-                            onPressed: () async {
-                              setState(() {
-                                loading = true;
-                              });
-                              if (_formKey.currentState.validate()) {
-                                dynamic result = await _auth.signIn(
-                                    email, password, context);
-                                if (result == null) {
+            body:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Expanded(
+              flex: 14,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(40.0, 50.0, 30.0, 20.0),
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(flex: 1, child: SizedBox()),
+                        Expanded(
+                            flex: _keyboardIsVisible() ? 1 : 7,
+                            child: StudentTrackTitle()),
+                        Expanded(flex: 2, child: SizedBox(height: 60.0)),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(
+                              decoration: InputDecoration(
+                                  hintText: 'Email Address',
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 2.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                    color: Color(0xff696969),
+                                    width: 2.0,
+                                  ))),
+                              validator: (val) =>
+                                  val.isEmpty ? "Enter a valid id" : null,
+                              onChanged: (val) {
+                                setState(() => email = val);
+                              }),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(
+                              decoration: InputDecoration(
+                                  hintText: 'Password',
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.white, width: 2.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color(0xff696969),
+                                          width: 2.0))),
+                              validator: (val) =>
+                                  val.length < 6 ? 'Password not Valid' : null,
+                              obscureText: true,
+                              onChanged: (val) {
+                                setState(() => password = val);
+                              }),
+                        ),
+                        Expanded(flex: 1, child: SizedBox()),
+                        Expanded(
+                          flex: 2,
+                          child: SizedBox(
+                            width: 100.0,
+                            child: RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(color: Color(0xff4dd172))),
+                                onPressed: () async {
                                   setState(() {
-                                    loading = false;
-                                    error =
-                                        'Please enter a valid Email Id and corresponding Password';
+                                    loading = true;
                                   });
-                                }
-                              }
-                            },
-                            child: Text('Sign In',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 16.0)),
-                            color: Color(0xff4dd172)),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: SizedBox(),
-                    ),
-                    Expanded(
-                      flex: error == "" ? 1 : 2,
-                      child: Text(error,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontStyle: FontStyle.italic)),
-                    ),
-                    _keyboardIsVisible()
-                        ? Expanded(
+                                  if (_formKey.currentState.validate()) {
+                                    dynamic result = await _auth.signIn(
+                                        email, password, context);
+                                    if (result == null) {
+                                      setState(() {
+                                        loading = false;
+                                        error =
+                                            'Please enter a valid Email Id and corresponding Password';
+                                      });
+                                    }
+                                  }
+                                },
+                                child: Text('Sign In',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 16.0)),
+                                color: Color(0xff4dd172)),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(),
+                        ),
+                        Expanded(
+                          flex: error == "" ? 1 : 2,
+                          child: Text(error,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic)),
+                        ),
+                      ],
+                    )),
+              ),
+            ),
+            _keyboardIsVisible()
+                ? Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  )
+                : Expanded(
+                    flex: 1,
+                    child: Container(
+                      color: Color(0xff4dd172),
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              "If you don't have an accoount please:",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          Expanded(
                             flex: 1,
                             child: SizedBox(),
-                          )
-                        : Expanded(
-                            flex: 2,
-                            child: SizedBox(
-                              child: Container(
-                                color: Color(0xff4dd172),
-                                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Text(
-                                        "If you don't have an accoount please:",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: SizedBox(),
-                                    ),
-                                    Expanded(
-                                      child: MaterialButton(
-                                        elevation: 0.0,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            side:
-                                                BorderSide(color: Colors.grey)),
-                                        child: Text(
-                                          'Click Here',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Color(0xff4dd172),
-                                          ),
-                                        ),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ContactUI()));
-                                        },
-                                      ),
-                                    ),
-                                  ],
+                          ),
+                          Expanded(
+                            child: MaterialButton(
+                              elevation: 0.0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(color: Color(0xff4dd172))),
+                              child: Text(
+                                'Click Here',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xff4dd172),
                                 ),
                               ),
+                              color: Colors.white,
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ContactUI()));
+                              },
                             ),
-                          )
-                  ],
-                )),
-          ));
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+          ]));
   }
 }
 
