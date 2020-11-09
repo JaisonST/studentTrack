@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:studenttrack/UI/EmailSetup.dart';
 import 'package:studenttrack/DatabaseServices/Database_Admin.dart';
-import 'package:studenttrack/UI/WashroomSetup.dart';
-import 'package:studenttrack/UI/RoomSetup.dart';
+import 'package:studenttrack/UI/SetUP.dart';
 
 class ConfigUI extends StatefulWidget {
   final String schoolDB;
