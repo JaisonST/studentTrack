@@ -91,7 +91,13 @@ class _SetupUIState extends State<SetupUI> {
                                                   collectionName:
                                                       setupItems[index])
                                               .deleteWashroom();
-                                        } else {}
+                                        } else if (widget.display == "Room") {
+                                          await DatabaseLive(
+                                                  schoolDB: widget.schoolDB,
+                                                  collectionName:
+                                                      setupItems[index])
+                                              .deleteRoom();
+                                        }
                                         setState(() {
                                           setupItems.removeAt(index);
                                         });

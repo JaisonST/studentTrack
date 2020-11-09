@@ -80,6 +80,23 @@ class DatabaseLive {
     }, SetOptions(merge: true));
   }
 
+  Future<void> deleteRoom() async {
+    AuthServices().deleteUser(collectionName, schoolDB);
+    var live = FirebaseFirestore.instance.collection('Schools').doc(schoolDB);
+    DatabaseAdmin(schoolDB: schoolDB).deleteFromRoomList(collectionName);
+    await live.collection(collectionName).get().then((QuerySnapshot) {
+      for (DocumentSnapshot d in QuerySnapshot.docs) {
+        d.reference.delete();
+      }
+      FirebaseFirestore.instance
+          .collection('Schools')
+          .doc(schoolDB)
+          .collection("Admin")
+          .doc('Cap')
+          .update({collectionName: FieldValue.delete()});
+    });
+  }
+
   //Live Functions
   Future addRecordToLive(String name, String grade) {
     var live = FirebaseFirestore.instance

@@ -119,6 +119,22 @@ class DatabaseAdmin {
     });
   }
 
+  Future<void> deleteFromRoomList(String washroom) async {
+    List<dynamic> washroomList = await returnRoomList();
+    int i;
+    for (i = 0; i < washroomList.length; ++i) {
+      if (washroom == washroomList[i]) break;
+    }
+    washroomList.removeAt(i);
+    var admin = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('Admin');
+    return admin.doc('List').set({
+      'Rooms': washroomList,
+    });
+  }
+
   Future<int> returnCap(String collectionName) async {
     var adminCap = FirebaseFirestore.instance
         .collection('Schools')
