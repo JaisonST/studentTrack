@@ -7,26 +7,35 @@ class DatabaseServices {
   final CollectionReference users =
       FirebaseFirestore.instance.collection('Users');
 
-  Future<void> createUser(String schoolDB,String collectionName) async {
+  Future<void> createUser(String schoolDB, String collectionName) async {
     await users.doc(uid).set({
       'DB': schoolDB,
-      'Designation':collectionName,
+      'Designation': collectionName,
     });
   }
 
   Future<String> returnDesignation() async {
     String returnValue;
-    await users.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
-      returnValue = documentSnapshot.data()['Designation'];
-    });
+    try {
+      await users.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
+        returnValue = documentSnapshot.data()['Designation'];
+      });
+    } catch (e) {
+      print(e);
+      returnValue = null;
+    }
     return returnValue;
   }
 
   Future<String> returnDB() async {
     String returnValue;
-    await users.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
-      returnValue = documentSnapshot.data()['DB'];
-    });
+    try {
+      await users.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
+        returnValue = documentSnapshot.data()['DB'];
+      });
+    } catch (e) {
+      returnValue = null;
+    }
     return returnValue;
   }
 
