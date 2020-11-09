@@ -56,13 +56,12 @@ class DatabaseAdmin {
   }
 
   //Washroom List Functions
-
   Future returnWashroomList() async {
     var admin = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin')
-        .doc('WashroomList');
+        .doc('List');
     return await admin.get().then((value) {
       return value['Washrooms'];
     });
@@ -75,7 +74,7 @@ class DatabaseAdmin {
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin');
-    return admin.doc('WashroomList').set({
+    return admin.doc('List').set({
       'Washrooms': washroomList,
     });
   }
@@ -91,19 +90,32 @@ class DatabaseAdmin {
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin');
-    return admin.doc('WashroomList').set({
+    return admin.doc('List').set({
       'Washrooms': washroomList,
     });
   }
 
-  Future<int> returnCap(String collectionName) async {
-    var adminCap = FirebaseFirestore.instance.collection('Schools').doc(schoolDB).collection('Admin').doc('Cap');
-
-    return await adminCap.get().then((DocumentSnapshot d){
-      return d[collectionName];
+  //Rooms List Functions
+  Future returnRoomList() async {
+    var admin = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('Admin')
+        .doc('List');
+    return await admin.get().then((value) {
+      return value['Rooms'];
     });
-
-
   }
 
+  Future<int> returnCap(String collectionName) async {
+    var adminCap = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('Admin')
+        .doc('Cap');
+
+    return await adminCap.get().then((DocumentSnapshot d) {
+      return d[collectionName];
+    });
+  }
 }

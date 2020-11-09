@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studenttrack/UI/TeacherWashroomUI.dart';
+import 'package:studenttrack/UI/TeacherRoomUI.dart';
 import '../DatabaseServices/Database_Admin.dart';
 import '../components.dart';
 import 'TeacherClinicUI.dart';
@@ -95,14 +96,14 @@ class _TeacherUIState extends State<TeacherUI> {
                   child: Image.asset("images/room.png"),
                   onPressed: () {
                     DatabaseAdmin(schoolDB: widget.schoolDB)
-                        .returnWashroomList()
+                        .returnRoomList()
                         .then((value) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TeacherWashroomUI(
+                          builder: (context) => TeacherRoomUI(
                             schoolDB: widget.schoolDB,
-                            washroomList: value,
+                            roomList: value,
                           ),
                         ),
                       );
