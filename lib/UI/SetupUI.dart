@@ -91,7 +91,7 @@ class _SetupUIState extends State<SetupUI> {
                                                   collectionName:
                                                       setupItems[index])
                                               .deleteWashroom();
-                                        }
+                                        } else {}
                                         setState(() {
                                           setupItems.removeAt(index);
                                         });
@@ -188,6 +188,11 @@ class _SetupUIState extends State<SetupUI> {
                                         schoolDB: widget.schoolDB,
                                         collectionName: newVal)
                                     .createNewWashroom(cap);
+                              } else if (widget.display == "Room") {
+                                await DatabaseLive(
+                                        schoolDB: widget.schoolDB,
+                                        collectionName: newVal)
+                                    .createNewRoom(cap);
                               }
                             } else {
                               Alert(

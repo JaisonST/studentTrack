@@ -61,7 +61,7 @@ class DatabaseAdmin {
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin')
-        .doc('List');
+        .doc('WashroomList');
     return await admin.get().then((value) {
       return value['Washrooms'];
     });
@@ -74,7 +74,7 @@ class DatabaseAdmin {
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin');
-    return admin.doc('List').set({
+    return admin.doc('WashroomList').set({
       'Washrooms': washroomList,
     });
   }
@@ -90,7 +90,7 @@ class DatabaseAdmin {
         .collection('Schools')
         .doc(schoolDB)
         .collection('Admin');
-    return admin.doc('List').set({
+    return admin.doc('WashroomList').set({
       'Washrooms': washroomList,
     });
   }
@@ -104,6 +104,18 @@ class DatabaseAdmin {
         .doc('List');
     return await admin.get().then((value) {
       return value['Rooms'];
+    });
+  }
+
+  Future<void> addToRoomList(String room) async {
+    List<dynamic> roomList = await returnRoomList();
+    roomList.add(room);
+    var admin = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('Admin');
+    return admin.doc('List').set({
+      'Rooms': roomList,
     });
   }
 

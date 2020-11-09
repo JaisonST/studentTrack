@@ -16,7 +16,7 @@ class _RoomSetupState extends State<RoomSetup> {
     return SetupUI(
       items: widget.rooms,
       schoolDB: widget.schoolDB,
-      display: "Rooms",
+      display: "Room",
     );
   }
 }
