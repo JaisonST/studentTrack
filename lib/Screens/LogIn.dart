@@ -19,6 +19,13 @@ class _LogInState extends State<LogIn> {
 
   @override
   Widget build(BuildContext context) {
+    bool _keyboardIsVisible() {
+      if (MediaQuery.of(context).viewInsets.bottom != 0.0) {
+        error = "";
+      }
+      return !(MediaQuery.of(context).viewInsets.bottom == 0.0);
+    }
+
     return loading
         ? Loading()
         : Scaffold(
@@ -29,7 +36,9 @@ class _LogInState extends State<LogIn> {
                 child: Column(
                   children: <Widget>[
                     Expanded(flex: 1, child: SizedBox()),
-                    Expanded(flex: 5, child: StudentTrackTitle()),
+                    Expanded(
+                        flex: _keyboardIsVisible() ? 1 : 5,
+                        child: StudentTrackTitle()),
                     Expanded(flex: 2, child: SizedBox(height: 60.0)),
                     Expanded(
                       flex: 2,
@@ -109,47 +118,61 @@ class _LogInState extends State<LogIn> {
                       child: SizedBox(),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: error == "" ? 1 : 2,
                       child: Text(error,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.black,
                               fontStyle: FontStyle.italic)),
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: SizedBox(
-                        child: Container(
-                          color: Color(0xff4dd172),
-                          padding: EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  "If you don't have an accoount please:",
-                                  style: TextStyle(color: Colors.white),
+                    _keyboardIsVisible()
+                        ? Expanded(
+                            flex: 1,
+                            child: SizedBox(),
+                          )
+                        : Expanded(
+                            flex: 2,
+                            child: SizedBox(
+                              child: Container(
+                                color: Color(0xff4dd172),
+                                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        "If you don't have an accoount please:",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: SizedBox(),
+                                    ),
+                                    Expanded(
+                                      child: MaterialButton(
+                                        elevation: 0.0,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            side:
+                                                BorderSide(color: Colors.grey)),
+                                        child: Text(
+                                          'Click Here',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Color(0xff4dd172),
+                                          ),
+                                        ),
+                                        color: Colors.white,
+                                        onPressed: () {},
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: SizedBox(),
-                              ),
-                              Expanded(
-                                child: MaterialButton(
-                                  child: Text(
-                                    'Click Here',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  color: Colors.white,
-                                  onPressed: () {},
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
+                            ),
+                          )
                   ],
                 )),
           ));
