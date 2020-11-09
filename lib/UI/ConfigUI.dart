@@ -72,7 +72,28 @@ class _ConfigUIState extends State<ConfigUI> {
             ),
           ),
           Expanded(
-            flex: 6,
+            flex: 2,
+            child: ConfigChoice(
+              display: "Set Up Rooms",
+              fn: () {
+                DatabaseAdmin(schoolDB: widget.schoolDB)
+                    .returnRoomList()
+                    .then((value) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WashroomSetup(
+                        washrooms: value,
+                        schoolDB: widget.schoolDB,
+                      ),
+                    ),
+                  );
+                });
+              },
+            ),
+          ),
+          Expanded(
+            flex: 5,
             child: SizedBox(),
           ),
         ],
