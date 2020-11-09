@@ -5,6 +5,7 @@ import 'package:studenttrack/DatabaseServices/Database.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:studenttrack/UI/ClinicUI.dart';
 import 'package:studenttrack/UI/TeacherUI.dart';
+import 'package:studenttrack/components.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'HomeScreen';
@@ -41,6 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
       return AdminUI(schoolDB: studentDB);
     } else if (location == "Teacher") {
       return TeacherUI(schoolDB: studentDB);
+    } else if (location == "" || location == null) {
+      return Scaffold(
+        appBar: HomeAppBar(),
+        body: Center(
+          child: Text('Account being setup please come back later'),
+        ),
+      );
     } else {
       print(location);
       return ClinicUI(
