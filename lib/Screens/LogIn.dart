@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/Screens/Loading.dart';
+import 'package:studenttrack/UI/ContactUI.dart';
 
 class LogIn extends StatefulWidget {
   static String id = "LoginScreen";
@@ -165,7 +166,13 @@ class _LogInState extends State<LogIn> {
                                           ),
                                         ),
                                         color: Colors.white,
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ContactUI()));
+                                        },
                                       ),
                                     ),
                                   ],
