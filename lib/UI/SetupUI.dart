@@ -109,10 +109,12 @@ class _SetupUIState extends State<SetupUI> {
                               },
                               elevation: 1,
                               fillColor: Colors.white,
-                              child: Icon(
-                                Icons.delete_outline,
-                                size: 35.0,
-                                color: Colors.red,
+                              child: Center(
+                                child: Icon(
+                                  Icons.delete_outline,
+                                  size: 35.0,
+                                  color: Colors.red,
+                                ),
                               ),
                               padding: EdgeInsets.all(15.0),
                               shape: CircleBorder(),
