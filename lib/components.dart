@@ -7,6 +7,7 @@ import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:studenttrack/ScanPage.dart';
 
 //function for the clinic form
 clinicForm(context, String localTitle, String localDesc, Color localColor,
@@ -95,8 +96,13 @@ class ClinicAddButton extends StatelessWidget {
         ),
         backgroundColor: Color(0xff4DD172),
         onPressed: () {
-          clinicForm(context, '$collectionName', 'Please Fill in Details',
-              Color(0xff4DD172), schoolDB, collectionName);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ScanPage(),
+            ),
+          );
+          //clinicForm(context, '$collectionName', 'Please Fill in Details',Color(0xff4DD172), schoolDB, collectionName);
         },
       ),
     );
