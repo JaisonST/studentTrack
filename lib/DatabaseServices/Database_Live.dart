@@ -157,4 +157,21 @@ class DatabaseLive {
         .then((value) => print("User deleted"))
         .catchError((error) => print("Failed to delete user: $error"));
   }
+
+  Future<void> scanAddRecordToLive(String doc_id) async{
+    var studentData = FirebaseFirestore.instance
+        .collection('Schools')
+        .doc(schoolDB)
+        .collection('StudentData');
+
+    String name;
+    String grade;
+
+    await studentData.doc(doc_id).get().then((DocumentSnapshot documentSnapshot){
+      name = documentSnapshot['Name'];
+      grade = documentSnapshot['Class'];
+    });
+
+    await addRecordToLive(name, grade);
+  }
 }

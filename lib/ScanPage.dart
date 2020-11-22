@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 import 'package:studenttrack/components.dart';
 
 class ScanPage extends StatefulWidget {
@@ -19,11 +20,12 @@ class _ScanPageState extends State<ScanPage> {
   String _qrInfo = '';
   bool _camState = false;
 
-  _qrCallback(String code) {
-    setState(() {
+  _qrCallback(String code){
+    setState((){
       _camState = false;
       _qrInfo = code;
     });
+
   }
 
   _scanCode() {
@@ -91,8 +93,9 @@ class _ScanPageState extends State<ScanPage> {
                             error.toString(),
                             style: TextStyle(color: Colors.red),
                           ),
-                          qrCodeCallback: (code) {
+                          qrCodeCallback: (code) async {
                             _qrCallback(code);
+                            await DatabaseLive(schoolDB: widget.schoolDB, collectionName: widget.collectionName).scanAddRecordToLive(code);
                           },
                         ),
                       ),
