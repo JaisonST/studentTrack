@@ -127,13 +127,21 @@ class EmergencyAddButton extends StatelessWidget {
         ),
         backgroundColor: Colors.red,
         onPressed: () {
-          clinicForm(
-              context,
-              'Emergency - Form',
-              'Alert will be sent to MSO team',
-              Colors.red,
-              schoolDB,
-              collectionName);
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ScanPage(collectionName: collectionName,schoolDB: schoolDB,localColor: Colors.red,localDesc: 'Alert will be sent to MSO team',localTitle: 'Emergency - Form'),
+            ),
+          );
+
+          // clinicForm(
+          //     context,
+          //     'Emergency - Form',
+          //     'Alert will be sent to MSO team',
+          //     Colors.red,
+          //     schoolDB,
+          //     collectionName);
         },
       ),
     );
