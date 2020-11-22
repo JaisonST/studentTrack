@@ -33,7 +33,7 @@ class DatabaseHistory {
 
     for (dynamic val in classes) {
       rows.add([val]);
-      rows.add(['Name', 'Class', 'Time of Entry', 'Time of Exit']);
+      rows.add(['ID','Name', 'Class', 'Time of Entry', 'Time of Exit']);
 
       await cloud
           .orderBy('Index', descending: false)
@@ -46,6 +46,7 @@ class DatabaseHistory {
             Timestamp t = doc.data()['Index'];
             DateTime recordDate = t.toDate();
             if (!recordDate.difference(date).isNegative) {
+              row.add(doc.data()['ID']);
               row.add(doc.data()['Name']);
               row.add(doc.data()['Class']);
               row.add(doc.data()['EntryTime']);
