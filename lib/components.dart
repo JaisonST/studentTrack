@@ -60,11 +60,13 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
                 String body =
                     'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
                 Navigator.pop((context));
+                Navigator.pop((context));
                 sendMail(
                     emails: emails, subject: subject, body: body, attach: null);
                 DatabaseEmergency(schoolDB: schoolDB)
                     .addRecordToEmergency(studentName, studentClass);
               } else {
+                Navigator.pop((context));
                 Navigator.pop((context));
                 DatabaseLive(schoolDB: schoolDB, collectionName: collectionName)
                     .addRecordToLive(studentName, studentClass);
@@ -99,7 +101,7 @@ class ClinicAddButton extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ScanPage(),
+              builder: (context) => ScanPage(collectionName: collectionName,schoolDB: schoolDB,localColor: Color(0xff4DD172),localDesc: 'Please Fill in Details',localTitle: '$collectionName'),
             ),
           );
           //clinicForm(context, '$collectionName', 'Please Fill in Details',Color(0xff4DD172), schoolDB, collectionName);

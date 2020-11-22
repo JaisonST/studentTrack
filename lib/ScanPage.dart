@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'package:studenttrack/components.dart';
 
 class ScanPage extends StatefulWidget {
   static String id = 'ScanPage';
+  String localTitle;
+  String localDesc;
+  Color localColor;
+  String schoolDB;
+  String collectionName;
+
+  ScanPage({@required this.localDesc,@required this.collectionName,@required this.localColor,@required this.localTitle,@required this.schoolDB});
   @override
   _ScanPageState createState() => _ScanPageState();
 }
@@ -52,8 +60,10 @@ class _ScanPageState extends State<ScanPage> {
                         color: Colors.white),
                   ),
                   color: Color(0xff4DD172),
-                  onPressed: () {
-                    print('HI');
+                  onPressed: () async {
+
+                    await clinicForm(context, widget.localTitle, widget.localDesc, widget.localColor, widget.schoolDB, widget.collectionName);
+
                   },
                 )
               ],
