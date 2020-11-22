@@ -64,12 +64,12 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
                 sendMail(
                     emails: emails, subject: subject, body: body, attach: null);
                 DatabaseEmergency(schoolDB: schoolDB)
-                    .addRecordToEmergency(studentName, studentClass);
+                    .addRecordToEmergency(studentName, studentClass,null);
               } else {
                 Navigator.pop((context));
                 Navigator.pop((context));
                 DatabaseLive(schoolDB: schoolDB, collectionName: collectionName)
-                    .addRecordToLive(studentName, studentClass);
+                    .addRecordToLive(studentName, studentClass,null);
               }
             }
           },

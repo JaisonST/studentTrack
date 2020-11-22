@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../components.dart';
+import 'Database_Admin.dart';
+
 class DatabaseEmergency {
 
 
@@ -40,6 +43,14 @@ class DatabaseEmergency {
 
     if(found) {
       await addRecordToEmergency(name, grade,doc_id);
+      List<dynamic> emails = await DatabaseAdmin(schoolDB: schoolDB).getRecipientList();
+      print(emails);
+      String subject = 'Emergency Case';
+      String body =
+          'Sir/Madam,\nThis is to inform you that $name of class $grade is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
+
+      sendMail(
+          emails: emails, subject: subject, body: body, attach: null);
     }
 
     return found;

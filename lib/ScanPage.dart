@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 import 'package:studenttrack/Screens/Loading.dart';
 import 'package:studenttrack/components.dart';
+
+import 'DatabaseServices/Database_Admin.dart';
 
 class ScanPage extends StatefulWidget {
   static String id = 'ScanPage';
@@ -59,7 +62,7 @@ class _ScanPageState extends State<ScanPage> {
         style: TextStyle(
             fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),
       ),
-      color: Color(0xff4DD172),
+      color: widget.localColor,
       onPressed: () async {
         await clinicForm(context, widget.localTitle, widget.localDesc,
             widget.localColor, widget.schoolDB, widget.collectionName);
@@ -73,7 +76,7 @@ class _ScanPageState extends State<ScanPage> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xff4DD172),
+          backgroundColor: widget.localColor,
           title: Text(widget.localTitle),
         ),
         body: _camState
@@ -92,10 +95,18 @@ class _ScanPageState extends State<ScanPage> {
                         ),
                         qrCodeCallback: (code) async {
                           _qrCallback(code);
-                          found = await DatabaseLive(
-                                  schoolDB: widget.schoolDB,
-                                  collectionName: widget.collectionName)
-                              .scanAddRecordToLive(code);
+
+                          if(widget.localTitle == 'Emergency - Form'){
+                            found = await DatabaseEmergency(
+                                schoolDB: widget.schoolDB)
+                                .scanAddRecordToEmergency(code);
+
+                          }else {
+                            found = await DatabaseLive(
+                                schoolDB: widget.schoolDB,
+                                collectionName: widget.collectionName)
+                                .scanAddRecordToLive(code);
+                          }
                           print('Found:');
                           print(found);
                           if (found) {
