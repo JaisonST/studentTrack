@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
+import 'package:studenttrack/Screens/Loading.dart';
 import 'package:studenttrack/components.dart';
 
 class ScanPage extends StatefulWidget {
@@ -74,9 +76,12 @@ class _ScanPageState extends State<ScanPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool found = false;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Scan Card'),
+        title: Text(widget.localTitle),
       ),
       body: _camState
           ? Column(
@@ -95,7 +100,35 @@ class _ScanPageState extends State<ScanPage> {
                           ),
                           qrCodeCallback: (code) async {
                             _qrCallback(code);
-                            await DatabaseLive(schoolDB: widget.schoolDB, collectionName: widget.collectionName).scanAddRecordToLive(code);
+                            found = await DatabaseLive(schoolDB: widget.schoolDB, collectionName: widget.collectionName).scanAddRecordToLive(code);
+                            print('Found:');
+                            print(found);
+                            if(found) {
+                              await Alert(
+                                context: context,
+                                title: 'Success',
+                                buttons: [
+                                  DialogButton(color: Colors.green,
+                                      child: Text('done'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      })
+                                ],
+                                style: AlertStyle(
+                                    titleStyle: TextStyle(color: Colors.green)),
+                              ).show().then((value) => Navigator.pop(context));
+                            }
+                            else{
+                              await Alert(
+                                context: context,
+                                title: 'Could not find Student record',
+                                buttons: [DialogButton(color: Colors.red, child: Text('Try Again'), onPressed:(){Navigator.pop(context);})],
+                                style: AlertStyle(titleStyle: TextStyle(color: Colors.red)),
+                              ).show();
+                              setState(() {
+                                _camState = true;
+                              });
+                            }
                           },
                         ),
                       ),
@@ -120,9 +153,7 @@ class _ScanPageState extends State<ScanPage> {
                     ),
                   )
                 ])
-          : Center(
-              child: Text(_qrInfo),
-            ),
+          : Loading()
     );
   }
 }
