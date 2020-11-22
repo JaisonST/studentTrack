@@ -7,6 +7,7 @@ import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:studenttrack/ScanPage.dart';
 
 //function for the clinic form
 clinicForm(context, String localTitle, String localDesc, Color localColor,
@@ -59,11 +60,13 @@ clinicForm(context, String localTitle, String localDesc, Color localColor,
                 String body =
                     'Sir/Madam,\nThis is to inform you that $studentName of class $studentClass is in dire need of visiting the clinic, however the clinic has too many patients at the moment. Please do the needful.\n\nYours sincerely,\nStudent Track\n\n\nNote: This message was computer generated, Do not reply to this email.';
                 Navigator.pop((context));
+                Navigator.pop((context));
                 sendMail(
                     emails: emails, subject: subject, body: body, attach: null);
                 DatabaseEmergency(schoolDB: schoolDB)
                     .addRecordToEmergency(studentName, studentClass);
               } else {
+                Navigator.pop((context));
                 Navigator.pop((context));
                 DatabaseLive(schoolDB: schoolDB, collectionName: collectionName)
                     .addRecordToLive(studentName, studentClass);
@@ -95,8 +98,13 @@ class ClinicAddButton extends StatelessWidget {
         ),
         backgroundColor: Color(0xff4DD172),
         onPressed: () {
-          clinicForm(context, '$collectionName', 'Please Fill in Details',
-              Color(0xff4DD172), schoolDB, collectionName);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ScanPage(collectionName: collectionName,schoolDB: schoolDB,localColor: Color(0xff4DD172),localDesc: 'Please Fill in Details',localTitle: '$collectionName'),
+            ),
+          );
+          //clinicForm(context, '$collectionName', 'Please Fill in Details',Color(0xff4DD172), schoolDB, collectionName);
         },
       ),
     );
@@ -119,13 +127,21 @@ class EmergencyAddButton extends StatelessWidget {
         ),
         backgroundColor: Colors.red,
         onPressed: () {
-          clinicForm(
-              context,
-              'Emergency - Form',
-              'Alert will be sent to MSO team',
-              Colors.red,
-              schoolDB,
-              collectionName);
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ScanPage(collectionName: collectionName,schoolDB: schoolDB,localColor: Colors.red,localDesc: 'Alert will be sent to MSO team',localTitle: 'Emergency - Form'),
+            ),
+          );
+
+          // clinicForm(
+          //     context,
+          //     'Emergency - Form',
+          //     'Alert will be sent to MSO team',
+          //     Colors.red,
+          //     schoolDB,
+          //     collectionName);
         },
       ),
     );

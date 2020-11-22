@@ -32,7 +32,7 @@ dependencies:
   permission_handler: ^5.0.1+1
   firebase_storage: ^4.0.0
   url_launcher: ^5.7.1
-
+  flutter_qr_bar_scanner: ^1.0.2
 
 dev_dependencies:
   flutter_test:
