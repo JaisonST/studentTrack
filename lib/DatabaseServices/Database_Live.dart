@@ -98,7 +98,7 @@ class DatabaseLive {
   }
 
   //Live Functions
-  Future addRecordToLive(String name, String grade) {
+  Future addRecordToLive(String name, String grade,String doc_id) {
     var live = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
@@ -109,13 +109,14 @@ class DatabaseLive {
           'Class': grade,
           'EntryTime': DateTime.now().toString(),
           'Location': collectionName,
-          'Index': DateTime.now()
+          'Index': DateTime.now(),
+          'ID': doc_id
         })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
 
-  Future addRecordToHistory(String name, String grade, String t, Timestamp d) {
+  Future addRecordToHistory(String name, String grade, String t, Timestamp d,String doc_id) {
     var history = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
@@ -128,6 +129,7 @@ class DatabaseLive {
           'ExitTime': DateTime.now().toString(),
           'Location': collectionName,
           'Index': d,
+          'ID': doc_id
         })
         .then((value) => print('User moved to history'))
         .catchError((error) => print('Failed to move user:$error'));
@@ -138,6 +140,7 @@ class DatabaseLive {
     String grade;
     String t;
     Timestamp d;
+    String doc_id;
     var live = FirebaseFirestore.instance
         .collection('Schools')
         .doc(schoolDB)
@@ -147,9 +150,10 @@ class DatabaseLive {
       grade = documentSnapshot.data()['Class'];
       t = documentSnapshot.data()['EntryTime'];
       d = documentSnapshot.data()['Index'];
+      doc_id = documentSnapshot.data()['ID'];
     });
 
-    addRecordToHistory(name, grade, t, d);
+    addRecordToHistory(name, grade, t, d,doc_id);
 
     return live
         .doc(uid)
@@ -179,7 +183,7 @@ class DatabaseLive {
     });
 
     if(found) {
-      await addRecordToLive(name, grade);
+      await addRecordToLive(name, grade,doc_id);
     }
 
     return found;
