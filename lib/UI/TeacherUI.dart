@@ -36,22 +36,22 @@ class _TeacherUIState extends State<TeacherUI> {
                   elevation: 0.0,
                   color: Colors.white,
                   child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                    padding: EdgeInsets.only(
+                        right: 20.0, top: 10.0, bottom: 10.0, left: 10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
-                          flex: 4,
+                          flex: 3,
                           child: Image.asset("images/clinic.png"),
                         ),
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: SizedBox(),
                         ),
                         Expanded(
-                          flex: 3,
+                          flex: 2,
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text(
@@ -97,7 +97,7 @@ class _TeacherUIState extends State<TeacherUI> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
-                          flex: 7,
+                          flex: 5,
                           child: Image.asset("images/washroom.png"),
                         ),
                         Expanded(
