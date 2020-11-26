@@ -65,9 +65,8 @@ class _LogInState extends State<LogIn> {
                                 setState(() => email = val);
                               }),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(),
+                        SizedBox(
+                          height: 10,
                         ),
                         Expanded(
                           flex: 3,
@@ -95,7 +94,7 @@ class _LogInState extends State<LogIn> {
                             width: 100.0,
                             child: RaisedButton(
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
+                                    borderRadius: BorderRadius.circular(25.0),
                                     side: BorderSide(color: Color(0xff4dd172))),
                                 onPressed: () async {
                                   setState(() {
@@ -141,16 +140,16 @@ class _LogInState extends State<LogIn> {
                     child: SizedBox(),
                   )
                 : Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: Container(
                       color: Color(0xff4dd172),
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Row(
                         children: [
                           Expanded(
-                            flex: 2,
+                            flex: 3,
                             child: Text(
-                              "If you don't have an accoount please:",
+                              "If you don't have an account",
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -159,6 +158,7 @@ class _LogInState extends State<LogIn> {
                             child: SizedBox(),
                           ),
                           Expanded(
+                            flex: 2,
                             child: MaterialButton(
                               elevation: 0.0,
                               shape: RoundedRectangleBorder(
