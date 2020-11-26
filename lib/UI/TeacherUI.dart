@@ -112,7 +112,21 @@ class _TeacherUIState extends State<TeacherUI> {
                       children: [
                         Expanded(
                           flex: 5,
-                          child: Image.asset("images/washroom.png"),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: SizedBox(),
+                              ),
+                              Expanded(
+                                  flex: 9,
+                                  child: Image.asset("images/washroom.png")),
+                              Expanded(
+                                flex: 1,
+                                child: SizedBox(),
+                              ),
+                            ],
+                          ),
                         ),
                         Expanded(
                           flex: 1,
@@ -172,7 +186,21 @@ class _TeacherUIState extends State<TeacherUI> {
                       children: [
                         Expanded(
                           flex: 4,
-                          child: Image.asset("images/room.png"),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: SizedBox(),
+                              ),
+                              Expanded(
+                                  flex: 9,
+                                  child: Image.asset("images/room.png")),
+                              Expanded(
+                                flex: 1,
+                                child: SizedBox(),
+                              ),
+                            ],
+                          ),
                         ),
                         Expanded(
                           flex: 1,
