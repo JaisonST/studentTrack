@@ -36,7 +36,8 @@ class _TeacherUIState extends State<TeacherUI> {
                   elevation: 0.0,
                   color: Colors.white,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,7 +90,8 @@ class _TeacherUIState extends State<TeacherUI> {
                   elevation: 0.0,
                   color: Colors.white,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,7 +150,8 @@ class _TeacherUIState extends State<TeacherUI> {
                   elevation: 0.0,
                   color: Colors.white,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
