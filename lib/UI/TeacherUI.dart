@@ -35,7 +35,34 @@ class _TeacherUIState extends State<TeacherUI> {
                   padding: EdgeInsets.all(10),
                   elevation: 0.0,
                   color: Colors.white,
-                  child: Image.asset("images/clinic.png"),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: Image.asset("images/clinic.png"),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              'CLINIC',
+                              style: TextStyle(color: Color(0xff848080)),
+                              textAlign: TextAlign.right,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -61,7 +88,34 @@ class _TeacherUIState extends State<TeacherUI> {
                   padding: EdgeInsets.all(10),
                   elevation: 0.0,
                   color: Colors.white,
-                  child: Image.asset("images/washroom.png"),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 7,
+                          child: Image.asset("images/washroom.png"),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(),
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              'WASHROOM',
+                              style: TextStyle(color: Color(0xff848080)),
+                              textAlign: TextAlign.right,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   onPressed: () {
                     DatabaseAdmin(schoolDB: widget.schoolDB)
                         .returnWashroomList()
@@ -93,7 +147,34 @@ class _TeacherUIState extends State<TeacherUI> {
                   padding: EdgeInsets.all(10),
                   elevation: 0.0,
                   color: Colors.white,
-                  child: Image.asset("images/room.png"),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: Image.asset("images/room.png"),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              'OTHERS',
+                              style: TextStyle(color: Color(0xff848080)),
+                              textAlign: TextAlign.right,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   onPressed: () {
                     DatabaseAdmin(schoolDB: widget.schoolDB)
                         .returnRoomList()
