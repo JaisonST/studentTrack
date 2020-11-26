@@ -49,8 +49,8 @@ class DatabaseHistory {
               row.add(doc.data()['ID']);
               row.add(doc.data()['Name']);
               row.add(doc.data()['Class']);
-              row.add(doc.data()['EntryTime']);
-              row.add(doc.data()['ExitTime']);
+              row.add(removeMilliSeconds(doc.data()['EntryTime'].toString()));
+              row.add(removeMilliSeconds(doc.data()['ExitTime'].toString()));
               rows.add(row);
             }
           }
@@ -65,6 +65,11 @@ class DatabaseHistory {
 
     f.writeAsString(csv).then((value) => uploadFile(f));
   }
+}
+
+String removeMilliSeconds(String date){
+  List<String> str = date.split('.');
+  return str[0];
 }
 
 uploadFile(File record) async {
