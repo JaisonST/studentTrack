@@ -44,7 +44,21 @@ class _TeacherUIState extends State<TeacherUI> {
                       children: [
                         Expanded(
                           flex: 3,
-                          child: Image.asset("images/clinic.png"),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: SizedBox(),
+                              ),
+                              Expanded(
+                                  flex: 9,
+                                  child: Image.asset("images/clinic.png")),
+                              Expanded(
+                                flex: 1,
+                                child: SizedBox(),
+                              ),
+                            ],
+                          ),
                         ),
                         Expanded(
                           flex: 2,
