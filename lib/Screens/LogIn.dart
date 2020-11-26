@@ -48,48 +48,41 @@ class _LogInState extends State<LogIn> {
                               )
                             : StudentTrackTitle(),
                         Expanded(flex: 2, child: SizedBox(height: 60.0)),
-                        Expanded(
-                          flex: 3,
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                                  hintText: 'Email Address',
-                                  enabledBorder: OutlineInputBorder(
+                        TextFormField(
+                            decoration: InputDecoration(
+                                hintText: 'Email Address',
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.white, width: 2.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.white, width: 2.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                    color: Color(0xff696969),
-                                    width: 2.0,
-                                  ))),
-                              validator: (val) =>
-                                  val.isEmpty ? "Enter a valid id" : null,
-                              onChanged: (val) {
-                                setState(() => email = val);
-                              }),
+                                  color: Color(0xff696969),
+                                  width: 2.0,
+                                ))),
+                            validator: (val) =>
+                                val.isEmpty ? "Enter a valid id" : null,
+                            onChanged: (val) {
+                              setState(() => email = val);
+                            }),
+                        SizedBox(
+                          height: 20,
                         ),
-                        // SizedBox(
-                        //   height: 10,
-                        // ),
-                        Expanded(
-                          flex: 3,
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                                  hintText: 'Password',
-                                  enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.white, width: 2.0)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Color(0xff696969),
-                                          width: 2.0))),
-                              validator: (val) =>
-                                  val.length < 6 ? 'Password not Valid' : null,
-                              obscureText: true,
-                              onChanged: (val) {
-                                setState(() => password = val);
-                              }),
-                        ),
+                        TextFormField(
+                            decoration: InputDecoration(
+                                hintText: 'Password',
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 2.0)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xff696969), width: 2.0))),
+                            validator: (val) =>
+                                val.length < 6 ? 'Password not Valid' : null,
+                            obscureText: true,
+                            onChanged: (val) {
+                              setState(() => password = val);
+                            }),
                         Expanded(flex: 1, child: SizedBox()),
                         SizedBox(
                           width: 100.0,
