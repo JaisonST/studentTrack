@@ -65,9 +65,9 @@ class _LogInState extends State<LogIn> {
                                 setState(() => email = val);
                               }),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
                         Expanded(
                           flex: 3,
                           child: TextFormField(
@@ -193,25 +193,24 @@ class StudentTrackTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Text('Student',
+
+        Text('Student',
               style: TextStyle(
                 fontSize: 70.0,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff4dd172),
               )),
-        ),
-        Expanded(
-          flex: 1,
-          child: Text('Track',
+
+
+       Text('Track',
               style: TextStyle(
                 fontSize: 70.0,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff696969),
               )),
-        ),
+
       ],
     );
   }
