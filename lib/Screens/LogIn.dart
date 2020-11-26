@@ -41,9 +41,12 @@ class _LogInState extends State<LogIn> {
                     child: Column(
                       children: <Widget>[
                         Expanded(flex: 1, child: SizedBox()),
-                        Expanded(
-                            flex: _keyboardIsVisible() ? 1 : 7,
-                            child: StudentTrackTitle()),
+                        _keyboardIsVisible()
+                            ? Expanded(
+                                flex: 1,
+                                child: SizedBox(),
+                              )
+                            : StudentTrackTitle(),
                         Expanded(flex: 2, child: SizedBox(height: 60.0)),
                         Expanded(
                           flex: 3,
@@ -88,35 +91,33 @@ class _LogInState extends State<LogIn> {
                               }),
                         ),
                         Expanded(flex: 1, child: SizedBox()),
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(
-                            width: 100.0,
-                            child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25.0),
-                                    side: BorderSide(color: Color(0xff4dd172))),
-                                onPressed: () async {
-                                  setState(() {
-                                    loading = true;
-                                  });
-                                  if (_formKey.currentState.validate()) {
-                                    dynamic result = await _auth.signIn(
-                                        email, password, context);
-                                    if (result == null) {
-                                      setState(() {
-                                        loading = false;
-                                        error =
-                                            'Please enter a valid Email Id and corresponding Password';
-                                      });
-                                    }
+                        SizedBox(
+                          width: 100.0,
+                          height: 50.0,
+                          child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  side: BorderSide(color: Color(0xff4dd172))),
+                              onPressed: () async {
+                                setState(() {
+                                  loading = true;
+                                });
+                                if (_formKey.currentState.validate()) {
+                                  dynamic result = await _auth.signIn(
+                                      email, password, context);
+                                  if (result == null) {
+                                    setState(() {
+                                      loading = false;
+                                      error =
+                                          'Please enter a valid Email Id and corresponding Password';
+                                    });
                                   }
-                                },
-                                child: Text('Sign In',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 16.0)),
-                                color: Color(0xff4dd172)),
-                          ),
+                                }
+                              },
+                              child: Text('Sign In',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16.0)),
+                              color: Color(0xff4dd172)),
                         ),
                         Expanded(
                           flex: 1,
@@ -195,22 +196,18 @@ class StudentTrackTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-
         Text('Student',
-              style: TextStyle(
-                fontSize: 70.0,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff4dd172),
-              )),
-
-
-       Text('Track',
-              style: TextStyle(
-                fontSize: 70.0,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff696969),
-              )),
-
+            style: TextStyle(
+              fontSize: 70.0,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff4dd172),
+            )),
+        Text('Track',
+            style: TextStyle(
+              fontSize: 70.0,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff696969),
+            )),
       ],
     );
   }
