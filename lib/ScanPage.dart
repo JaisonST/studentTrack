@@ -56,18 +56,27 @@ class _ScanPageState extends State<ScanPage> {
 
   Widget _cameraControlWidget(context) {
     return Expanded(
-        child: RaisedButton(
+        child: Align(
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              RaisedButton(
       child: Text(
-        'Enter Details Manually',
-        style: TextStyle(
-            fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),
+              'Enter Details Manually',
+              style: TextStyle(
+                  fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white),
       ),
       color: widget.localColor,
       onPressed: () async {
-        await clinicForm(context, widget.localTitle, widget.localDesc,
-            widget.localColor, widget.schoolDB, widget.collectionName);
+              await clinicForm(context, widget.localTitle, widget.localDesc,
+                  widget.localColor, widget.schoolDB, widget.collectionName);
       },
-    ));
+    ),
+            ],
+          ),
+        ));
   }
 
   @override
@@ -164,7 +173,13 @@ class _ScanPageState extends State<ScanPage> {
                     width: double.infinity,
                     padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
                     color: Colors.white,
-                    child: _cameraControlWidget(context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        _cameraControlWidget(context),
+                      ],
+                    ),
+
                   ),
                 )
               ])
