@@ -181,13 +181,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_qr_bar_scanner:
-    dependency: "direct main"
-    description:
-      name: flutter_qr_bar_scanner
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -261,13 +254,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7"
-  native_device_orientation:
-    dependency: transitive
-    description:
-      name: native_device_orientation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   nested:
     dependency: transitive
     description:
@@ -380,6 +366,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  scan_preview:
+    dependency: "direct main"
+    description:
+      name: scan_preview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   sky_engine:
     dependency: transitive
     description: flutter

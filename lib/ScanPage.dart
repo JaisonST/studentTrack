@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'package:scan_preview/scan_preview.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:scan_preview/scan_preview_widget.dart';
 import 'package:studenttrack/DatabaseServices/Database_Emergency.dart';
 import 'package:studenttrack/DatabaseServices/Database_Live.dart';
 import 'package:studenttrack/Screens/Loading.dart';
@@ -97,12 +98,9 @@ class _ScanPageState extends State<ScanPage> {
                     child: SizedBox(
                       height: 700,
                       width: 500,
-                      child: QRBarScannerCamera(
-                        onError: (context, error) => Text(
-                          error.toString(),
-                          style: TextStyle(color: Colors.red),
-                        ),
-                        qrCodeCallback: (code) async {
+                      child: ScanPreviewWidget(
+                        onScanResult: (code) async  {
+                          debugPrint('scan result: $code');
                           _qrCallback(code);
 
                           if(widget.localTitle == 'Emergency - Form'){

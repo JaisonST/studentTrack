@@ -16,7 +16,7 @@ class _VersionState extends State<Version> {
   bool isVersionCorrect;
   @override
   void initState() {
-    version = 1;
+    version = 2;
     isVersionCorrect = false;
     DatabaseServices().returnVersion().then((value) {
       if (version == value) {

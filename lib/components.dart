@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studenttrack/AuthenticationSystem/Auth.dart';
 import 'package:studenttrack/DatabaseServices/Database.dart';
@@ -97,13 +98,28 @@ class ClinicAddButton extends StatelessWidget {
           size: 40.0,
         ),
         backgroundColor: Color(0xff4DD172),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ScanPage(collectionName: collectionName,schoolDB: schoolDB,localColor: Color(0xff4DD172),localDesc: 'Please Fill in Details',localTitle: '$collectionName'),
-            ),
-          );
+        onPressed: () async {
+
+          if (await Permission.camera.isGranted) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ScanPage(collectionName: collectionName,schoolDB: schoolDB,localColor: Color(0xff4DD172),localDesc: 'Please Fill in Details',localTitle: '$collectionName'),
+              ),
+            );
+          } else {
+            await Permission.camera.request().then((value) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ScanPage(collectionName: collectionName,schoolDB: schoolDB,localColor: Color(0xff4DD172),localDesc: 'Please Fill in Details',localTitle: '$collectionName'),
+                ),
+              );
+            });
+          }
+
+
+
           //clinicForm(context, '$collectionName', 'Please Fill in Details',Color(0xff4DD172), schoolDB, collectionName);
         },
       ),
@@ -126,14 +142,30 @@ class EmergencyAddButton extends StatelessWidget {
           size: 40.0,
         ),
         backgroundColor: Colors.red,
-        onPressed: () {
+        onPressed: () async {
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ScanPage(collectionName: collectionName,schoolDB: schoolDB,localColor: Colors.red,localDesc: 'Alert will be sent to MSO team',localTitle: 'Emergency - Form'),
-            ),
-          );
+          if (await Permission.camera.isGranted) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ScanPage(collectionName: collectionName,schoolDB: schoolDB,localColor: Colors.red,localDesc: 'Alert will be sent to MSO team',localTitle: 'Emergency - Form'),
+              ),
+            );
+
+          } else {
+            await Permission.camera.request().then((value) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ScanPage(collectionName: collectionName,schoolDB: schoolDB,localColor: Colors.red,localDesc: 'Alert will be sent to MSO team',localTitle: 'Emergency - Form'),
+                ),
+              );
+
+
+            });
+          }
+
+
 
           // clinicForm(
           //     context,
